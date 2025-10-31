@@ -20,3 +20,20 @@ raw:
   - name: GB-transmission-system-boundary-zone-map.pdf
     source: https://www.elexon.co.uk/bsc/documents/data/operational-data/gb-transmission-system-boundary-zone-map/
     description: map of the UK with transmission boundaries and main lines
+
+interim:
+  - name: gb-transmission-map/
+    sources: 
+      - GB-transmission-system-boundary-zone-map.pdf
+      - uk_buc.geojson
+    description: Mapping the transmission boundaries onto the UK map, and redrawing the boundaries in QGIS found in it for later processing 
+  - name: wikidata_to_repd/
+    sources:
+      - wikidata_to_repd.py
+      - bm_units.py
+    description: Mapping wikidata to REPD in order to match the REPD sites to their BM units
+  - name: hackcollective_data.csv
+    sources: 
+      - bm_units_with_locations.xlsx
+      - bm_units.py
+    description: cleaned version of the hackcollective manual mapping
