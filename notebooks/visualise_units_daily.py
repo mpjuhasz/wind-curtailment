@@ -414,23 +414,79 @@ def _(mo):
 
 @app.cell
 def _(np, pl, quarter_hour_aggregates):
-    to_bin = quarter_hour_aggregates["above"].with_columns(
+    to_bin_above = quarter_hour_aggregates["above"].with_columns(
         pl.col("curtailment").mul(4).alias("curtailment_gw"),
         pl.col("generated").mul(4).alias("generated_gw")
     )
 
-    quantiles = np.arange(0, to_bin.select(pl.col("generated_gw").max()).item() + 1, 0.5)
+    quantiles = np.arange(0, to_bin_above.select(pl.col("generated_gw").max()).item() + 1, 0.5)
 
-    to_bin.with_columns(
+    bin_results_above = to_bin_above.with_columns(
         pl.col("generated_gw").cut(
         quantiles,
-        labels=[f"{i}-{i+0.5}GW" for i in [float(i) for i in quantiles] + [float(quantiles.max() + 1)]]
-    ).alias("bin")).group_by("bin").agg(
+        labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in quantiles] + [float(quantiles.max() + 1)]]
+    ).cast(pl.String).alias("bin")).group_by("bin").agg(
         pl.col("curtailment_gw").sum(),
         pl.col("generated_gw").sum()
     ).with_columns(
         (pl.col("curtailment_gw") / pl.col("generated_gw")).alias("curtailment_percent")
-    ).sort("bin").to_pandas()
+    ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
+    return (bin_results_above,)
+
+
+@app.cell
+def _(np, pl, quarter_hour_aggregates):
+    to_bin_below = quarter_hour_aggregates["below"].with_columns(
+        pl.col("curtailment").mul(4).alias("curtailment_gw"),
+        pl.col("generated").mul(4).alias("generated_gw")
+    )
+
+    _quantiles = np.arange(0, to_bin_below.select(pl.col("generated_gw").max()).item() + 1, 0.5)
+
+    bin_results_below = to_bin_below.with_columns(
+        pl.col("generated_gw").cut(
+        _quantiles,
+        labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in _quantiles] + [float(_quantiles.max() + 1)]]
+    ).cast(pl.String).alias("bin")).group_by("bin").agg(
+        pl.col("curtailment_gw").sum(),
+        pl.col("generated_gw").sum()
+    ).with_columns(
+        (pl.col("curtailment_gw") / pl.col("generated_gw")).alias("curtailment_percent")
+    ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
+    return (bin_results_below,)
+
+
+@app.cell
+def _(bin_results_above, bin_results_below, go):
+    fig6 = go.Figure()
+
+    fig6.add_bar(
+        x=bin_results_above.select("bin").to_numpy().flatten(),
+        y=bin_results_above.select("curtailment_percent").to_numpy().flatten(),
+        name='Above B6 Boundary',
+        marker_color='blue',
+        opacity=0.8,
+    )
+
+    fig6.add_bar(
+        x=bin_results_below.select("bin").to_numpy().flatten(),
+        y=bin_results_below.select("curtailment_percent").to_numpy().flatten(),
+        name='Below B6 Boundary',
+        marker_color='lightgreen',
+        opacity=0.8,
+    
+    )
+
+    fig6.update_layout(
+        barmode='overlay'
+    )
+
+    fig6.show()
+    return
+
+
+@app.cell
+def _():
     return
 
 
@@ -502,8 +558,57 @@ def _(go, hourly_data, pl):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Curtailment vs location
+
+    Checking whether there's a link between the location and the curtailment percentage.
+    """)
+    return
+
+
 @app.cell
-def _():
+def _(daily_folder, pl, units_with_boundary):
+    def get_curtailment_for_unit(bm_unit: str) -> float:
+        _file_path = daily_folder / f"{bm_unit}.csv"
+        if _file_path.exists() is False:
+            print(f"No data for {bm_unit}")
+            return None
+        _df = pl.read_csv(_file_path)
+        total_generated = _df.select(pl.col("generated").sum()).item()
+        total_curtailment = _df.select(pl.col("curtailment").sum()).item()
+        if total_generated == 0:
+            return 0.0
+        return total_curtailment / total_generated
+
+    units_with_curtailment = units_with_boundary.filter(pl.col("technology_type").str.contains("Wind")).with_columns(
+        curtailment_ratio=pl.col("bm_unit").map_elements(get_curtailment_for_unit, return_dtype=pl.Float64)
+    )
+
+    return (units_with_curtailment,)
+
+
+@app.cell
+def _(px, units_with_curtailment):
+    fig5 = px.scatter(
+        units_with_curtailment.to_pandas(),
+        x='repd_lat',
+        y='curtailment_ratio',
+        size='capacity',
+        color='below_b6',
+        labels={'repd_lat': 'Latitude', 'curtailment_ratio': 'Curtailment Ratio', 'below_b6': 'Below B6 Boundary'},
+        title='Curtailment Ratio vs Latitude for Wind Units',
+        hover_data=['repd_site_name', 'capacity']
+    )
+
+    fig5.show()
+    return
+
+
+@app.cell
+def _(E_CWMD):
+    E_CWMD-1
     return
 
 
