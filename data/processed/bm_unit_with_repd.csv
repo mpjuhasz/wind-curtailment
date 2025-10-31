@@ -4,8 +4,8 @@
 2,T_AFTOW-1,Afton Wind Farm,55.3116,-4.17428,Wind Onshore,50.0,Strathclyde,Scotland
 3,T_AKGLW-2,Aikengall,55.91721,-2.49007,Wind Onshore,48.0,Lothian,Scotland
 4,T_AKGLW-3,Aikengall,55.91721,-2.49007,Wind Onshore,48.0,Lothian,Scotland
-5,T_AKGLW-2,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,Wind Onshore,60.8,Lothian,Scotland
-6,T_AKGLW-3,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,Wind Onshore,60.8,Lothian,Scotland
+5,T_AKGLW-3,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,Wind Onshore,60.8,Lothian,Scotland
+6,T_AKGLW-2,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,Wind Onshore,60.8,Lothian,Scotland
 7,T_AKGLW-2,Aikengall IIa Community Wind Farm,55.89342,-2.45259,Wind Onshore,81.7,Borders,Scotland
 8,T_AKGLW-3,Aikengall IIa Community Wind Farm,55.89342,-2.45259,Wind Onshore,81.7,Borders,Scotland
 9,E_AIRSW-1,Airies Farm,54.80205,-4.65774,Wind Onshore,35.0,Dumfries and Galloway,Scotland
@@ -20,16 +20,16 @@
 18,T_BDCHW-1,Bad a Cheo Wind Farm,58.42046,-3.42919,Wind Onshore,26.7,Highland,Scotland
 19,E_BABAW-1,Baillie Wind Farm,58.56792,-3.67702,Wind Onshore,52.5,Highland,Scotland
 20,T_BOWLW-1,Barrow,53.99146,-3.29828,Wind Offshore,90.0,Offshore,Offshore
-21,T_BEATO-3,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
-22,T_BEATO-2,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
-23,T_BEATO-4,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
-24,T_BEATO-1,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
+21,T_BEATO-1,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
+22,T_BEATO-4,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
+23,T_BEATO-3,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
+24,T_BEATO-2,Beatrice,58.08823,-2.95016,Wind Offshore,588.0,Offshore,Offshore
 25,E_BETHW-1,Beinn Tharsuinn Extension (Beinn nan Oighrean),57.78823,-4.24815,Wind Onshore,4.6,Highland,Scotland
 26,E_BETHW-1,Beinn Tharsuinn Windfarm Project,57.80527,-4.329,Wind Onshore,29.8,Highland,Scotland
 27,E_BTUIW-3,Beinn an Tuirc,55.57317,-5.58735,Wind Onshore,29.7,Strathclyde,Scotland
 28,E_BTUIW-2,Beinn an Tuirc,55.57317,-5.58735,Wind Onshore,29.7,Strathclyde,Scotland
-29,E_BTUIW-3,Beinn an Tuirc Phase 2,55.57317,-5.58735,Wind Onshore,43.7,Strathclyde,Scotland
-30,E_BTUIW-2,Beinn an Tuirc Phase 2,55.57317,-5.58735,Wind Onshore,43.7,Strathclyde,Scotland
+29,E_BTUIW-2,Beinn an Tuirc Phase 2,55.57317,-5.58735,Wind Onshore,43.7,Strathclyde,Scotland
+30,E_BTUIW-3,Beinn an Tuirc Phase 2,55.57317,-5.58735,Wind Onshore,43.7,Strathclyde,Scotland
 31,T_BEINW-1,Beinneun,57.09561,-4.96548,Wind Onshore,85.0,Highland,Scotland
 32,E_BRYBW-1,Berry Burn,57.44661,-3.47539,Wind Onshore,66.7,Grampian,Scotland
 33,2__PSTAT002,Berry Burn,57.44661,-3.47539,Wind Onshore,66.7,Grampian,Scotland
@@ -42,8 +42,8 @@
 40,E_BLARW-1,Blary Hill Wind Farm,55.56826,-5.64354,Wind Onshore,35.0,Strathclyde,Scotland
 41,E_ARNKB-1,Bloxwich Battery,52.59009,-2.01002,Battery,41.0,West Midlands,West Midlands
 42,E_BRDUW-1,Braes O'Doune,56.26983,-4.05894,Wind Onshore,72.0,Stirling,Scotland
-43,T_NOKYW-2,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,Wind Onshore,100.0,Strathclyde,Scotland
-44,T_NOKYW-1,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,Wind Onshore,100.0,Strathclyde,Scotland
+43,T_NOKYW-1,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,Wind Onshore,100.0,Strathclyde,Scotland
+44,T_NOKYW-2,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,Wind Onshore,100.0,Strathclyde,Scotland
 45,T_WISTW-2,Brochloch Rig (formerly Windy Standard II),55.29221,-4.20315,Wind Onshore,90.0,Dumfries and Galloway,Scotland
 46,T_BROCW-1,Broken Cross (Former Surface Mine),55.6045,-3.81617,Wind Onshore,48.0,South Lanarkshire,Scotland
 47,E_BROFB-1,"Brook Farm, High Street - Battery Energy Storage",53.02902,-1.37279,Battery,,Derbyshire,East Midlands
@@ -54,10 +54,10 @@
 52,T_BURWS-1,Burwell Solar Farm,52.284,0.30403,Solar Photovoltaics,49.9,Cambridgeshire,Eastern
 53,V__NHABI005,Camilla Battery Storage,56.10897,-3.26616,Battery,49.99,Fife,Scotland
 54,2__PEDGE003,Camster,58.40865,-3.27151,Wind Onshore,50.0,Highland,Scotland
-55,T_PINFB-3,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
-56,T_PINFB-1,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
+55,T_PINFB-2,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
+56,T_PINFB-3,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
 57,T_PINFB-4,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
-58,T_PINFB-2,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
+58,T_PINFB-1,"Capenhurst Lane, Capenhurst - Battery storage",53.2679,-2.95031,Battery,57.0,Cheshire,North West
 59,T_CRGHW-1,Carraig Gheal,56.33901,-5.29454,Wind Onshore,46.0,Strathclyde,Scotland
 60,2__PSMAE001,Causeymire,58.44347,-3.08542,Wind Onshore,48.3,Highland,Scotland
 61,T_LNCSW-2,Centrica (Lincs),53.18417,0.49808,Wind Offshore,270.0,Offshore,Offshore
@@ -67,9 +67,9 @@
 65,E_CLDRW-1,Clashindarroch,57.37103,-2.85794,Wind Onshore,129.0,Grampian,Scotland
 66,E_CLDRW-1,Clashindarroch,57.36648,-2.86615,Wind Onshore,37.0,Grampian,Scotland
 67,E_CLDRW-1,Clashindarroch 2,57.38397,-2.93309,Wind Onshore,77.0,Grampian,Scotland
-68,T_CLDNW-1,Clyde Wind Farm,55.44163,-3.54273,Wind Onshore,350.0,Strathclyde,Scotland
-69,T_CLDCW-1,Clyde Wind Farm,55.44163,-3.54273,Wind Onshore,350.0,Strathclyde,Scotland
-70,T_CLDSW-1,Clyde Wind Farm,55.44163,-3.54273,Wind Onshore,350.0,Strathclyde,Scotland
+68,T_CLDSW-1,Clyde Wind Farm,55.44163,-3.54273,Wind Onshore,350.0,Strathclyde,Scotland
+69,T_CLDNW-1,Clyde Wind Farm,55.44163,-3.54273,Wind Onshore,350.0,Strathclyde,Scotland
+70,T_CLDCW-1,Clyde Wind Farm,55.44163,-3.54273,Wind Onshore,350.0,Strathclyde,Scotland
 71,E_CNCLW-1,Coire Na Cloiche Wind Farm,57.76962,-4.37316,Wind Onshore,29.9,Highland,Scotland
 72,E_CORB-1,Corby Biomass Plant,52.50861,-0.67832,Biomass (dedicated),14.3,Northamptonshire,East Midlands
 73,T_CGTHW-1,Corriegarth,57.19008,-4.35964,Wind Onshore,69.5,Highland,Scotland
@@ -82,32 +82,32 @@
 80,2__MSTAT001,Creyke Beck,53.79827,-0.42102,Battery,49.9,Humberside,Yorkshire and Humber
 81,T_CRDEW-1,Crossdykes,55.17615,-3.17287,Wind Onshore,48.0,Dumfries and Galloway,Scotland
 82,T_CRDEW-2,Crossdykes,55.17615,-3.17287,Wind Onshore,48.0,Dumfries and Galloway,Scotland
-83,T_CRUA-2,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
-84,T_CRUA-3,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
-85,T_CRUA-4,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
-86,T_CRUA-1,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
+83,T_CRUA-4,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
+84,T_CRUA-1,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
+85,T_CRUA-3,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
+86,T_CRUA-2,Cruachan,56.41115,-5.11345,Pumped Storage Hydroelectricity,440.0,Argyll and Bute,Scotland
 87,T_CRYRW-3,Crystal Rig Extension II,55.91289,-2.54549,Wind Onshore,20.7,Borders,Scotland
 88,T_CRYRW-3,Crystal Rig Wind Farm Phase 2a,55.89948,-2.52931,Wind Onshore,138.0,Borders,Scotland
 89,T_CRYRW-2,Crystal Rig Wind Farm Phase 2a,55.89948,-2.52931,Wind Onshore,138.0,Borders,Scotland
 90,T_CRYRW-2,Crystal Rig Wind Farm Phase III,55.92641,-2.53448,Wind Onshore,13.8,Borders,Scotland
 91,T_CRYRW-3,Crystal Rig Wind Farm Phase III,55.92641,-2.53448,Wind Onshore,13.8,Borders,Scotland
-92,T_CRYRW-2,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,Wind Onshore,48.0,Borders,Scotland
-93,T_CRYRW-3,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,Wind Onshore,48.0,Borders,Scotland
+92,T_CRYRW-3,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,Wind Onshore,48.0,Borders,Scotland
+93,T_CRYRW-2,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,Wind Onshore,48.0,Borders,Scotland
 94,T_CUMHW-1,Cumberhead Wind Farm,55.57184,-3.95894,Wind Onshore,48.0,South Lanarkshire,Scotland
 95,E_CWMD-1,Cwm Dyli,53.04255,-4.03337,Large Hydro,9.9,Gwynedd,Wales
 96,T_DALQW-1,Dalquhandy Windfarm,55.18061,-4.90958,Wind Onshore,45.0,Strathclyde,Scotland
 97,E_DALSW-1,Dalswinton,55.1841,-3.65056,Wind Onshore,30.0,Dumfries and Galloway,Scotland
 98,T_DRSLW-1,Dersalloch,55.30426,-4.48822,Wind Onshore,69.0,Strathclyde,Scotland
-99,T_DINO-6,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
+99,T_DINO-4,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
 100,T_DINO-1,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
-101,T_DINO-3,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
-102,T_DINO-4,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
-103,T_DINO-2,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
-104,T_DINO-5,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
-105,T_DBAWO-2,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
-106,T_DBAWO-4,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
-107,T_DBAWO-1,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
-108,T_DBAWO-5,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
+101,T_DINO-2,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
+102,T_DINO-5,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
+103,T_DINO-6,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
+104,T_DINO-3,Dinorwig,53.11861,-4.11389,Pumped Storage Hydroelectricity,1728.0,Conwy,Wales
+105,T_DBAWO-1,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
+106,T_DBAWO-2,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
+107,T_DBAWO-5,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
+108,T_DBAWO-4,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
 109,T_DBAWO-3,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,Wind Offshore,2400.0,Offshore,Offshore
 110,T_DOREW-1,Dorenell Wind Farm (Previously Site A and B Scaut Hill),57.3509,-3.13168,Wind Onshore,177.0,Grampian,Scotland
 111,T_DOREW-2,Dorenell Wind Farm (Previously Site A and B Scaut Hill),57.3509,-3.13168,Wind Onshore,177.0,Grampian,Scotland
@@ -118,62 +118,62 @@
 116,T_DOUGW-1,Douglas West and Dalquhandy Renewable Energy Project,55.58736,-3.8901,Wind Onshore,49.0,South Lanarkshire,Scotland
 117,T_DALQW-1,Douglas West and Dalquhandy Renewable Energy Project,55.58736,-3.8901,Wind Onshore,49.0,South Lanarkshire,Scotland
 118,E_DBFRM-1,Down Barn Farm,51.19357,-1.68555,Solar Photovoltaics,49.9,Wiltshire,South West
-119,T_DRAXX-5,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
-120,T_DRAXX-4,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
-121,T_DRAXX-2,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
-122,T_DRAXX-6,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
-123,T_DRAXX-3,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
-124,T_DRAXX-1,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
+119,T_DRAXX-2,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
+120,T_DRAXX-1,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
+121,T_DRAXX-3,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
+122,T_DRAXX-4,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
+123,T_DRAXX-5,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
+124,T_DRAXX-6,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
 125,E__MDRX002,Drax Biomass Power Station - Unit 1,53.73559,-0.9911,Biomass (co-firing),645.0,North Yorkshire,Yorkshire and Humber
-126,T_DRAXX-6,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-127,T_DRAXX-4,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-128,T_DRAXX-5,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+126,T_DRAXX-5,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+127,T_DRAXX-6,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+128,T_DRAXX-3,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
 129,T_DRAXX-1,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
 130,E__MDRX002,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-131,T_DRAXX-3,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+131,T_DRAXX-4,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
 132,T_DRAXX-2,Drax Biomass Power Station - Unit 2,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-133,T_DRAXX-6,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-134,T_DRAXX-4,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-135,T_DRAXX-2,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-136,E__MDRX002,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+133,T_DRAXX-2,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+134,E__MDRX002,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+135,T_DRAXX-5,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+136,T_DRAXX-4,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
 137,T_DRAXX-3,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-138,T_DRAXX-1,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-139,T_DRAXX-5,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-140,T_DRAXX-6,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-141,T_DRAXX-5,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-142,T_DRAXX-4,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-143,T_DRAXX-3,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-144,T_DRAXX-1,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-145,E__MDRX002,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-146,T_DRAXX-2,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
-147,T_DRAXX-2,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-148,T_DRAXX-4,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-149,E__MDRX002,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-150,T_DRAXX-3,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-151,T_DRAXX-1,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-152,T_DRAXX-5,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-153,T_DRAXX-6,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
-154,E__MDRX002,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
-155,T_DRAXX-6,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
-156,T_DRAXX-5,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
-157,T_DRAXX-1,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
-158,T_DRAXX-3,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
-159,T_DRAXX-2,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
-160,T_DRAXX-4,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+138,T_DRAXX-6,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+139,T_DRAXX-1,Drax Biomass Power Station - Unit 3,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+140,T_DRAXX-2,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+141,E__MDRX002,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+142,T_DRAXX-3,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+143,T_DRAXX-5,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+144,T_DRAXX-4,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+145,T_DRAXX-1,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+146,T_DRAXX-6,Drax Biomass Power Station - Unit 4,53.73559,-0.9911,Biomass (dedicated),645.0,North Yorkshire,Yorkshire and Humber
+147,T_DRAXX-3,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+148,T_DRAXX-1,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+149,T_DRAXX-2,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+150,E__MDRX002,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+151,T_DRAXX-6,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+152,T_DRAXX-4,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+153,T_DRAXX-5,Drax Heron Renewable Energy Park,53.63877,-0.21532,Biomass (dedicated),290.0,Humberside,Yorkshire and Humber
+154,T_DRAXX-4,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+155,T_DRAXX-1,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+156,T_DRAXX-6,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+157,T_DRAXX-5,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+158,E__MDRX002,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+159,T_DRAXX-3,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
+160,T_DRAXX-2,Drax Ouse Renewable Energy Park,53.7475,-0.99083,Biomass (dedicated),290.0,North Yorkshire,Yorkshire and Humber
 161,T_DDGNO-4,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
-162,T_DDGNO-1,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
-163,T_DDGNO-3,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
-164,T_DDGNO-2,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
+162,T_DDGNO-3,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
+163,T_DDGNO-2,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
+164,T_DDGNO-1,Dudgeon East,53.11746,0.61347,Wind Offshore,402.0,Offshore,Offshore
 165,T_DDGNO-1,Dudgeon Extension Project,53.14934,1.18427,Wind Offshore,402.0,Offshore,Offshore
-166,T_DDGNO-4,Dudgeon Extension Project,53.14934,1.18427,Wind Offshore,402.0,Offshore,Offshore
+166,T_DDGNO-2,Dudgeon Extension Project,53.14934,1.18427,Wind Offshore,402.0,Offshore,Offshore
 167,T_DDGNO-3,Dudgeon Extension Project,53.14934,1.18427,Wind Offshore,402.0,Offshore,Offshore
-168,T_DDGNO-2,Dudgeon Extension Project,53.14934,1.18427,Wind Offshore,402.0,Offshore,Offshore
+168,T_DDGNO-4,Dudgeon Extension Project,53.14934,1.18427,Wind Offshore,402.0,Offshore,Offshore
 169,T_DNLWW-1,Dun Law,55.80646,-2.84603,Wind Onshore,17.2,Borders,Scotland
 170,T_DUNGW-1,Dunmaglass Wind Farm,57.25148,-4.2558,Wind Onshore,94.0,Highland,Scotland
-171,T_EAAO-1,East Anglia 1 (EA 1),52.13696,2.1728,Wind Offshore,714.0,Offshore,Offshore
-172,T_EAAO-2,East Anglia 1 (EA 1),52.13696,2.1728,Wind Offshore,714.0,Offshore,Offshore
-173,T_EAAO-2,East Anglia 1 North (EA 4),52.13696,2.1728,Wind Offshore,800.0,Offshore,Offshore
-174,T_EAAO-1,East Anglia 1 North (EA 4),52.13696,2.1728,Wind Offshore,800.0,Offshore,Offshore
+171,T_EAAO-2,East Anglia 1 (EA 1),52.13696,2.1728,Wind Offshore,714.0,Offshore,Offshore
+172,T_EAAO-1,East Anglia 1 (EA 1),52.13696,2.1728,Wind Offshore,714.0,Offshore,Offshore
+173,T_EAAO-1,East Anglia 1 North (EA 4),52.13696,2.1728,Wind Offshore,800.0,Offshore,Offshore
+174,T_EAAO-2,East Anglia 1 North (EA 4),52.13696,2.1728,Wind Offshore,800.0,Offshore,Offshore
 175,T_EAAO-2,East Anglia 2 (EA 2),52.72099,2.16871,Wind Offshore,900.0,Offshore,Offshore
 176,E_TULWW-2,Easter Tulloch Wind Farm (Tullo Extension),56.83639,-2.3957,Wind Onshore,25.0,Grampian,Scotland
 177,T_EDINW-1,Edinbane Wind Farm,57.46913,-6.43221,Wind Onshore,41.4,Highland,Scotland
@@ -182,23 +182,23 @@
 180,T_FALGW-1,Fallago Rig,55.83131,-2.68803,Wind Onshore,144.0,Borders,Scotland
 181,T_FARR-1,Farr Wind Farm,57.33392,-4.10301,Wind Onshore,92.0,Highland,Scotland
 182,T_FARR-2,Farr Wind Farm,57.33392,-4.10301,Wind Onshore,92.0,Highland,Scotland
-183,E_FASN-3,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
-184,T_FASN-2,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
-185,T_FASN-1,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
-186,E_FASN-4,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
+183,E_FASN-4,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
+184,T_FASN-1,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
+185,E_FASN-3,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
+186,T_FASN-2,Fasnakyle Hydro Extension,57.32719,-4.79458,Large Hydro,7.5,Highland,Scotland
 187,E_FAWN-1,Fawley Waste to Energy Plant,50.8485,-1.3796,EfW Incineration,8.6,Hampshire,South East
 188,2__PSTAT002,Fetteresso Wind Farm (Mid Hill 3),56.96441,-2.34737,Wind Onshore,42.0,Grampian,Scotland
-189,T_FFES-3,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
+189,T_FFES-2,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
 190,T_FFES-4,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
-191,T_FFES-2,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
-192,T_FFES-1,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
+191,T_FFES-1,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
+192,T_FFES-3,Ffestiniog,52.98083,-3.96889,Pumped Storage Hydroelectricity,360.0,Conwy,Wales
 193,T_FOYE-1,Foyers,57.25436,-4.49382,Pumped Storage Hydroelectricity,300.0,Highland,Scotland
 194,T_FOYED-1,Foyers,57.25436,-4.49382,Pumped Storage Hydroelectricity,300.0,Highland,Scotland
 195,T_FOYE-2,Foyers,57.25436,-4.49382,Pumped Storage Hydroelectricity,300.0,Highland,Scotland
 196,T_FSDLW-1,Freasdail Wind Farm,55.77701,-5.47064,Wind Onshore,22.5,Strathclyde,Scotland
 197,T_GLWSW-1,Galawhistle,55.53957,-3.97542,Wind Onshore,66.0,Strathclyde,Scotland
-198,T_GANW-13,Galloper Wind Farm,51.87999,2.03999,Wind Offshore,353.0,Offshore,Offshore
-199,T_GANW-11,Galloper Wind Farm,51.87999,2.03999,Wind Offshore,353.0,Offshore,Offshore
+198,T_GANW-11,Galloper Wind Farm,51.87999,2.03999,Wind Offshore,353.0,Offshore,Offshore
+199,T_GANW-13,Galloper Wind Farm,51.87999,2.03999,Wind Offshore,353.0,Offshore,Offshore
 200,T_GANW-24,Galloper Wind Farm,51.87999,2.03999,Wind Offshore,353.0,Offshore,Offshore
 201,T_GANW-22,Galloper Wind Farm,51.87999,2.03999,Wind Offshore,353.0,Offshore,Offshore
 202,T_GNAPW-1,Glen App,55.00066,-4.98968,Wind Onshore,22.0,Strathclyde,Scotland
@@ -213,22 +213,22 @@
 211,E_GDSTW-1,Gordonstown Hill Wind Farm,57.46192,-2.48276,Wind Onshore,12.5,Grampian,Scotland
 212,M_CAS-GAR01,Great Glen Scheme,57.20163,-4.72133,Large Hydro,36.0,Highland,Scotland
 213,M_CAS-MOR01,Great Glen Scheme,57.20163,-4.72133,Large Hydro,36.0,Highland,Scotland
-214,T_GRGBW-3,Greater Gabbard Wind Farm,51.91764,1.92842,Wind Offshore,504.0,Offshore,Offshore
-215,T_GRGBW-2,Greater Gabbard Wind Farm,51.91764,1.92842,Wind Offshore,504.0,Offshore,Offshore
+214,T_GRGBW-2,Greater Gabbard Wind Farm,51.91764,1.92842,Wind Offshore,504.0,Offshore,Offshore
+215,T_GRGBW-3,Greater Gabbard Wind Farm,51.91764,1.92842,Wind Offshore,504.0,Offshore,Offshore
 216,T_GRGBW-1,Greater Gabbard Wind Farm,51.91764,1.92842,Wind Offshore,504.0,Offshore,Offshore
 217,E_GRGRW-1,Greengairs East Wind Farm,55.90107,-3.91201,Wind Onshore,24.0,Strathclyde,Scotland
 218,T_GRIFW-2,Griffin Wind farm,56.58122,-3.73375,Wind Onshore,156.0,Tayside,Scotland
 219,T_GRIFW-1,Griffin Wind farm,56.58122,-3.73375,Wind Onshore,156.0,Tayside,Scotland
-220,T_GNFSW-1,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,Wind Offshore,12.0,Offshore,Offshore
-221,T_GNFSW-2,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,Wind Offshore,12.0,Offshore,Offshore
-222,T_GNFSW-1,Gunfleet Sands II,51.72719,1.24592,Wind Offshore,64.8,Offshore,Offshore
-223,T_GNFSW-2,Gunfleet Sands II,51.72719,1.24592,Wind Offshore,64.8,Offshore,Offshore
-224,T_GNFSW-1,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,Wind Offshore,108.0,Offshore,Offshore
-225,T_GNFSW-2,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,Wind Offshore,108.0,Offshore,Offshore
+220,T_GNFSW-2,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,Wind Offshore,12.0,Offshore,Offshore
+221,T_GNFSW-1,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,Wind Offshore,12.0,Offshore,Offshore
+222,T_GNFSW-2,Gunfleet Sands II,51.72719,1.24592,Wind Offshore,64.8,Offshore,Offshore
+223,T_GNFSW-1,Gunfleet Sands II,51.72719,1.24592,Wind Offshore,64.8,Offshore,Offshore
+224,T_GNFSW-2,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,Wind Offshore,108.0,Offshore,Offshore
+225,T_GNFSW-1,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,Wind Offshore,108.0,Offshore,Offshore
 226,T_GYMR-26,Gwynt y Mor,53.454,-3.62665,Wind Offshore,576.0,Offshore,Offshore
 227,T_GYMR-17,Gwynt y Mor,53.454,-3.62665,Wind Offshore,576.0,Offshore,Offshore
-228,T_GYMR-28,Gwynt y Mor,53.454,-3.62665,Wind Offshore,576.0,Offshore,Offshore
-229,T_GYMR-15,Gwynt y Mor,53.454,-3.62665,Wind Offshore,576.0,Offshore,Offshore
+228,T_GYMR-15,Gwynt y Mor,53.454,-3.62665,Wind Offshore,576.0,Offshore,Offshore
+229,T_GYMR-28,Gwynt y Mor,53.454,-3.62665,Wind Offshore,576.0,Offshore,Offshore
 230,T_HADHW-1,Hadyard Hill,55.25682,-4.73191,Wind Onshore,120.0,Strathclyde,Scotland
 231,T_HALSW-1,Halsary Wind Farm,58.4309,-3.44445,Wind Onshore,34.0,Highland,Scotland
 232,E_HBHDW-1,Harburnhead Wind Farm,55.80868,-3.53217,Wind Onshore,51.7,Lothian,Scotland
@@ -242,17 +242,17 @@
 240,E_HLTWW-1,Hill of Towie (Drummuir),57.62284,-3.34105,Wind Onshore,48.0,Grampian,Scotland
 241,E_HLTWW-1,Hill of Towie II Wind Farm,57.62284,-3.34105,Wind Onshore,48.0,Grampian,Scotland
 242,E_BHOLB-1,Holes Bay,50.72632,-1.99021,Battery,15.0,Dorset,South West
-243,T_HOWAO-1,Hornsea 1 - Heron & Njord,53.68154,1.42074,Wind Offshore,1218.0,Offshore,Offshore
-244,T_HOWAO-3,Hornsea 1 - Heron & Njord,53.68154,1.42074,Wind Offshore,1218.0,Offshore,Offshore
-245,T_HOWAO-2,Hornsea 1 - Heron & Njord,53.68154,1.42074,Wind Offshore,1218.0,Offshore,Offshore
-246,T_HOWBO-3,Hornsea 2 - Optimus and Breesea,53.96,1.53999,Wind Offshore,1320.0,Offshore,Offshore
-247,T_HOWBO-1,Hornsea 2 - Optimus and Breesea,53.96,1.53999,Wind Offshore,1320.0,Offshore,Offshore
+243,T_HOWAO-3,Hornsea 1 - Heron & Njord,53.68154,1.42074,Wind Offshore,1218.0,Offshore,Offshore
+244,T_HOWAO-2,Hornsea 1 - Heron & Njord,53.68154,1.42074,Wind Offshore,1218.0,Offshore,Offshore
+245,T_HOWAO-1,Hornsea 1 - Heron & Njord,53.68154,1.42074,Wind Offshore,1218.0,Offshore,Offshore
+246,T_HOWBO-1,Hornsea 2 - Optimus and Breesea,53.96,1.53999,Wind Offshore,1320.0,Offshore,Offshore
+247,T_HOWBO-3,Hornsea 2 - Optimus and Breesea,53.96,1.53999,Wind Offshore,1320.0,Offshore,Offshore
 248,T_HOWBO-2,Hornsea 2 - Optimus and Breesea,53.96,1.53999,Wind Offshore,1320.0,Offshore,Offshore
-249,T_HMGTO-2,Humber Gateway A,53.38746,0.50064,Wind Offshore,219.0,Offshore,Offshore
-250,T_HMGTO-1,Humber Gateway A,53.38746,0.50064,Wind Offshore,219.0,Offshore,Offshore
+249,T_HMGTO-1,Humber Gateway A,53.38746,0.50064,Wind Offshore,219.0,Offshore,Offshore
+250,T_HMGTO-2,Humber Gateway A,53.38746,0.50064,Wind Offshore,219.0,Offshore,Offshore
 251,E_HYWDW-1,Hywind Scotland Pilot Park (Hywind 2) Demonstrator,57.50746,-1.44258,Wind Offshore,30.0,Offshore,Offshore
-252,T_KEADGT-3,Keadby Wind Farm,53.6118,-0.76369,Wind Onshore,68.0,Humberside,Yorkshire and Humber
-253,T_KEAD-1,Keadby Wind Farm,53.6118,-0.76369,Wind Onshore,68.0,Humberside,Yorkshire and Humber
+252,T_KEAD-1,Keadby Wind Farm,53.6118,-0.76369,Wind Onshore,68.0,Humberside,Yorkshire and Humber
+253,T_KEADGT-3,Keadby Wind Farm,53.6118,-0.76369,Wind Onshore,68.0,Humberside,Yorkshire and Humber
 254,T_KEAD-2,Keadby Wind Farm,53.6118,-0.76369,Wind Onshore,68.0,Humberside,Yorkshire and Humber
 255,T_KTHLW-1,Keith Hill,55.83945,-2.8421,Wind Onshore,25.0,Lothian,Scotland
 256,T_KTHLW-1,Keith Hill,55.81727,-2.82546,Wind Onshore,4.5,Lothian,Scotland
@@ -263,8 +263,8 @@
 261,E_KINCW-1,Kincardine Offshore Windfarm,56.99728,-1.8738,Wind Offshore,49.5,Offshore,Offshore
 262,2__PMARB002,Kinlochleven Hydro Power Station,56.71457,-4.96341,Large Hydro,19.5,Highland,Scotland
 263,E_KHLLW-1,Kirk Hill Wind Farm,55.30642,-4.73986,Wind Onshore,18.8,South Ayrshire,Scotland
-264,T_KYPEW-1,Kype Muir Wind Farm,55.63265,-4.0361,Wind Onshore,88.4,Strathclyde,Scotland
-265,T_KPMRW-1,Kype Muir Wind Farm,55.63265,-4.0361,Wind Onshore,88.4,Strathclyde,Scotland
+264,T_KPMRW-1,Kype Muir Wind Farm,55.63265,-4.0361,Wind Onshore,88.4,Strathclyde,Scotland
+265,T_KYPEW-1,Kype Muir Wind Farm,55.63265,-4.0361,Wind Onshore,88.4,Strathclyde,Scotland
 266,T_LAGA-1,Langage Energy Park - Hydrogen Production Facility,50.38977,-4.01137,Hydrogen,10.0,Devon,South West
 267,T_LARKS-1,Larks Green Solar Farm,51.57794,-2.47741,Solar Photovoltaics,70.0,Gloucestershire,South West
 268,T_LARKS-1,Larks Green Solar Farm,51.57794,-2.47741,Battery,49.5,Gloucestershire,South West
@@ -273,14 +273,14 @@
 271,T_LCLTW-1,Lochluichart (Extension),57.68011,-4.84136,Wind Onshore,18.0,Highland,Scotland
 272,T_LCLTW-1,Lochluichart Extension II,57.67466,-4.81059,Wind Onshore,18.0,Highland,Scotland
 273,T_LCLTW-1,Lochluichart Wind Farm Extension 2,57.69346,-4.76759,Wind Onshore,24.0,Highland,Scotland
-274,T_LARYW-4,London Array Phase 1,51.62168,1.49583,Wind Offshore,630.0,Offshore,Offshore
+274,T_LARYW-2,London Array Phase 1,51.62168,1.49583,Wind Offshore,630.0,Offshore,Offshore
 275,T_LARYW-3,London Array Phase 1,51.62168,1.49583,Wind Offshore,630.0,Offshore,Offshore
 276,T_LARYW-1,London Array Phase 1,51.62168,1.49583,Wind Offshore,630.0,Offshore,Offshore
-277,T_LARYW-2,London Array Phase 1,51.62168,1.49583,Wind Offshore,630.0,Offshore,Offshore
-278,T_LARYW-3,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
-279,T_LARYW-4,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
-280,T_LARYW-1,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
-281,T_LARYW-2,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
+277,T_LARYW-4,London Array Phase 1,51.62168,1.49583,Wind Offshore,630.0,Offshore,Offshore
+278,T_LARYW-2,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
+279,T_LARYW-3,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
+280,T_LARYW-4,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
+281,T_LARYW-1,London Array Phase 2,51.47158,1.04077,Wind Offshore,240.0,Offshore,Offshore
 282,E_LYNE1,Lynemouth Power Station,55.20672,-1.5325,Biomass (dedicated),420.0,Northumberland,North East
 283,E_LYNE2,Lynemouth Power Station,55.20672,-1.5325,Biomass (dedicated),420.0,Northumberland,North East
 284,E_LYNE3,Lynemouth Power Station,55.20672,-1.5325,Biomass (dedicated),420.0,Northumberland,North East
@@ -295,19 +295,19 @@
 293,T_MYGPW-1,Minnygap,55.24877,-3.5148,Wind Onshore,25.0,Dumfries and Galloway,Scotland
 294,T_MYGPW-1,Minnygap,55.24877,-3.5148,Wind Onshore,30.0,Dumfries and Galloway,Scotland
 295,E_MINSW-1,Minsca,55.12207,-3.35286,Wind Onshore,36.8,Dumfries and Galloway,Scotland
-296,T_MOWEO-2,Moray East,57.96732,-2.79054,Wind Offshore,950.0,Offshore,Offshore
-297,T_MOWEO-3,Moray East,57.96732,-2.79054,Wind Offshore,950.0,Offshore,Offshore
+296,T_MOWEO-3,Moray East,57.96732,-2.79054,Wind Offshore,950.0,Offshore,Offshore
+297,T_MOWEO-2,Moray East,57.96732,-2.79054,Wind Offshore,950.0,Offshore,Offshore
 298,T_MOWEO-1,Moray East,57.96732,-2.79054,Wind Offshore,950.0,Offshore,Offshore
 299,T_MOWWO-1,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
-300,T_MOWWO-4,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
-301,T_MOWWO-3,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
-302,T_MOWWO-2,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
+300,T_MOWWO-2,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
+301,T_MOWWO-4,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
+302,T_MOWWO-3,Moray West Offshore Wind Farm Project,58.06989,-3.31307,Wind Offshore,882.0,Offshore,Offshore
 303,E_MOYEW-1,Moy Wind Farm,57.38883,-4.0488,Wind Onshore,40.0,Highland,Scotland
 304,E_MOYEW-1,Moy Wind Farm (2nd Application),57.38883,-4.0488,Wind Onshore,66.0,Highland,Scotland
 305,T_NNGAO-2,Neart na Gaoithe,56.27,-2.25,Wind Offshore,450.0,Offshore,Offshore
 306,T_NNGAO-1,Neart na Gaoithe,56.27,-2.25,Wind Offshore,450.0,Offshore,Offshore
-307,T_NOKYW-1,North Kyle Energy Project,55.35173,-4.35966,Wind Onshore,205.8,Strathclyde,Scotland
-308,T_NOKYW-2,North Kyle Energy Project,55.35173,-4.35966,Wind Onshore,205.8,Strathclyde,Scotland
+307,T_NOKYW-2,North Kyle Energy Project,55.35173,-4.35966,Wind Onshore,205.8,Strathclyde,Scotland
+308,T_NOKYW-1,North Kyle Energy Project,55.35173,-4.35966,Wind Onshore,205.8,Strathclyde,Scotland
 309,T_OMNDW-1,Ormonde Offshore,54.08887,-3.43859,Wind Offshore,150.0,Offshore,Offshore
 310,2__PENEC002,Paul's Hill and Extension,57.44615,-3.47621,Wind Onshore,65.0,Grampian,Scotland
 311,2__PENEC002,Pauls Hill 2,57.44615,-3.47621,Wind Onshore,28.0,Grampian,Scotland
@@ -315,21 +315,21 @@
 313,T_PNYCW-1,Pen Y Cymoedd,51.65554,-3.69573,Wind Onshore,228.0,Neath Port Talbot,Wales
 314,T_PGBIW-1,Pogbie Wind Farm 1,55.82185,-2.83302,Wind Onshore,5.1,Lothian,Scotland
 315,T_PGBIW-1,Pogbie Wind Farm 2,55.83945,-2.8421,Wind Onshore,4.8,East Lothian,Scotland
-316,T_HEYM2-D,Port Of Heysham Wind Farm,54.03554,-2.91912,Wind Onshore,9.0,Lancashire,North West
-317,T_HEYM27,Port Of Heysham Wind Farm,54.03554,-2.91912,Wind Onshore,9.0,Lancashire,North West
+316,T_HEYM27,Port Of Heysham Wind Farm,54.03554,-2.91912,Wind Onshore,9.0,Lancashire,North West
+317,T_HEYM2-D,Port Of Heysham Wind Farm,54.03554,-2.91912,Wind Onshore,9.0,Lancashire,North West
 318,T_HEYM28,Port Of Heysham Wind Farm,54.03554,-2.91912,Wind Onshore,9.0,Lancashire,North West
 319,E_POTES-1,Port of Tyne,54.97727,-1.45591,Battery,35.0,Tyne and Wear,North East
-320,T_RCBKO-2,Race Bank (Phase 1),53.13597,0.58917,Wind Offshore,289.8,Offshore,Offshore
-321,T_RCBKO-1,Race Bank (Phase 1),53.13597,0.58917,Wind Offshore,289.8,Offshore,Offshore
+320,T_RCBKO-1,Race Bank (Phase 1),53.13597,0.58917,Wind Offshore,289.8,Offshore,Offshore
+321,T_RCBKO-2,Race Bank (Phase 1),53.13597,0.58917,Wind Offshore,289.8,Offshore,Offshore
 322,T_RCBKO-1,Race Bank (Phase 2),53.13597,0.58917,Wind Offshore,283.5,Offshore,Offshore
 323,T_RCBKO-2,Race Bank (Phase 2),53.13597,0.58917,Wind Offshore,283.5,Offshore,Offshore
 324,T_RMPNO-2,Rampion Offshore Wind Farm (Hastings Zone),50.63999,-0.18,Wind Offshore,400.0,Offshore,Offshore
 325,T_RMPNO-1,Rampion Offshore Wind Farm (Hastings Zone),50.63999,-0.18,Wind Offshore,400.0,Offshore,Offshore
-326,T_RMPNO-1,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,Wind Offshore,1200.0,Offshore,Offshore
-327,T_RMPNO-2,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,Wind Offshore,1200.0,Offshore,Offshore
+326,T_RMPNO-2,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,Wind Offshore,1200.0,Offshore,Offshore
+327,T_RMPNO-1,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,Wind Offshore,1200.0,Offshore,Offshore
 328,E_RHEI-1,Rheidol Wind Farm,52.40758,-3.87723,Wind Onshore,2.4,Dyfed,Wales
-329,T_RREW-1,Robin Rigg East,54.76419,-3.69552,Wind Offshore,84.0,Offshore,Offshore
-330,T_RRWW-1,Robin Rigg East,54.76419,-3.69552,Wind Offshore,84.0,Offshore,Offshore
+329,T_RRWW-1,Robin Rigg East,54.76419,-3.69552,Wind Offshore,84.0,Offshore,Offshore
+330,T_RREW-1,Robin Rigg East,54.76419,-3.69552,Wind Offshore,84.0,Offshore,Offshore
 331,T_RREW-1,Robin Rigg West,54.7473,-3.72931,Wind Offshore,90.0,Offshore,Offshore
 332,T_RRWW-1,Robin Rigg West,54.7473,-3.72931,Wind Offshore,90.0,Offshore,Offshore
 333,E_ROOSB-1,Roosecote,54.10522,-3.19003,Battery,49.0,Cumbria,North West
@@ -338,27 +338,27 @@
 336,2__PENEC001,Rothes Wind (Cairn Uish),57.53726,-3.36296,Wind Onshore,50.6,Grampian,Scotland
 337,2__PSTAT001,Rothes Wind Farm (Extension) (II),57.53726,-3.36296,Wind Onshore,41.4,Grampian,Scotland
 338,2__PENEC001,Rothes Wind Farm (Extension) (II),57.53726,-3.36296,Wind Onshore,41.4,Grampian,Scotland
-339,2__PSTAT001,Rothes Wind Farm III,57.51526,-3.3204,Wind Onshore,132.0,Moray,Scotland
-340,2__PENEC001,Rothes Wind Farm III,57.51526,-3.3204,Wind Onshore,132.0,Moray,Scotland
-341,T_RUGGT-7,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
-342,T_RUGPS-7,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
-343,T_RUGPS-6,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
-344,T_RUGGT-6,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
-345,T_SAKNW-1,Sandy Knowe Wind Farm,55.36893,-4.05055,Wind Onshore,90.0,Dumfries and Galloway,Scotland
-346,T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,Wind Onshore,49.4,Dumfries and Galloway,Scotland
-347,T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,Wind Onshore,81.6,Dumfries and Galloway,Scotland
+339,2__PENEC001,Rothes Wind Farm III,57.51526,-3.3204,Wind Onshore,132.0,Moray,Scotland
+340,2__PSTAT001,Rothes Wind Farm III,57.51526,-3.3204,Wind Onshore,132.0,Moray,Scotland
+341,T_RUGGT-6,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
+342,T_RUGPS-6,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
+343,T_RUGPS-7,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
+344,T_RUGGT-7,Rugeley Power Plant Conversion,52.75396,-1.91297,Biomass (dedicated),1000.0,Staffordshire,West Midlands
+345,T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,Wind Onshore,49.4,Dumfries and Galloway,Scotland
+346,T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,Wind Onshore,81.6,Dumfries and Galloway,Scotland
+347,T_SAKNW-1,Sandy Knowe Wind Farm,55.36893,-4.05055,Wind Onshore,90.0,Dumfries and Galloway,Scotland
 348,T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,Wind Onshore,49.4,Dumfries and Galloway,Scotland
 349,T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,Wind Onshore,81.6,Dumfries and Galloway,Scotland
 350,T_SANQW-1,Sanquhar Community Windfarm,55.34418,-4.04657,Wind Onshore,32.4,Dumfries and Galloway,Scotland
-351,T_SGRWO-2,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
-352,T_SGRWO-3,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
-353,T_SGRWO-6,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
-354,T_SGRWO-4,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
-355,T_SGRWO-5,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
-356,T_SGRWO-1,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
+351,T_SGRWO-1,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
+352,T_SGRWO-5,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
+353,T_SGRWO-2,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
+354,T_SGRWO-6,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
+355,T_SGRWO-4,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
+356,T_SGRWO-3,Seagreen,56.63551,-1.92662,Wind Offshore,1075.0,Offshore,Offshore
 357,E_VKING-2,Seal Sands,54.61283,-1.17856,Advanced Conversion Technologies,24.0,County Durham,North East
-358,T_SHRSW-2,Sheringham Shoal,53.13532,1.14792,Wind Offshore,317.0,Offshore,Offshore
-359,T_SHRSW-1,Sheringham Shoal,53.13532,1.14792,Wind Offshore,317.0,Offshore,Offshore
+358,T_SHRSW-1,Sheringham Shoal,53.13532,1.14792,Wind Offshore,317.0,Offshore,Offshore
+359,T_SHRSW-2,Sheringham Shoal,53.13532,1.14792,Wind Offshore,317.0,Offshore,Offshore
 360,T_SLOY-2,Sloy Hydroelectric Power Station - Pumped Hydro Conversion,56.08073,-4.83385,Pumped Storage Hydroelectricity,100.0,Argyll and Bute ,Scotland
 361,T_SLOYD-1,Sloy Hydroelectric Power Station - Pumped Hydro Conversion,56.08073,-4.83385,Pumped Storage Hydroelectricity,100.0,Argyll and Bute ,Scotland
 362,T_SLOY-3,Sloy Hydroelectric Power Station - Pumped Hydro Conversion,56.08073,-4.83385,Pumped Storage Hydroelectricity,100.0,Argyll and Bute ,Scotland
@@ -372,21 +372,21 @@
 370,T_SPLN-1,Spalding,52.773,-0.14412,Biomass (dedicated),14.5,Lincolnshire,East Midlands
 371,T_SEEL-1,Spalding,52.773,-0.14412,Biomass (dedicated),14.5,Lincolnshire,East Midlands
 372,T_STRNW-1,Strathy North,58.49,-4.03359,Wind Onshore,67.7,Highland,Scotland
-373,T_STLGW-2,Stronelairg Wind Farm,57.12692,-4.52637,Wind Onshore,227.7,Highland,Scotland
-374,T_STLGW-1,Stronelairg Wind Farm,57.12692,-4.52637,Wind Onshore,227.7,Highland,Scotland
-375,T_STLGW-3,Stronelairg Wind Farm,57.12692,-4.52637,Wind Onshore,227.7,Highland,Scotland
+373,T_STLGW-1,Stronelairg Wind Farm,57.12692,-4.52637,Wind Onshore,227.7,Highland,Scotland
+374,T_STLGW-3,Stronelairg Wind Farm,57.12692,-4.52637,Wind Onshore,227.7,Highland,Scotland
+375,T_STLGW-2,Stronelairg Wind Farm,57.12692,-4.52637,Wind Onshore,227.7,Highland,Scotland
 376,T_THNTO-1,Thanet,51.42993,1.63341,Wind Offshore,300.0,Offshore,Offshore
 377,T_THNTO-2,Thanet,51.42993,1.63341,Wind Offshore,300.0,Offshore,Offshore
 378,E_TGP1,Tilbury Green Power,51.4604,0.34968,Biomass (dedicated),43.0,Essex,Eastern
 379,T_TDBNW-1,Toddleburn,55.76855,-2.87739,Wind Onshore,27.6,Borders,Scotland
 380,C__PSTAT011,Tom Na Clach - Wind Farm Extension,57.38458,-3.88793,Wind Onshore,31.5,Nairn,Scotland
 381,T_TRLGW-1,Tralorg Wind Farm,55.24977,-4.80617,Wind Onshore,20.0,Strathclyde,Scotland
-382,T_TKNEW-1,Triton Knoll,53.21227,0.86164,Wind Offshore,857.0,Offshore,Offshore
-383,T_TKNWW-1,Triton Knoll,53.21227,0.86164,Wind Offshore,857.0,Offshore,Offshore
-384,E_TULWW-2,Tullo Farm,56.96391,-2.21076,Wind Onshore,17.5,Grampian,Scotland
-385,E_TULWW-1,Tullo Farm,56.96391,-2.21076,Wind Onshore,17.5,Grampian,Scotland
-386,E_TULWW-1,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,Wind Onshore,7.5,Grampian,Scotland
-387,E_TULWW-2,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,Wind Onshore,7.5,Grampian,Scotland
+382,T_TKNWW-1,Triton Knoll,53.21227,0.86164,Wind Offshore,857.0,Offshore,Offshore
+383,T_TKNEW-1,Triton Knoll,53.21227,0.86164,Wind Offshore,857.0,Offshore,Offshore
+384,E_TULWW-1,Tullo Farm,56.96391,-2.21076,Wind Onshore,17.5,Grampian,Scotland
+385,E_TULWW-2,Tullo Farm,56.96391,-2.21076,Wind Onshore,17.5,Grampian,Scotland
+386,E_TULWW-2,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,Wind Onshore,7.5,Grampian,Scotland
+387,E_TULWW-1,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,Wind Onshore,7.5,Grampian,Scotland
 388,E_TULWW-1,Tullo Wind Farm South (Ext.),56.82742,-2.40489,Wind Onshore,10.0,Grampian,Scotland
 389,E_TULWW-2,Tullo Wind Farm South (Ext.),56.82742,-2.40489,Wind Onshore,10.0,Grampian,Scotland
 390,E_TLYMW-1,Tullymurdoch Wind Farm,56.65491,-3.31341,Wind Onshore,14.4,Tayside,Scotland
@@ -394,43 +394,43 @@
 392,T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,Wind Onshore,37.8,Dumfries and Galloway,Scotland
 393,T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,Wind Onshore,27.0,Dumfries and Galloway,Scotland
 394,T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,Wind Onshore,37.8,Dumfries and Galloway,Scotland
-395,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-396,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-397,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-398,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-399,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-400,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-401,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-402,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-403,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-404,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-405,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-406,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-407,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-408,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
-409,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
-410,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+395,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+396,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+397,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+398,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+399,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+400,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+401,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+402,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+403,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+404,T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+405,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+406,T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+407,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+408,T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
+409,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,370.0,Shetland,Scotland
+410,T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,Wind Onshore,443.0,Shetland,Scotland
 411,T_WLNYW-1,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
 412,T_WLNYO-2,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
-413,T_WLNYO-2,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
-414,T_WLNYW-1,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
-415,T_WLNYO-4,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
-416,T_WLNYO-3,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
-417,T_WLNYO-4,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
-418,T_WLNYO-3,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
-419,T_WLNYW-1,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
-420,T_WLNYO-2,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
-421,T_WLNYO-3,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
-422,T_WLNYW-1,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
-423,T_WLNYO-2,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
-424,T_WLNYO-4,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
-425,T_WBURB-41,West Burton,53.36453,-0.79836,Battery,49.0,Nottinghamshire,East Midlands
-426,T_WBURB-43,West Burton,53.36453,-0.79836,Battery,49.0,Nottinghamshire,East Midlands
+413,T_WLNYO-3,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
+414,T_WLNYO-4,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
+415,T_WLNYW-1,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
+416,T_WLNYO-2,Walney 3,54.08999,-3.74001,Wind Offshore,659.0,Offshore,Offshore
+417,T_WLNYO-3,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
+418,T_WLNYW-1,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
+419,T_WLNYO-2,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
+420,T_WLNYO-4,Walney 1,54.03945,-3.51579,Wind Offshore,183.6,Offshore,Offshore
+421,T_WLNYO-4,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
+422,T_WLNYO-2,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
+423,T_WLNYO-3,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
+424,T_WLNYW-1,Walney 2,54.08074,-3.60897,Wind Offshore,183.6,Offshore,Offshore
+425,T_WBURB-43,West Burton,53.36453,-0.79836,Battery,49.0,Nottinghamshire,East Midlands
+426,T_WBURB-41,West Burton,53.36453,-0.79836,Battery,49.0,Nottinghamshire,East Midlands
 427,T_WDNSO-2,West of Duddon Sands,53.98515,-3.46201,Wind Offshore,389.0,Offshore,Offshore
 428,T_WDNSO-1,West of Duddon Sands,53.98515,-3.46201,Wind Offshore,389.0,Offshore,Offshore
 429,T_WTMSO-1,Westermost Rough A,53.09773,0.56148,Wind Offshore,210.0,Offshore,Offshore
-430,T_WHILW-2,Whitelee,55.68121,-4.27906,Wind Onshore,322.0,Strathclyde,Scotland
-431,T_WHILW-1,Whitelee,55.68121,-4.27906,Wind Onshore,322.0,Strathclyde,Scotland
+430,T_WHILW-1,Whitelee,55.68121,-4.27906,Wind Onshore,322.0,Strathclyde,Scotland
+431,T_WHILW-2,Whitelee,55.68121,-4.27906,Wind Onshore,322.0,Strathclyde,Scotland
 432,T_WHILW-2,Whitelee Windfarm Extension Phase 1,55.67715,-4.28678,Wind Onshore,108.0,Strathclyde,Scotland
 433,T_WHIHW-1,Whiteside Hill,55.35741,-4.02944,Wind Onshore,25.3,Dumfries and Galloway,Scotland
 434,T_WILCT-1,Wilton,54.57663,-1.08069,Wind Onshore,6.6,Cleveland,North East
