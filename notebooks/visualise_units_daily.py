@@ -191,7 +191,7 @@ def _(Path):
     daily_folder = Path(f"./data/processed/daily/")
     weekly_folder = Path(f"./data/processed/weekly/")
     quarter_hourly_folder = Path(f"./data/processed/15m/")
-    return bm_unit, daily_folder
+    return bm_unit, daily_folder, quarter_hourly_folder, weekly_folder
 
 
 @app.cell
@@ -231,40 +231,47 @@ def _(mo):
 
 
 @app.cell
-def _(daily_folder, pl, units_with_boundary):
-    below, above = [], []
+def _(Path, daily_folder, pl, units_with_boundary):
+    def partition_and_aggregate_by_boundary(folder: Path):
+        below, above = [], []
 
-    for unit in daily_folder.glob("*.csv"):
-        _bm_unit = unit.stem
+        for unit in folder.glob("*.csv"):
+            _bm_unit = unit.stem
 
-        if _bm_unit == "E_HRHLW-1":
-            # taking the Strathclyde one as real
-            _below_b6 = True
-        else:
-            _below_b6 = units_with_boundary.filter(pl.col("bm_unit") == _bm_unit).select("below_b6").unique().item()
-
-
-        _df = pl.read_csv(daily_folder / f"{_bm_unit}.csv")
-
-        if _below_b6:
-            below.append(_df.select("time", "curtailment", "generated"))
-        else:
-            above.append(_df.select("time", "curtailment", "generated"))
+            if _bm_unit == "E_HRHLW-1":
+                # taking the Strathclyde one as real
+                _below_b6 = True
+            else:
+                _below_b6 = units_with_boundary.filter(pl.col("bm_unit") == _bm_unit).select("below_b6").unique().item()
 
 
-    df_above = pl.concat(above).group_by("time").sum().sort("time")
-    df_below = pl.concat(below).group_by("time").sum().sort("time")
-    return df_above, df_below
+            _df = pl.read_csv(folder / f"{_bm_unit}.csv")
+
+            if _below_b6:
+                below.append(_df.select("time", "curtailment", "generated"))
+            else:
+                above.append(_df.select("time", "curtailment", "generated"))
+
+
+        df_above = pl.concat(above).group_by("time").sum().sort("time")
+        df_below = pl.concat(below).group_by("time").sum().sort("time")
+        return {
+            "above": df_above,
+            "below": df_below
+        }
+
+    daily_aggregates = partition_and_aggregate_by_boundary(daily_folder)
+    return daily_aggregates, partition_and_aggregate_by_boundary
 
 
 @app.cell
-def _(df_above, df_below, go, pl):
+def _(daily_aggregates, go, pl):
 
     fig2 = go.Figure()
     fig2.add_trace(
         go.Scatter(
-            x=df_above.select("time").to_numpy().flatten(),
-            y=df_above.select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            x=daily_aggregates["above"].select("time").to_numpy().flatten(),
+            y=daily_aggregates["above"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
             mode='lines',
             name='Above B6 Curtailment',
             line=dict(color='blue')
@@ -272,8 +279,8 @@ def _(df_above, df_below, go, pl):
     )
     fig2.add_trace(
         go.Scatter(
-            x=df_below.select("time").to_numpy().flatten(),
-            y=df_below.select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            x=daily_aggregates["below"].select("time").to_numpy().flatten(),
+            y=daily_aggregates["below"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
             mode='lines',
             name='Below B6 Curtailment',
             line=dict(color='green')
@@ -296,6 +303,107 @@ def _(mo):
 
     Let's look at a weekly aggregation which makes it more manageable:
     """)
+    return
+
+
+@app.cell
+def _(go, partition_and_aggregate_by_boundary, pl, weekly_folder):
+    weekly_aggregates = partition_and_aggregate_by_boundary(weekly_folder)
+
+    fig3 = go.Figure()
+    fig3.add_trace(
+        go.Scatter(
+            x=weekly_aggregates["above"].select("time").to_numpy().flatten(),
+            y=weekly_aggregates["above"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            mode='lines',
+            name='Above B6 Curtailment',
+            line=dict(color='blue')
+        )
+    )
+    fig3.add_trace(
+        go.Scatter(
+            x=weekly_aggregates["below"].select("time").to_numpy().flatten(),
+            y=weekly_aggregates["below"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            mode='lines',
+            name='Below B6 Curtailment',
+            line=dict(color='green')
+        )
+    )
+    fig3.update_layout(
+        title="Total Curtailment in % of potenetial generation Above and Below B6 Boundary",
+        xaxis_title="Time",
+        yaxis_title="Curtailment (MW)",
+        legend_title="Location"
+    )
+    fig3.show()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    ## Time distribution
+    """)
+    return
+
+
+@app.cell
+def _(Path, pl, quarter_hourly_folder, units_with_boundary):
+    def partition_and_aggregate_by_boundary_and_hour(folder: Path):
+        below, above = [], []
+
+        for unit in folder.glob("*.csv"):
+            _bm_unit = unit.stem
+
+            if _bm_unit == "E_HRHLW-1":
+                # taking the Strathclyde one as real
+                _below_b6 = True
+            else:
+                _below_b6 = units_with_boundary.filter(pl.col("bm_unit") == _bm_unit).select("below_b6").unique().item()
+
+
+            _df = pl.read_csv(folder / f"{_bm_unit}.csv")
+
+            if _below_b6:
+                below.append(_df.with_columns(pl.col("time").str.to_datetime(format="%Y-%m-%dT%H:%M:%S%.f").dt.hour().alias("hour")).select("hour", "curtailment", "generated"))
+            else:
+                above.append(_df.with_columns(pl.col("time").str.to_datetime(format="%Y-%m-%dT%H:%M:%S%.f").dt.hour().alias("hour")).select("hour", "curtailment", "generated"))
+
+
+        df_above = pl.concat(above).group_by("hour").sum().sort("hour")
+        df_below = pl.concat(below).group_by("hour").sum().sort("hour")
+        return {
+            "above": df_above,
+            "below": df_below
+        }
+
+    hourly_data = partition_and_aggregate_by_boundary_and_hour(quarter_hourly_folder)
+    return (hourly_data,)
+
+
+@app.cell
+def _(go, hourly_data, pl):
+    fig4 = go.Figure()
+
+    fig4.add_trace(
+        go.Scatter(
+            x=hourly_data["above"].select("hour").to_numpy().flatten(),
+            y=hourly_data["above"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            mode='lines+markers',
+            name='Above B6 Curtailment',
+            line=dict(color='blue')
+        )
+    )
+
+    fig4.add_trace(
+        go.Scatter(
+            x=hourly_data["below"].select("hour").to_numpy().flatten(),
+            y=hourly_data["below"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            mode='lines+markers',
+            name='Below B6 Curtailment',
+            line=dict(color='green')
+        )
+    )
     return
 
 
