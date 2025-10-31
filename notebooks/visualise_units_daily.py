@@ -175,10 +175,22 @@ def _(boundaries, go, pd, uk, units_with_boundary):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Now that we've got the partitioning of the wind farms by above vs below the b6 boundary, we can start looking at the curtailment too:
+    - how do curtailment figures differ on the two sides of this boundary?
+    - how do curtailment figures look throughout the day?
+    """)
+    return
+
+
 @app.cell
 def _(Path):
     bm_unit = "T_SGRWO-1"
     daily_folder = Path(f"./data/processed/daily/")
+    weekly_folder = Path(f"./data/processed/weekly/")
+    quarter_hourly_folder = Path(f"./data/processed/15m/")
     return bm_unit, daily_folder
 
 
@@ -207,6 +219,83 @@ def _(bm_unit, df, px):
     )
 
     _fig.show()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    This is slightly bizarre, but Hare Hill seems to have two sites: on in Durham and another in Strathclyde. Ignoring this issue for now, as it's only one unit.
+    """)
+    return
+
+
+@app.cell
+def _(daily_folder, pl, units_with_boundary):
+    below, above = [], []
+
+    for unit in daily_folder.glob("*.csv"):
+        _bm_unit = unit.stem
+
+        if _bm_unit == "E_HRHLW-1":
+            # taking the Strathclyde one as real
+            _below_b6 = True
+        else:
+            _below_b6 = units_with_boundary.filter(pl.col("bm_unit") == _bm_unit).select("below_b6").unique().item()
+
+
+        _df = pl.read_csv(daily_folder / f"{_bm_unit}.csv")
+
+        if _below_b6:
+            below.append(_df.select("time", "curtailment", "generated"))
+        else:
+            above.append(_df.select("time", "curtailment", "generated"))
+
+
+    df_above = pl.concat(above).group_by("time").sum().sort("time")
+    df_below = pl.concat(below).group_by("time").sum().sort("time")
+    return df_above, df_below
+
+
+@app.cell
+def _(df_above, df_below, go, pl):
+
+    fig2 = go.Figure()
+    fig2.add_trace(
+        go.Scatter(
+            x=df_above.select("time").to_numpy().flatten(),
+            y=df_above.select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            mode='lines',
+            name='Above B6 Curtailment',
+            line=dict(color='blue')
+        )
+    )
+    fig2.add_trace(
+        go.Scatter(
+            x=df_below.select("time").to_numpy().flatten(),
+            y=df_below.select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            mode='lines',
+            name='Below B6 Curtailment',
+            line=dict(color='green')
+        )
+    )
+    fig2.update_layout(
+        title="Total Curtailment in % of potenetial generation Above and Below B6 Boundary",
+        xaxis_title="Time",
+        yaxis_title="Curtailment (MW)",
+        legend_title="Location"
+    )
+    fig2.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    I mean, this is crystal clear. Above the B6 it's hitting 20 - 35% curtailment of the total potential generation regularly, whereas below it's pretty decent with the spikes only being around 5 - 10%.
+
+    Let's look at a weekly aggregation which makes it more manageable:
+    """)
     return
 
 
