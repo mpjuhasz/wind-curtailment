@@ -398,7 +398,6 @@ def _(go, partition_and_aggregate_by_boundary, pl, quarter_hourly_folder):
     )
 
     _fig3.show()
-
     return (quarter_hour_aggregates,)
 
 
@@ -474,7 +473,7 @@ def _(bin_results_above, bin_results_below, go):
         name='Below B6 Boundary',
         marker_color='lightgreen',
         opacity=0.8,
-    
+
     )
 
     fig6.update_layout(
@@ -585,7 +584,6 @@ def _(daily_folder, pl, units_with_boundary):
     units_with_curtailment = units_with_boundary.filter(pl.col("technology_type").str.contains("Wind")).with_columns(
         curtailment_ratio=pl.col("bm_unit").map_elements(get_curtailment_for_unit, return_dtype=pl.Float64)
     )
-
     return (units_with_curtailment,)
 
 
@@ -603,12 +601,6 @@ def _(px, units_with_curtailment):
     )
 
     fig5.show()
-    return
-
-
-@app.cell
-def _(E_CWMD):
-    E_CWMD-1
     return
 
 

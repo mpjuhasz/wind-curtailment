@@ -114,14 +114,25 @@ def _(manual_data, unit_mapping):
 
 
 @app.cell
-def _(hackcollective_data, mapped_manual):
-    mapped_manual.shape[0], hackcollective_data.shape[0]
+def _(pd):
+    small_manual_batch = pd.read_csv("./data/interim/manual_wind_mappings.csv")
+    return (small_manual_batch,)
+
+
+@app.cell
+def _(hackcollective_data, mapped_manual, small_manual_batch):
+    mapped_manual.shape[0], hackcollective_data.shape[0], small_manual_batch.shape[0]
     return
 
 
 @app.cell
-def _(hackcollective_data_fixed, mapped_manual, pd):
-    merged = pd.concat([mapped_manual, hackcollective_data_fixed]).drop_duplicates().sort_values("repd_site_name")
+def _():
+    return
+
+
+@app.cell
+def _(hackcollective_data_fixed, mapped_manual, pd, small_manual_batch):
+    merged = pd.concat([mapped_manual, hackcollective_data_fixed, small_manual_batch]).drop_duplicates().sort_values("repd_site_name")
     merged["repd_site_name"] = merged["repd_site_name"].str.strip().str.replace(u'\xa0', " ")
     # rounding issues in the lat long prevent deduplicating on the full one
     return (merged,)
