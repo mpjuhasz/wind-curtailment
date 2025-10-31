@@ -167,38 +167,38 @@ def _(pd, wd):
 
 @app.cell
 def _():
-    # algorithmic_matches[~algorithmic_matches["site_name"].isin(reviewed_matches[reviewed_matches["Accepted"].notna()]["site_name"].tolist())].to_csv("./data/processed/algorithmic_matches_wikidata_and_repd_2.csv")
+    # algorithmic_matches[~algorithmic_matches["site_name"].isin(reviewed_matches[reviewed_matches["Accepted"].notna()]["site_name"].tolist())].to_csv("./data/interim/algorithmic_matches_wikidata_and_repd_2.csv")
     return
 
 
 @app.cell
 def _():
-    # algorithmic_matches.to_csv("./data/processed/algorithmic_matches_wikidata_and_repd.csv")
+    # algorithmic_matches.to_csv("./data/interim/algorithmic_matches_wikidata_and_repd.csv")
     return
 
 
 @app.cell
 def _(pd):
-    reviewed_matches = pd.read_csv("./data/processed/wikidata_to_repd/algorithmic_matches_wikidata_and_repd_reviewed.csv")
-    reviewed_matches_2 = pd.read_csv("./data/processed/wikidata_to_repd/algorithmic_matches_wikidata_and_repd_reviewed_2.csv")
+    reviewed_matches = pd.read_csv("./data/interim/wikidata_to_repd/algorithmic_matches_wikidata_and_repd_reviewed.csv")
+    reviewed_matches_2 = pd.read_csv("./data/interim/wikidata_to_repd/algorithmic_matches_wikidata_and_repd_reviewed_2.csv")
     return reviewed_matches, reviewed_matches_2
 
 
 @app.cell
 def _(reviewed_matches, reviewed_matches_2):
-    reviewed_matches[reviewed_matches["Accepted"].str.lower() == "y"][["site_name", "repd_site_name", "repd_lat", "repd_long"]].rename(columns={"site_name": "wikidata_site_name"}).drop_duplicates().to_csv("./data/processed/wikidata_to_repd/wikidata_to_repd_part_1.csv", index=False)
+    reviewed_matches[reviewed_matches["Accepted"].str.lower() == "y"][["site_name", "repd_site_name", "repd_lat", "repd_long"]].rename(columns={"site_name": "wikidata_site_name"}).drop_duplicates().to_csv("./data/interim/wikidata_to_repd/wikidata_to_repd_part_1.csv", index=False)
 
-    reviewed_matches_2[reviewed_matches_2["Accepted"].str.lower() == "y"][["site_name", "repd_site_name", "repd_lat", "repd_long"]].rename(columns={"site_name": "wikidata_site_name"}).drop_duplicates().to_csv("./data/processed/wikidata_to_repd/wikidata_to_repd_part_2.csv", index=False)
+    reviewed_matches_2[reviewed_matches_2["Accepted"].str.lower() == "y"][["site_name", "repd_site_name", "repd_lat", "repd_long"]].rename(columns={"site_name": "wikidata_site_name"}).drop_duplicates().to_csv("./data/interim/wikidata_to_repd/wikidata_to_repd_part_2.csv", index=False)
     return
 
 
 @app.cell
 def _(pd, reviewed_matches, reviewed_matches_2):
     names_reviewed = reviewed_matches[reviewed_matches["Accepted"].str.lower() == "y"]["site_name"].unique().tolist() + reviewed_matches_2[reviewed_matches_2["Accepted"].str.lower() == "y"]["site_name"].unique().tolist()
-    wd_to_bm = pd.read_csv("./data/processed/wikidata_to_repd/wikidata_name_to_bm_unit.csv")
+    wd_to_bm = pd.read_csv("./data/interim/wikidata_to_repd/wikidata_name_to_bm_unit.csv")
     filtered_wd_to_bm = wd_to_bm[wd_to_bm["name"].apply(lambda x: x not in names_reviewed)]
 
-    filtered_wd_to_bm.to_csv("./data/processed/wikidata_to_repd/wikidata_name_to_bm_unit_unreviewed.csv", index=False)
+    filtered_wd_to_bm.to_csv("./data/interim/wikidata_to_repd/wikidata_name_to_bm_unit_unreviewed.csv", index=False)
     return
 
 
@@ -223,12 +223,17 @@ def _(mo):
 @app.cell
 def _(Path, pd):
     dfs = []
-    for f in Path("data/processed/wikidata_to_repd/").glob("wikidata_to_repd_part_*.csv"):
+    for f in Path("data/interim/wikidata_to_repd/").glob("wikidata_to_repd_part_*.csv"):
         dfs.append(
             pd.read_csv(f)
         )
 
     pd.concat(dfs).to_csv("./data/processed/wikidata_to_repd.csv", index=False)
+    return
+
+
+@app.cell
+def _():
     return
 
 
