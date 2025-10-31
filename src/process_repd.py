@@ -18,7 +18,8 @@ def main():
         "Installed Capacity (MWelec)": "capacity",
         "County": "county",
         "Region": "region",
-        "Country": "country"
+        "Country": "country",
+        "Development Status": "development_status"
     }
     
     repd = repd[repd_column_map.keys()]

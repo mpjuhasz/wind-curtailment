@@ -172,7 +172,7 @@ def _(merged):
 
 @app.cell
 def _(merged, repd):
-    final_merge = merged.merge(repd, left_on=["repd_site_name", "repd_lat", "repd_long"], right_on=["site_name", "lat", "long"], how="left")[["bm_unit", "repd_site_name", "repd_lat", "repd_long", "technology_type", "capacity", "county", "region"]]
+    final_merge = merged.merge(repd, left_on=["repd_site_name", "repd_lat", "repd_long"], right_on=["site_name", "lat", "long"], how="left")[["bm_unit", "repd_site_name", "repd_lat", "repd_long", "technology_type", "capacity", "county", "region", "development_status"]]
     return (final_merge,)
 
 
