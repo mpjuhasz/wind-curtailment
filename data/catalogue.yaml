@@ -1,0 +1,22 @@
+raw:
+  - name: repd-q2-jul-2025.csv
+    source: https://www.gov.uk/government/publications/renewable-energy-planning-database-monthly-extract
+    description: Gov.uk collection of renewables projects.
+  - name: uk_bfe.geojson
+    source: https://geoportal.statistics.gov.uk/datasets/06d13e0421784911aa669768f25dcb18_0/explore?location=59.336639%2C-6.117840%2C4.63
+    description: Full resolution geo file for the UK country boundaries
+  - name: uk_buc.geojson
+    source: https://geoportal.statistics.gov.uk/datasets/06d13e0421784911aa669768f25dcb18_0/explore?location=59.336639%2C-6.117840%2C4.63
+    description: Simplified geo file for the UK country boundaries
+  - name: bm_units_with_locations.xlsx
+    source: https://wooden-knee-d53.notion.site/UK-Wind-Curtailment-Monitor-Methodology-71475d0b7cfd4edb97d6397b358f4118
+    description: Hand-created mapping from BMU to windfarm site 
+  - name: bm_units.json
+    source: https://data.elexon.co.uk/bmrs/api/v1/reference/bmunits/all
+    description: All units to name of the plant
+  - name: station_to_bm_unit.json
+    source: query.wikidata.org
+    description: All the station to bm unit mappings from wikidata
+  - name: GB-transmission-system-boundary-zone-map.pdf
+    source: https://www.elexon.co.uk/bsc/documents/data/operational-data/gb-transmission-system-boundary-zone-map/
+    description: map of the UK with transmission boundaries and main lines

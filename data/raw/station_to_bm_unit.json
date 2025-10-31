@@ -1,0 +1,2909 @@
+[
+    {
+        "item": "http://www.wikidata.org/entity/Q116875376",
+        "itemLabel": "Rothes Wind Farm",
+        "code": "CAIRW-1",
+        "coords": "Point(-3.36 57.53)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116875376",
+        "itemLabel": "Rothes Wind Farm",
+        "code": "CAIRW-2",
+        "coords": "Point(-3.36 57.53)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116875376",
+        "itemLabel": "Rothes Wind Farm",
+        "code": "ROTHW-1",
+        "coords": "Point(-3.36 57.53)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116875442",
+        "itemLabel": "Fawley Cogen Power Station",
+        "code": "FAWN-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116875500",
+        "itemLabel": "Markinch Biomass Plant",
+        "code": "MARK-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116875547",
+        "itemLabel": "Lochluichart Wind Farm",
+        "code": "LCLTW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116875585",
+        "itemLabel": "Clachan Power Station",
+        "code": "CLAC-1",
+        "coords": "Point(-4.9218 56.27745)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876121",
+        "itemLabel": "Garry Hydroelectric Scheme",
+        "code": "CAS-GAR01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876266",
+        "itemLabel": "Moriston Hydroelectric Scheme",
+        "code": "CAS-MOR01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876403",
+        "itemLabel": "Tom na Clach Wind Farm",
+        "code": "TMNCW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876521",
+        "itemLabel": "Killin Hydroelectric Scheme",
+        "code": "CAS-KIL01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876556",
+        "itemLabel": "Baillie Wind Farm",
+        "code": "BABAW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876646",
+        "itemLabel": "Croydon Power Station",
+        "code": "CROYD-2",
+        "coords": "Point(-0.11637 51.37644)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876697",
+        "itemLabel": "Camster Wind Farm",
+        "code": "CMSTW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876722",
+        "itemLabel": "Hill of Towie Wind Farm",
+        "code": "HLTWW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116876924",
+        "itemLabel": "Dunbar Energy Recovery Facility",
+        "code": "DNBAR-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877013",
+        "itemLabel": "Corriemoillie Wind Farm",
+        "code": "CRMLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877111",
+        "itemLabel": "Halsary Wind Farm",
+        "code": "HALSW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877160",
+        "itemLabel": "Causeymire Wind Farm",
+        "code": "CAUSW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877291",
+        "itemLabel": "Coire Na Cloiche Wind Farm",
+        "code": "CNCLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877387",
+        "itemLabel": "Edinbane Wind Farm",
+        "code": "EDINW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877483",
+        "itemLabel": "Bad a Cheo Wind Farm",
+        "code": "BDCHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877673",
+        "itemLabel": "Rosehall Wind Farm",
+        "code": "RSHLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877766",
+        "itemLabel": "Dalquhandy Wind Farm",
+        "code": "DALQW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877792",
+        "itemLabel": "Harburnhead Wind Farm",
+        "code": "HBHDW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877822",
+        "itemLabel": "Mid Hill Wind Farm",
+        "code": "MDHLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877839",
+        "itemLabel": "Hill of Glaschyle Wind Farm",
+        "code": "HLGLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877850",
+        "itemLabel": "Tralorg Wind Farm",
+        "code": "TRLGW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877868",
+        "itemLabel": "Beinn Tharsuinn Wind Farm",
+        "code": "BETHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877879",
+        "itemLabel": "Sanquhar Community Wind Farm",
+        "code": "SANQW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877902",
+        "itemLabel": "Douglas West Wind Farm",
+        "code": "DOUGW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877917",
+        "itemLabel": "Burn of Whilk Wind Farm",
+        "code": "BNWKW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877925",
+        "itemLabel": "Tullymurdoch Wind Farm",
+        "code": "TLYMW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877933",
+        "itemLabel": "Cour Wind Farm",
+        "code": "COUWW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877943",
+        "itemLabel": "Middle Muir Wind Farm",
+        "code": "MIDMW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877949",
+        "itemLabel": "Gordonstown Hill Wind Farm",
+        "code": "GDSTW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877955",
+        "itemLabel": "Glens of Foudland Wind Farm",
+        "code": "GLOFW-1",
+        "coords": "Point(-2.65 57.414)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877969",
+        "itemLabel": "Hare Hill Wind Farm",
+        "code": "HRHLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877986",
+        "itemLabel": "Crossdykes Wind Farm",
+        "code": "CRDEW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877986",
+        "itemLabel": "Crossdykes Wind Farm",
+        "code": "CRDEW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878016",
+        "itemLabel": "Capenhurst Battery",
+        "code": "PINFB-1",
+        "coords": "Point(-2.943583333 53.265694444)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878016",
+        "itemLabel": "Capenhurst Battery",
+        "code": "PINFB-2",
+        "coords": "Point(-2.943583333 53.265694444)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878016",
+        "itemLabel": "Capenhurst Battery",
+        "code": "PINFB-3",
+        "coords": "Point(-2.943583333 53.265694444)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878016",
+        "itemLabel": "Capenhurst Battery",
+        "code": "PINFB-4",
+        "coords": "Point(-2.943583333 53.265694444)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878016",
+        "itemLabel": "Capenhurst Battery",
+        "code": "PINFB-5",
+        "coords": "Point(-2.943583333 53.265694444)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878016",
+        "itemLabel": "Capenhurst Battery",
+        "code": "PINFB-6",
+        "coords": "Point(-2.943583333 53.265694444)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878069",
+        "itemLabel": "Freasdail Wind Farm",
+        "code": "FSDLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878077",
+        "itemLabel": "Assel Valley Wind Farm",
+        "code": "ASLVW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878082",
+        "itemLabel": "Dalswinton Wind Farm",
+        "code": "DALSW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878093",
+        "itemLabel": "Minsca Wind Farm",
+        "code": "MINSW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878109",
+        "itemLabel": "Burwell Battery",
+        "code": "BURWB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878129",
+        "itemLabel": "Brook Farm Battery",
+        "code": "BROFB-1",
+        "coords": "Point(1.05 52.074)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878153",
+        "itemLabel": "Roosecote Battery",
+        "code": "ROOSB-1",
+        "coords": "Point(-3.189 54.105)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878177",
+        "itemLabel": "Arbroath Battery",
+        "code": "ARBRB-1",
+        "coords": "Point(-2.619634 56.56497)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878223",
+        "itemLabel": "Hutton Battery",
+        "code": "ARNKB-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878249",
+        "itemLabel": "Hunningley Stairfoot Battery",
+        "code": "BARNB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878260",
+        "itemLabel": "Nant Power Station",
+        "code": "NANT-1",
+        "coords": "Point(-5.211666666 56.338055555)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878285",
+        "itemLabel": "Ewe Hill Wind Farm",
+        "code": "EWHLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878295",
+        "itemLabel": "Airies Wind Farm",
+        "code": "AIRSW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878303",
+        "itemLabel": "An Suidhe Wind Farm",
+        "code": "ANSUW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878310",
+        "itemLabel": "Glen App Wind Farm",
+        "code": "GNAPW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878322",
+        "itemLabel": "Glenchamber Wind Farm",
+        "code": "GLCHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878372",
+        "itemLabel": "Didcot B Power Station",
+        "code": "DIDCB5",
+        "coords": "Point(-1.268 51.6254)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878372",
+        "itemLabel": "Didcot B Power Station",
+        "code": "DIDCB6",
+        "coords": "Point(-1.268 51.6254)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878407",
+        "itemLabel": "Didcot OCGT Power Station",
+        "code": "DIDC01G",
+        "coords": "Point(-1.2639 51.6245)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878407",
+        "itemLabel": "Didcot OCGT Power Station",
+        "code": "DIDC02G",
+        "coords": "Point(-1.2639 51.6245)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878407",
+        "itemLabel": "Didcot OCGT Power Station",
+        "code": "DIDC03G",
+        "coords": "Point(-1.2639 51.6245)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878407",
+        "itemLabel": "Didcot OCGT Power Station",
+        "code": "DIDC04G",
+        "coords": "Point(-1.2639 51.6245)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878801",
+        "itemLabel": "Holes Bay Battery",
+        "code": "BHOLB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878847",
+        "itemLabel": "Contego Battery",
+        "code": "CONTB-1",
+        "coords": "Point(-0.162756 50.95526)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878862",
+        "itemLabel": "Hawkers Hill Energy Park",
+        "code": "HAWKB-1",
+        "coords": "Point(-2.208174 51.013772)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878879",
+        "itemLabel": "Nursling Battery",
+        "code": "NURSB-1",
+        "coords": "Point(-1.484869 50.942355)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116883955",
+        "itemLabel": "Port of Tyne Energy Storage",
+        "code": "POTES-1",
+        "coords": "Point(-1.455827 54.977384)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116883962",
+        "itemLabel": "Goole Fields Wind Farms",
+        "code": "GFLDW-1",
+        "coords": "Point(-0.8822 53.6643)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116883974",
+        "itemLabel": "Minnygap Wind Farm",
+        "code": "MYGPW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884040",
+        "itemLabel": "Rugeley B Power Station",
+        "code": "RUGGT-6"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884040",
+        "itemLabel": "Rugeley B Power Station",
+        "code": "RUGGT-7"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884040",
+        "itemLabel": "Rugeley B Power Station",
+        "code": "RUGPS-6"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884040",
+        "itemLabel": "Rugeley B Power Station",
+        "code": "RUGPS-7"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884092",
+        "itemLabel": "Cowley Battery Storage",
+        "code": "COWB-1",
+        "coords": "Point(-1.189058 51.709925)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884110",
+        "itemLabel": "Redfield Road Gas Generation Plant",
+        "code": "RDFRB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884110",
+        "itemLabel": "Redfield Road Gas Generation Plant",
+        "code": "RDFRD-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884131",
+        "itemLabel": "Tremorfa Steelworks",
+        "code": "TRMFD-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884182",
+        "itemLabel": "Bloxwich Battery",
+        "code": "ARNKB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884220",
+        "itemLabel": "Pen y Cymoedd Battery",
+        "code": "PNYCB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884290",
+        "itemLabel": "Aylesford Battery",
+        "code": "AG-ZEN03J"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884358",
+        "itemLabel": "Pillswood Battery",
+        "code": "PILLB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884358",
+        "itemLabel": "Pillswood Battery",
+        "code": "PILLB-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884377",
+        "itemLabel": "Clunie Cascade",
+        "code": "CAS-CLU01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884451",
+        "itemLabel": "Bustleholme Battery",
+        "code": "BUSTB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884549",
+        "itemLabel": "Thurcroft Battery",
+        "code": "AG-MFLX02"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884738",
+        "itemLabel": "Mannington Battery Storage",
+        "code": "AG-HEDF01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884818",
+        "itemLabel": "Skelmersdale Battery",
+        "code": "SKELB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116885583",
+        "itemLabel": "Enderby Storage",
+        "code": "BFSE01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116885651",
+        "itemLabel": "Creyke Beck Battery Storage",
+        "code": "AG-MSTK01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116886641",
+        "itemLabel": "Lester Way Power Plant",
+        "code": "LSTWY-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116886687",
+        "itemLabel": "The Drove Power Plant",
+        "code": "TDRVE-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116886710",
+        "itemLabel": "Red Scar Peaking Plant",
+        "code": "RDSCR-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116886718",
+        "itemLabel": "Red Scar Battery Storage",
+        "code": "AG-HEL00G"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116890190",
+        "itemLabel": "Hunningley Stairfoot BESS",
+        "code": "BARNB-1",
+        "coords": "Point(-1.45007 53.54841)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1146238",
+        "itemLabel": "Dinorwig Power Station",
+        "code": "DINO-1",
+        "coords": "Point(-4.107341766 53.117842582)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1146238",
+        "itemLabel": "Dinorwig Power Station",
+        "code": "DINO-2",
+        "coords": "Point(-4.107341766 53.117842582)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1146238",
+        "itemLabel": "Dinorwig Power Station",
+        "code": "DINO-3",
+        "coords": "Point(-4.107341766 53.117842582)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1146238",
+        "itemLabel": "Dinorwig Power Station",
+        "code": "DINO-4",
+        "coords": "Point(-4.107341766 53.117842582)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1146238",
+        "itemLabel": "Dinorwig Power Station",
+        "code": "DINO-5",
+        "coords": "Point(-4.107341766 53.117842582)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1146238",
+        "itemLabel": "Dinorwig Power Station",
+        "code": "DINO-6",
+        "coords": "Point(-4.107341766 53.117842582)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7178058",
+        "itemLabel": "Peterhead Power Station",
+        "code": "PEHE-1",
+        "coords": "Point(-1.78888 57.4772)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7178058",
+        "itemLabel": "Peterhead Power Station",
+        "code": "PEHE-2",
+        "coords": "Point(-1.78888 57.4772)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15212096",
+        "itemLabel": "Cruachan Power Station",
+        "code": "CRUA-1",
+        "coords": "Point(-5.11305556 56.40638889)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15212096",
+        "itemLabel": "Cruachan Power Station",
+        "code": "CRUA-2",
+        "coords": "Point(-5.11305556 56.40638889)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15212096",
+        "itemLabel": "Cruachan Power Station",
+        "code": "CRUA-3",
+        "coords": "Point(-5.11305556 56.40638889)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15212096",
+        "itemLabel": "Cruachan Power Station",
+        "code": "CRUA-4",
+        "coords": "Point(-5.11305556 56.40638889)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946709",
+        "itemLabel": "Sizewell B power station",
+        "code": "SIZB-1",
+        "coords": "Point(1.61972 52.215)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946709",
+        "itemLabel": "Sizewell B power station",
+        "code": "SIZB-2",
+        "coords": "Point(1.61972 52.215)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946799",
+        "itemLabel": "Heysham 1 power station",
+        "code": "HEYM11",
+        "coords": "Point(-2.91719 54.0304)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946799",
+        "itemLabel": "Heysham 1 power station",
+        "code": "HEYM12",
+        "coords": "Point(-2.91719 54.0304)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946808",
+        "itemLabel": "Heysham 2 power station",
+        "code": "HEYM27",
+        "coords": "Point(-2.91504 54.0273)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946808",
+        "itemLabel": "Heysham 2 power station",
+        "code": "HEYM28",
+        "coords": "Point(-2.91504 54.0273)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946808",
+        "itemLabel": "Heysham 2 power station",
+        "code": "HEYM2D-1",
+        "coords": "Point(-2.91504 54.0273)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946950",
+        "itemLabel": "Dungeness B power station",
+        "code": "DNGB21",
+        "coords": "Point(0.95976 50.9134)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946950",
+        "itemLabel": "Dungeness B power station",
+        "code": "DNGB22",
+        "coords": "Point(0.95976 50.9134)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q104946950",
+        "itemLabel": "Dungeness B power station",
+        "code": "DNGBD-1",
+        "coords": "Point(0.95976 50.9134)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q111295900",
+        "itemLabel": "Conon Valley Hydro Electric Scheme",
+        "code": "CAS-CON01",
+        "coords": "Point(-4.598 57.554)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q111301500",
+        "itemLabel": "Finlarig power station",
+        "code": "FINL-1",
+        "coords": "Point(-4.29872 56.4816)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q113663075",
+        "itemLabel": "Hornsea Two Offshore Wind Farm",
+        "code": "HOWBO-1",
+        "coords": "Point(1.5518 53.91)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q113663075",
+        "itemLabel": "Hornsea Two Offshore Wind Farm",
+        "code": "HOWBO-2",
+        "coords": "Point(1.5518 53.91)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q113663075",
+        "itemLabel": "Hornsea Two Offshore Wind Farm",
+        "code": "HOWBO-3",
+        "coords": "Point(1.5518 53.91)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q114030619",
+        "itemLabel": "Griffin Wind Farm",
+        "code": "GRIFW-1",
+        "coords": "Point(-3.7435659 56.583251)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q114030619",
+        "itemLabel": "Griffin Wind Farm",
+        "code": "GRIFW-2",
+        "coords": "Point(-3.7435659 56.583251)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q114030635",
+        "itemLabel": "Clashindarroch Wind Farm",
+        "code": "CLDRW-1",
+        "coords": "Point(-2.9640069 57.363336)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q114030639",
+        "itemLabel": "Dun Law wind farm",
+        "code": "DNLWW-1",
+        "coords": "Point(-2.8512555 55.805307)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q114030644",
+        "itemLabel": "Harestanes Wind Farm",
+        "code": "HRSTW-1",
+        "coords": "Point(-3.5596388 55.244384)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q114030651",
+        "itemLabel": "Moy Wind Farm",
+        "code": "MOYEW-1",
+        "coords": "Point(-4.0154701 57.406964)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115794582",
+        "itemLabel": "Seagreen Wind Farm",
+        "code": "SGRWO-1",
+        "coords": "Point(-1.741 56.588)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115794582",
+        "itemLabel": "Seagreen Wind Farm",
+        "code": "SGRWO-2",
+        "coords": "Point(-1.741 56.588)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115794582",
+        "itemLabel": "Seagreen Wind Farm",
+        "code": "SGRWO-3",
+        "coords": "Point(-1.741 56.588)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115794582",
+        "itemLabel": "Seagreen Wind Farm",
+        "code": "SGRWO-4",
+        "coords": "Point(-1.741 56.588)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115794582",
+        "itemLabel": "Seagreen Wind Farm",
+        "code": "SGRWO-5",
+        "coords": "Point(-1.741 56.588)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115794582",
+        "itemLabel": "Seagreen Wind Farm",
+        "code": "SGRWO-6",
+        "coords": "Point(-1.741 56.588)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929386",
+        "itemLabel": "Stronelairg Wind Farm",
+        "code": "STLGW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929386",
+        "itemLabel": "Stronelairg Wind Farm",
+        "code": "STLGW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929386",
+        "itemLabel": "Stronelairg Wind Farm",
+        "code": "STLGW-3"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929443",
+        "itemLabel": "Dorenell Wind Farm",
+        "code": "DOREW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929443",
+        "itemLabel": "Dorenell Wind Farm",
+        "code": "DOREW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929541",
+        "itemLabel": "Fallago Rig Wind Farm",
+        "code": "FALGW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115929575",
+        "itemLabel": "Bhlaraidh Wind Farm",
+        "code": "BHLAW-1",
+        "coords": "Point(-4.7158 57.2456)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115952211",
+        "itemLabel": "Dogger Bank A Wind Farm",
+        "code": "DBAWO-3",
+        "coords": "Point(1.9301 54.7489)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115952211",
+        "itemLabel": "Dogger Bank A Wind Farm",
+        "code": "DBAWO-4",
+        "coords": "Point(1.9301 54.7489)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115952211",
+        "itemLabel": "Dogger Bank A Wind Farm",
+        "code": "DBAWO-5",
+        "coords": "Point(1.9301 54.7489)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115952717",
+        "itemLabel": "South Kyle Wind Farm",
+        "code": "SOKYW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115954919",
+        "itemLabel": "Dunmaglass Wind Farm",
+        "code": "DUNGW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115954949",
+        "itemLabel": "Brockloch Rig Wind Farm",
+        "code": "WISTW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955192",
+        "itemLabel": "Kype Muir Wind Farm",
+        "code": "KPMRW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955192",
+        "itemLabel": "Kype Muir Wind Farm",
+        "code": "KYPEW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955243",
+        "itemLabel": "Beinneun Wind Farm",
+        "code": "BEINW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955324",
+        "itemLabel": "Creag Riabhach Wind Farm",
+        "code": "CREAW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955673",
+        "itemLabel": "Gordonbush Wind Farm",
+        "code": "GORDW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955673",
+        "itemLabel": "Gordonbush Wind Farm",
+        "code": "GORDW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955724",
+        "itemLabel": "Corriegarth Wind Farm",
+        "code": "CGTHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955735",
+        "itemLabel": "Dersalloch Wind Farm",
+        "code": "DRSLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955825",
+        "itemLabel": "Strathy North Wind Farm",
+        "code": "STRNW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955833",
+        "itemLabel": "Berry Burn Wind Farm",
+        "code": "BRYBW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955842",
+        "itemLabel": "Galawhistle Wind Farm",
+        "code": "GLWSW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955925",
+        "itemLabel": "Paul's Hill Wind Farm",
+        "code": "PAUHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115955940",
+        "itemLabel": "Kennoxhead Wind Farm",
+        "code": "KENNW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115963110",
+        "itemLabel": "Toddleburn Wind Farm",
+        "code": "TDBNW-1",
+        "coords": "Point(-2.872 55.768)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115981381",
+        "itemLabel": "Moray West Offshore Wind Farm",
+        "code": "MOWWO-1",
+        "coords": "Point(-2.988 58.094)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115981381",
+        "itemLabel": "Moray West Offshore Wind Farm",
+        "code": "MOWWO-2",
+        "coords": "Point(-2.988 58.094)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115981381",
+        "itemLabel": "Moray West Offshore Wind Farm",
+        "code": "MOWWO-3",
+        "coords": "Point(-2.988 58.094)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115981381",
+        "itemLabel": "Moray West Offshore Wind Farm",
+        "code": "MOWWO-4",
+        "coords": "Point(-2.988 58.094)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116036206",
+        "itemLabel": "Andershaw Wind Farm",
+        "code": "ASHWW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861310",
+        "itemLabel": "Aikengall Community Wind Farm",
+        "code": "AKGLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861310",
+        "itemLabel": "Aikengall Community Wind Farm",
+        "code": "AKGLW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861310",
+        "itemLabel": "Aikengall Community Wind Farm",
+        "code": "AKGLW-3"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861329",
+        "itemLabel": "Indian Queens Power Station",
+        "code": "INDQ-1",
+        "coords": "Point(-4.8997 50.396)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861374",
+        "itemLabel": "Cottam Development Centre",
+        "code": "CDCL-1",
+        "coords": "Point(-0.786 53.3062)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861380",
+        "itemLabel": "Severn Power Station",
+        "code": "SVRP-10"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861380",
+        "itemLabel": "Severn Power Station",
+        "code": "SVRP-20"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861396",
+        "itemLabel": "West Burton A Power Station",
+        "code": "WBUPS-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861396",
+        "itemLabel": "West Burton A Power Station",
+        "code": "WBUPS-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861396",
+        "itemLabel": "West Burton A Power Station",
+        "code": "WBUPS-3"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861396",
+        "itemLabel": "West Burton A Power Station",
+        "code": "WBUPS-4"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861411",
+        "itemLabel": "West Burton B Power Station",
+        "code": "WBURB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861411",
+        "itemLabel": "West Burton B Power Station",
+        "code": "WBURB-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861411",
+        "itemLabel": "West Burton B Power Station",
+        "code": "WBURB-3"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861425",
+        "itemLabel": "Grangemouth CHP",
+        "code": "GRMO-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861544",
+        "itemLabel": "A’Chruach Wind Farm",
+        "code": "ACHRW-1",
+        "coords": "Point(-5.335 56.1292)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861652",
+        "itemLabel": "Afton Wind Farm",
+        "code": "AFTOW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116861675",
+        "itemLabel": "Blackcraig Wind Farm",
+        "code": "BLKWW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116863133",
+        "itemLabel": "Kilbraur Wind Farm",
+        "code": "KILBW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116863673",
+        "itemLabel": "Fellside Power Station",
+        "code": "FELL-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116863893",
+        "itemLabel": "Aberdare Power Station",
+        "code": "ABERU-1",
+        "coords": "Point(-3.41613 51.6975)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116863896",
+        "itemLabel": "Auchrobert Wind Farm",
+        "code": "ABRTW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116869658",
+        "itemLabel": "Carraig Gheal Wind Farm",
+        "code": "CRGHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116869720",
+        "itemLabel": "Mark Hill Wind Farm",
+        "code": "MKHLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116869934",
+        "itemLabel": "Millennium Wind Farm",
+        "code": "MILWW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116869954",
+        "itemLabel": "Glen Kyllachy Wind Farm",
+        "code": "GLNKW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116869960",
+        "itemLabel": "Tilbury Green Power",
+        "code": "TIBG-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116870059",
+        "itemLabel": "Sandy Knowe Wind Farm",
+        "code": "SAKNW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884330",
+        "itemLabel": "Back Lane Battery",
+        "code": "AG-CBS06B",
+        "coords": "Point(-1.37484 53.22386)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q455472",
+        "itemLabel": "Gwynt y Môr Wind Farm",
+        "code": "GYMRO-15",
+        "coords": "Point(-3.58333333 53.45)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q455472",
+        "itemLabel": "Gwynt y Môr Wind Farm",
+        "code": "GYMRO-17",
+        "coords": "Point(-3.58333333 53.45)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q455472",
+        "itemLabel": "Gwynt y Môr Wind Farm",
+        "code": "GYMRO-26",
+        "coords": "Point(-3.58333333 53.45)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q455472",
+        "itemLabel": "Gwynt y Môr Wind Farm",
+        "code": "GYMRO-28",
+        "coords": "Point(-3.58333333 53.45)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1330226",
+        "itemLabel": "Walney Wind Farm",
+        "code": "WLNYO-2",
+        "coords": "Point(-3.522 54.044)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1330226",
+        "itemLabel": "Walney Wind Farm",
+        "code": "WLNYO-3",
+        "coords": "Point(-3.522 54.044)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1330226",
+        "itemLabel": "Walney Wind Farm",
+        "code": "WLNYO-4",
+        "coords": "Point(-3.522 54.044)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1330226",
+        "itemLabel": "Walney Wind Farm",
+        "code": "WLNYW-1",
+        "coords": "Point(-3.522 54.044)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1466261",
+        "itemLabel": "Torness Nuclear Power Station",
+        "code": "TORN-1",
+        "coords": "Point(-2.40908 55.968)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1466261",
+        "itemLabel": "Torness Nuclear Power Station",
+        "code": "TORN-2",
+        "coords": "Point(-2.40908 55.968)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1466261",
+        "itemLabel": "Torness Nuclear Power Station",
+        "code": "TORND-1",
+        "coords": "Point(-2.40908 55.968)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1536182",
+        "itemLabel": "Hinkley Point B Nuclear Power Station",
+        "code": "HINB-7",
+        "coords": "Point(-3.1280887 51.2088898)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1536182",
+        "itemLabel": "Hinkley Point B Nuclear Power Station",
+        "code": "HINB-8",
+        "coords": "Point(-3.1280887 51.2088898)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1536182",
+        "itemLabel": "Hinkley Point B Nuclear Power Station",
+        "code": "HINBD-1",
+        "coords": "Point(-3.1280887 51.2088898)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1576615",
+        "itemLabel": "Thanet Wind Farm",
+        "code": "THNTO-1",
+        "coords": "Point(1.6331 51.4306)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1576615",
+        "itemLabel": "Thanet Wind Farm",
+        "code": "THNTO-2",
+        "coords": "Point(1.6331 51.4306)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXD-2",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXX-1",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXX-2",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXX-3",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXX-4",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXX-5",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1629859",
+        "itemLabel": "Drax power station",
+        "code": "DRAXX-6",
+        "coords": "Point(-0.996389 53.7358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1702534",
+        "itemLabel": "Joint European Torus",
+        "code": "CULJD-1",
+        "coords": "Point(-1.226388888 51.659166666)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1702534",
+        "itemLabel": "Joint European Torus",
+        "code": "CULJD-1",
+        "coords": "Point(-1.237215 51.75484)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1724197",
+        "itemLabel": "Robin Rigg Wind Farm",
+        "code": "RREW-1",
+        "coords": "Point(-3.71667 54.75)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1724197",
+        "itemLabel": "Robin Rigg Wind Farm",
+        "code": "RRWW-1",
+        "coords": "Point(-3.71667 54.75)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1739500",
+        "itemLabel": "Wylfa Nuclear Power Station",
+        "code": "WYLF-1",
+        "coords": "Point(-4.48333 53.4167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1739500",
+        "itemLabel": "Wylfa Nuclear Power Station",
+        "code": "WYLF-2",
+        "coords": "Point(-4.48333 53.4167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1739500",
+        "itemLabel": "Wylfa Nuclear Power Station",
+        "code": "WYLF-3",
+        "coords": "Point(-4.48333 53.4167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q1739500",
+        "itemLabel": "Wylfa Nuclear Power Station",
+        "code": "WYLF-4",
+        "coords": "Point(-4.48333 53.4167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2016017",
+        "itemLabel": "Barrow Offshore Wind Farm",
+        "code": "BOWLW-1",
+        "coords": "Point(-3.28333 53.9833)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2271607",
+        "itemLabel": "Isle of Man to England Interconnector",
+        "code": "MANXENR-1",
+        "coords": "Point(-3.83333 54.0)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2583856",
+        "itemLabel": "Burbo Bank Offshore Wind Farm",
+        "code": "BRBEO-1",
+        "coords": "Point(-3.16667 53.4833)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2583856",
+        "itemLabel": "Burbo Bank Offshore Wind Farm",
+        "code": "BURBW-1",
+        "coords": "Point(-3.16667 53.4833)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2944691",
+        "itemLabel": "Pembroke B Power Station",
+        "code": "PEMB-11",
+        "coords": "Point(-4.98842 51.6831)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2944691",
+        "itemLabel": "Pembroke B Power Station",
+        "code": "PEMB-21",
+        "coords": "Point(-4.98842 51.6831)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2944691",
+        "itemLabel": "Pembroke B Power Station",
+        "code": "PEMB-31",
+        "coords": "Point(-4.98842 51.6831)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2944691",
+        "itemLabel": "Pembroke B Power Station",
+        "code": "PEMB-41",
+        "coords": "Point(-4.98842 51.6831)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q2944691",
+        "itemLabel": "Pembroke B Power Station",
+        "code": "PEMB-51",
+        "coords": "Point(-4.98842 51.6831)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q3364824",
+        "itemLabel": "Race Bank Wind Farm",
+        "code": "RCBKO-1",
+        "coords": "Point(0.83333333 53.275)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q3364824",
+        "itemLabel": "Race Bank Wind Farm",
+        "code": "RCBKO-2",
+        "coords": "Point(0.83333333 53.275)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q3364833",
+        "itemLabel": "Moray East Offshore Wind Farm",
+        "code": "MOWEO-1",
+        "coords": "Point(-2.69852 58.16708)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q3364833",
+        "itemLabel": "Moray East Offshore Wind Farm",
+        "code": "MOWEO-2",
+        "coords": "Point(-2.69852 58.16708)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q3364833",
+        "itemLabel": "Moray East Offshore Wind Farm",
+        "code": "MOWEO-3",
+        "coords": "Point(-2.69852 58.16708)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q3430521",
+        "itemLabel": "Medway Power Station",
+        "code": "MEDP-1",
+        "coords": "Point(0.69 51.44)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4019566",
+        "itemLabel": "Whitelee Wind Farm",
+        "code": "WHILW-1",
+        "coords": "Point(-4.285555555 55.672777777)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4019566",
+        "itemLabel": "Whitelee Wind Farm",
+        "code": "WHILW-2",
+        "coords": "Point(-4.285555555 55.672777777)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4141649",
+        "itemLabel": "Viking Wind Farm",
+        "code": "VKNGW-1",
+        "coords": "Point(-1.261222222 60.286611111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4141649",
+        "itemLabel": "Viking Wind Farm",
+        "code": "VKNGW-2",
+        "coords": "Point(-1.261222222 60.286611111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4141649",
+        "itemLabel": "Viking Wind Farm",
+        "code": "VKNGW-3",
+        "coords": "Point(-1.261222222 60.286611111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4141649",
+        "itemLabel": "Viking Wind Farm",
+        "code": "VKNGW-4",
+        "coords": "Point(-1.261222222 60.286611111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4689039",
+        "itemLabel": "Affric-Beauly hydro-electric power scheme",
+        "code": "CAS-BEU01",
+        "coords": "Point(-4.794 57.325)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4763389",
+        "itemLabel": "Anglesey Aluminium",
+        "code": "ANGLD-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4788723",
+        "itemLabel": "Arecleoch Wind Farm",
+        "code": "ARCHW-1",
+        "coords": "Point(-4.88222 55.0533)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4877211",
+        "itemLabel": "Beatrice Wind Farm",
+        "code": "BEATO-1",
+        "coords": "Point(-3.07 58.13)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4877211",
+        "itemLabel": "Beatrice Wind Farm",
+        "code": "BEATO-2",
+        "coords": "Point(-3.07 58.13)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4877211",
+        "itemLabel": "Beatrice Wind Farm",
+        "code": "BEATO-3",
+        "coords": "Point(-3.07 58.13)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4877211",
+        "itemLabel": "Beatrice Wind Farm",
+        "code": "BEATO-4",
+        "coords": "Point(-3.07 58.13)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4881352",
+        "itemLabel": "Beinn an Tuirc Wind Farm",
+        "code": "BTUIW-1",
+        "coords": "Point(-5.57611 55.5714)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4881352",
+        "itemLabel": "Beinn an Tuirc Wind Farm",
+        "code": "BTUIW-2",
+        "coords": "Point(-5.57611 55.5714)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4881352",
+        "itemLabel": "Beinn an Tuirc Wind Farm",
+        "code": "BTUIW-3",
+        "coords": "Point(-5.57611 55.5714)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4921161",
+        "itemLabel": "Black Law Wind Farm",
+        "code": "BLLA-1",
+        "coords": "Point(-3.73889 55.7669)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q4921161",
+        "itemLabel": "Black Law Wind Farm",
+        "code": "BLLA-2",
+        "coords": "Point(-3.73889 55.7669)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5046442",
+        "itemLabel": "Carrington Power Station",
+        "code": "CARR-1",
+        "coords": "Point(-2.41089 53.4358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5046442",
+        "itemLabel": "Carrington Power Station",
+        "code": "CARR-2",
+        "coords": "Point(-2.41089 53.4358)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5137058",
+        "itemLabel": "Clyde Wind Farm",
+        "code": "CLDCW-1",
+        "coords": "Point(-3.65444 55.4672)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5137058",
+        "itemLabel": "Clyde Wind Farm",
+        "code": "CLDNW-1",
+        "coords": "Point(-3.65444 55.4672)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5137058",
+        "itemLabel": "Clyde Wind Farm",
+        "code": "CLDSW-1",
+        "coords": "Point(-3.65444 55.4672)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5161301",
+        "itemLabel": "Connah's Quay Power Station",
+        "code": "CNQPS-1",
+        "coords": "Point(-3.0813 53.2322)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5161301",
+        "itemLabel": "Connah's Quay Power Station",
+        "code": "CNQPS-2",
+        "coords": "Point(-3.0813 53.2322)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5161301",
+        "itemLabel": "Connah's Quay Power Station",
+        "code": "CNQPS-3",
+        "coords": "Point(-3.0813 53.2322)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5161301",
+        "itemLabel": "Connah's Quay Power Station",
+        "code": "CNQPS-4",
+        "coords": "Point(-3.0813 53.2322)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5169824",
+        "itemLabel": "Corby Power Station",
+        "code": "CORB-1",
+        "coords": "Point(-0.68139 52.5109)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5173812",
+        "itemLabel": "Coryton Power Station",
+        "code": "COSO-1",
+        "coords": "Point(0.508 51.512)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5179664",
+        "itemLabel": "Cowes Power Station",
+        "code": "COWE1",
+        "coords": "Point(-1.2864 50.7459)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5179664",
+        "itemLabel": "Cowes Power Station",
+        "code": "COWE2",
+        "coords": "Point(-1.2864 50.7459)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5191333",
+        "itemLabel": "Crystal Rig Wind Farm",
+        "code": "CRYRW-2",
+        "coords": "Point(-2.55 55.9)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5191333",
+        "itemLabel": "Crystal Rig Wind Farm",
+        "code": "CRYRW-3",
+        "coords": "Point(-2.55 55.9)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15226770",
+        "itemLabel": "Humber Gateway Wind Farm",
+        "code": "HMGTO-1",
+        "coords": "Point(0.293 53.644)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15226770",
+        "itemLabel": "Humber Gateway Wind Farm",
+        "code": "HMGTO-2",
+        "coords": "Point(0.293 53.644)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15261442",
+        "itemLabel": "Neart na Gaoithe Offshore Wind Farm",
+        "code": "NNGAO-1",
+        "coords": "Point(-2.32083333 56.26777778)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17347013",
+        "itemLabel": "East Anglia ONE",
+        "code": "EAAO-1",
+        "coords": "Point(2.3 52.66)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17347013",
+        "itemLabel": "East Anglia ONE",
+        "code": "EAAO-2",
+        "coords": "Point(2.3 52.66)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17509465",
+        "itemLabel": "European Offshore Wind Deployment Centre",
+        "code": "ABRBO-1",
+        "coords": "Point(-1.98333 57.2167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17569223",
+        "itemLabel": "Fasnakyle Power Station",
+        "code": "FASN-1",
+        "coords": "Point(-4.794 57.326083333)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17569223",
+        "itemLabel": "Fasnakyle Power Station",
+        "code": "FASN-4",
+        "coords": "Point(-4.794 57.326083333)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17569223",
+        "itemLabel": "Fasnakyle Power Station",
+        "code": "FASN2",
+        "coords": "Point(-4.794 57.326083333)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17569223",
+        "itemLabel": "Fasnakyle Power Station",
+        "code": "FASN3",
+        "coords": "Point(-4.794 57.326083333)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17574814",
+        "itemLabel": "Kinlochleven Power Station",
+        "code": "KNLCV-1",
+        "coords": "Point(-4.95803 56.7129)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17830804",
+        "itemLabel": "Errochty Dam",
+        "code": "ERRO-1",
+        "coords": "Point(-4.10523 56.7644)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17830804",
+        "itemLabel": "Errochty Dam",
+        "code": "ERRO-2",
+        "coords": "Point(-4.10523 56.7644)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q17830804",
+        "itemLabel": "Errochty Dam",
+        "code": "ERRO-3",
+        "coords": "Point(-4.10523 56.7644)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q18161324",
+        "itemLabel": "Marchwood Power Station",
+        "code": "MRWD-1",
+        "coords": "Point(-1.438888888 50.897777777)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q21061737",
+        "itemLabel": "Killingholme B power station",
+        "code": "KILLPG-1",
+        "coords": "Point(-0.25518 53.65419)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q21061737",
+        "itemLabel": "Killingholme B power station",
+        "code": "KILLPG-2",
+        "coords": "Point(-0.25518 53.65419)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q29018007",
+        "itemLabel": "Kilgallioch Wind Farm",
+        "code": "KLGLW-1",
+        "coords": "Point(-4.76527778 55.05)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q123580913",
+        "itemLabel": "Thame Road Battery Storage",
+        "code": "THMRB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q123984135",
+        "itemLabel": "Peterborough STOR",
+        "code": "PETDG-1",
+        "coords": "Point(-0.2037977 52.575703)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q123984183",
+        "itemLabel": "Brigg STOR",
+        "code": "BRGDG-1",
+        "coords": "Point(-0.508006 53.540993)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q15261442",
+        "itemLabel": "Neart na Gaoithe Offshore Wind Farm",
+        "code": "NNGAO-2",
+        "coords": "Point(-2.32083333 56.26777778)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q96375108",
+        "itemLabel": "Cleve Hill Solar Park",
+        "code": "CLVHS-1",
+        "coords": "Point(0.9429 51.3344)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q96375108",
+        "itemLabel": "Cleve Hill Solar Park",
+        "code": "CLVHS-2",
+        "coords": "Point(0.9429 51.3344)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877822",
+        "itemLabel": "Mid Hill Wind Farm",
+        "code": "2__PSTAT002"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117337478",
+        "itemLabel": "Dogger Bank B Wind Farm",
+        "code": "DBBWO-2",
+        "coords": "Point(1.6622 54.9866)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117337478",
+        "itemLabel": "Dogger Bank B Wind Farm",
+        "code": "DBBWO-3",
+        "coords": "Point(1.6622 54.9866)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117337478",
+        "itemLabel": "Dogger Bank B Wind Farm",
+        "code": "DBBWO-4",
+        "coords": "Point(1.6622 54.9866)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117337478",
+        "itemLabel": "Dogger Bank B Wind Farm",
+        "code": "DBBWO-5",
+        "coords": "Point(1.6622 54.9866)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117337478",
+        "itemLabel": "Dogger Bank B Wind Farm",
+        "code": "DBBWO-1",
+        "coords": "Point(1.6622 54.9866)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q135526864",
+        "itemLabel": "Haghshaw Hill Wind Farm",
+        "code": "HAHAW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q135526864",
+        "itemLabel": "Haghshaw Hill Wind Farm",
+        "code": "HAGHW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q135527588",
+        "itemLabel": "Broken Cross wind farm",
+        "code": "BROCW-1",
+        "coords": "Point(-3.8280487 55.6165211)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q135733295",
+        "itemLabel": "North Kyle Wind Farm",
+        "code": "NOKYW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q135733295",
+        "itemLabel": "North Kyle Wind Farm",
+        "code": "NOKYW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q136122231",
+        "itemLabel": "Thurrock Storage",
+        "code": "THURB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q136122231",
+        "itemLabel": "Thurrock Storage",
+        "code": "THURB-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q136122231",
+        "itemLabel": "Thurrock Storage",
+        "code": "THURB-3"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q131282629",
+        "itemLabel": "Kirk Hill Wind Farm",
+        "code": "KHLLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q572403",
+        "itemLabel": "Hartlepool Nuclear Power Station",
+        "code": "HRTL-1",
+        "coords": "Point(-1.18083 54.635)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q572403",
+        "itemLabel": "Hartlepool Nuclear Power Station",
+        "code": "HRTL-2",
+        "coords": "Point(-1.18083 54.635)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q614982",
+        "itemLabel": "Braes of Doune Wind Farm",
+        "code": "BRDUW-1",
+        "coords": "Point(-4.0625 56.2761)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q763941",
+        "itemLabel": "Ormonde Wind Farm",
+        "code": "OMNDO-1",
+        "coords": "Point(-3.4 54.1)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q782133",
+        "itemLabel": "Hunterston B nuclear power station",
+        "code": "HUNBD-1",
+        "coords": "Point(-4.89009 55.7221)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q799488",
+        "itemLabel": "Sloy Power Station",
+        "code": "SLOY-1",
+        "coords": "Point(-4.711551 56.251204)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q799488",
+        "itemLabel": "Sloy Power Station",
+        "code": "SLOY-2",
+        "coords": "Point(-4.711551 56.251204)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q799488",
+        "itemLabel": "Sloy Power Station",
+        "code": "SLOY-3",
+        "coords": "Point(-4.711551 56.251204)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q799488",
+        "itemLabel": "Sloy Power Station",
+        "code": "SLOY-4",
+        "coords": "Point(-4.711551 56.251204)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q799488",
+        "itemLabel": "Sloy Power Station",
+        "code": "SLOYD-1",
+        "coords": "Point(-4.711551 56.251204)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q820613",
+        "itemLabel": "Greater Gabbard wind farm",
+        "code": "GRGBW-1",
+        "coords": "Point(1.94 51.88)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q820613",
+        "itemLabel": "Greater Gabbard wind farm",
+        "code": "GRGBW-2",
+        "coords": "Point(1.94 51.88)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q820613",
+        "itemLabel": "Greater Gabbard wind farm",
+        "code": "GRGBW-3",
+        "coords": "Point(1.94 51.88)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q914264",
+        "itemLabel": "London Array",
+        "code": "LARYO-1",
+        "coords": "Point(1.55361 51.6439)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q914264",
+        "itemLabel": "London Array",
+        "code": "LARYO-2",
+        "coords": "Point(1.55361 51.6439)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q914264",
+        "itemLabel": "London Array",
+        "code": "LARYO-3",
+        "coords": "Point(1.55361 51.6439)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q914264",
+        "itemLabel": "London Array",
+        "code": "LARYO-4",
+        "coords": "Point(1.55361 51.6439)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5197194",
+        "itemLabel": "Cwm Dyli",
+        "code": "CWMD-1",
+        "coords": "Point(-4.0115 53.0659)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5212205",
+        "itemLabel": "Damhead Creek power station",
+        "code": "DAMC-1",
+        "coords": "Point(0.6001 51.4254)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5263345",
+        "itemLabel": "Derwent Power Station",
+        "code": "DERW-1",
+        "coords": "Point(-1.4007 52.9064)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5311735",
+        "itemLabel": "Dudgeon Offshore Wind Farm",
+        "code": "DDGNO-1",
+        "coords": "Point(1.39 53.249)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5311735",
+        "itemLabel": "Dudgeon Offshore Wind Farm",
+        "code": "DDGNO-2",
+        "coords": "Point(1.39 53.249)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5311735",
+        "itemLabel": "Dudgeon Offshore Wind Farm",
+        "code": "DDGNO-3",
+        "coords": "Point(1.39 53.249)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5311735",
+        "itemLabel": "Dudgeon Offshore Wind Farm",
+        "code": "DDGNO-4",
+        "coords": "Point(1.39 53.249)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5331045",
+        "itemLabel": "East–West Interconnector",
+        "code": "IED-EWIC1",
+        "coords": "Point(-4.8257 53.5305)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5331045",
+        "itemLabel": "East–West Interconnector",
+        "code": "IEG-EWIC1",
+        "coords": "Point(-4.8257 53.5305)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5377316",
+        "itemLabel": "Enfield Power Station",
+        "code": "EECL-1",
+        "coords": "Point(-0.0227778 51.6628)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5436202",
+        "itemLabel": "Farr Wind Farm",
+        "code": "FAARW-1",
+        "coords": "Point(-4.09417 57.325)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5436202",
+        "itemLabel": "Farr Wind Farm",
+        "code": "FAARW-2",
+        "coords": "Point(-4.09417 57.325)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5446209",
+        "itemLabel": "Ffestiniog Power Station",
+        "code": "FFES-1",
+        "coords": "Point(-3.96889 52.9808)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5446209",
+        "itemLabel": "Ffestiniog Power Station",
+        "code": "FFES-2",
+        "coords": "Point(-3.96889 52.9808)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5446209",
+        "itemLabel": "Ffestiniog Power Station",
+        "code": "FFES-3",
+        "coords": "Point(-3.96889 52.9808)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5446209",
+        "itemLabel": "Ffestiniog Power Station",
+        "code": "FFES-4",
+        "coords": "Point(-3.96889 52.9808)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5566630",
+        "itemLabel": "Glanford Brigg Power Station",
+        "code": "BRGG-1",
+        "coords": "Point(-0.503635 53.5406)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5568417",
+        "itemLabel": "Glendoe Hydro Scheme",
+        "code": "GLNDO-1",
+        "coords": "Point(-4.556 57.093)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5600309",
+        "itemLabel": "Great Yarmouth Power Station",
+        "code": "GYAR-1",
+        "coords": "Point(1.73326 52.5839)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5618736",
+        "itemLabel": "Gunfleet Sands Offshore Wind Farm",
+        "code": "GNFSW-1",
+        "coords": "Point(1.17444 51.7394)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5618736",
+        "itemLabel": "Gunfleet Sands Offshore Wind Farm",
+        "code": "GNFSW-2",
+        "coords": "Point(1.17444 51.7394)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q5638120",
+        "itemLabel": "Hadyard Hill Wind Farm",
+        "code": "HADHW-1",
+        "coords": "Point(-4.72306 55.2458)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6005237",
+        "itemLabel": "Immingham Power Station",
+        "code": "HUMR-1",
+        "coords": "Point(-0.23328 53.6383)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6382090",
+        "itemLabel": "Keadby Power Station",
+        "code": "KEAD-1",
+        "coords": "Point(-0.750442 53.5944)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6382090",
+        "itemLabel": "Keadby Power Station",
+        "code": "KEADGT-3",
+        "coords": "Point(-0.750442 53.5944)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6485663",
+        "itemLabel": "Langage Power Station",
+        "code": "LAGA-1",
+        "coords": "Point(-4.01173 50.3884)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6551320",
+        "itemLabel": "Lincs Wind Farm",
+        "code": "LNCSO-1",
+        "coords": "Point(0.483333 53.1833)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6551320",
+        "itemLabel": "Lincs Wind Farm",
+        "code": "LNCSO-2",
+        "coords": "Point(0.483333 53.1833)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6649001",
+        "itemLabel": "Little Barford Power Station",
+        "code": "LBAR-1",
+        "coords": "Point(-0.268889 52.2044)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6649001",
+        "itemLabel": "Little Barford Power Station",
+        "code": "LBAR-1G",
+        "coords": "Point(-0.268889 52.2044)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6665055",
+        "itemLabel": "Lochaber hydroelectric scheme",
+        "code": "LCSMH-1",
+        "coords": "Point(-5.073 56.829)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q6989526",
+        "itemLabel": "Hywind Scotland",
+        "code": "HYWDW-1",
+        "coords": "Point(-1.35 57.48333333)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7162125",
+        "itemLabel": "Pen y Cymoedd",
+        "code": "PNYCW-1",
+        "coords": "Point(-3.562 51.711)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7178021",
+        "itemLabel": "Peterborough Power Station",
+        "code": "PETEM1",
+        "coords": "Point(-0.204 52.5769)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7178058",
+        "itemLabel": "Peterhead Power Station",
+        "code": "PEHED-1",
+        "coords": "Point(-1.78888 57.4772)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7290043",
+        "itemLabel": "Rampion Wind Farm",
+        "code": "RMPNO-1",
+        "coords": "Point(-0.278888888 50.664722222)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7290043",
+        "itemLabel": "Rampion Wind Farm",
+        "code": "RMPNO-2",
+        "coords": "Point(-0.278888888 50.664722222)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7295516",
+        "itemLabel": "Ratcliffe-on-Soar power station",
+        "code": "RATS-1",
+        "coords": "Point(-1.255 52.8653)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7295516",
+        "itemLabel": "Ratcliffe-on-Soar power station",
+        "code": "RATS-2",
+        "coords": "Point(-1.255 52.8653)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7295516",
+        "itemLabel": "Ratcliffe-on-Soar power station",
+        "code": "RATS-3",
+        "coords": "Point(-1.255 52.8653)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7295516",
+        "itemLabel": "Ratcliffe-on-Soar power station",
+        "code": "RATS-4",
+        "coords": "Point(-1.255 52.8653)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7295516",
+        "itemLabel": "Ratcliffe-on-Soar power station",
+        "code": "RATSGT-2",
+        "coords": "Point(-1.255 52.8653)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7295516",
+        "itemLabel": "Ratcliffe-on-Soar power station",
+        "code": "RATSGT-4",
+        "coords": "Point(-1.255 52.8653)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7320336",
+        "itemLabel": "Rheidol Power Station",
+        "code": "RHEI-4",
+        "coords": "Point(-3.9 52.396)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7355577",
+        "itemLabel": "Rocksavage Power Station",
+        "code": "ROCK-1",
+        "coords": "Point(-2.72541 53.3154)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7384976",
+        "itemLabel": "Rye House power station",
+        "code": "RYHPS-1",
+        "coords": "Point(0.01077 51.7625)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7440154",
+        "itemLabel": "Seabank Power Station",
+        "code": "SEAB-1",
+        "coords": "Point(-2.669 51.54)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7440154",
+        "itemLabel": "Seabank Power Station",
+        "code": "SEAB-2",
+        "coords": "Point(-2.669 51.54)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7440541",
+        "itemLabel": "Seal Sands Power Station",
+        "code": "VKING-2",
+        "coords": "Point(-1.20268 54.6067)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7495028",
+        "itemLabel": "Sheringham Shoal Offshore Wind Farm",
+        "code": "SHRSO-1",
+        "coords": "Point(1.13333 53.1167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7495028",
+        "itemLabel": "Sheringham Shoal Offshore Wind Farm",
+        "code": "SHRSO-2",
+        "coords": "Point(1.13333 53.1167)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7501423",
+        "itemLabel": "Shoreham Power Station",
+        "code": "SHOS-1",
+        "coords": "Point(-0.230556 50.8294)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7567510",
+        "itemLabel": "South Humber Bank Power Station",
+        "code": "SHBA-1",
+        "coords": "Point(-0.146 53.603)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7567510",
+        "itemLabel": "South Humber Bank Power Station",
+        "code": "SHBA-2",
+        "coords": "Point(-0.146 53.603)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7572988",
+        "itemLabel": "Spalding Power Station",
+        "code": "SEEL-1",
+        "coords": "Point(-0.1321 52.8078)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7572988",
+        "itemLabel": "Spalding Power Station",
+        "code": "SPLN-1",
+        "coords": "Point(-0.1321 52.8078)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7593060",
+        "itemLabel": "St Fergus Gas Terminal",
+        "code": "SFERD-1",
+        "coords": "Point(-1.83803 57.5706)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7593060",
+        "itemLabel": "St Fergus Gas Terminal",
+        "code": "SFGSD-1",
+        "coords": "Point(-1.83803 57.5706)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7593060",
+        "itemLabel": "St Fergus Gas Terminal",
+        "code": "SFGSD-2",
+        "coords": "Point(-1.83803 57.5706)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7605141",
+        "itemLabel": "Staythorpe Power Station",
+        "code": "STAY-1",
+        "coords": "Point(-0.85573 53.0748)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7605141",
+        "itemLabel": "Staythorpe Power Station",
+        "code": "STAY-2",
+        "coords": "Point(-0.85573 53.0748)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7605141",
+        "itemLabel": "Staythorpe Power Station",
+        "code": "STAY-3",
+        "coords": "Point(-0.85573 53.0748)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7605141",
+        "itemLabel": "Staythorpe Power Station",
+        "code": "STAY-4",
+        "coords": "Point(-0.85573 53.0748)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7650222",
+        "itemLabel": "Sutton Bridge Power Station",
+        "code": "SUTB-1",
+        "coords": "Point(0.19316 52.7572)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7690249",
+        "itemLabel": "Taylor's Lane Power Station",
+        "code": "TAYL2G",
+        "coords": "Point(-0.2575 51.546)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7690249",
+        "itemLabel": "Taylor's Lane Power Station",
+        "code": "TAYL3G",
+        "coords": "Point(-0.2575 51.546)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7694583",
+        "itemLabel": "Teesside power station",
+        "code": "TSREP-1",
+        "coords": "Point(-1.12042 54.5768)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7844328",
+        "itemLabel": "Triton Knoll Wind Farm",
+        "code": "TKNEW-1",
+        "coords": "Point(0.9 53.4)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7844328",
+        "itemLabel": "Triton Knoll Wind Farm",
+        "code": "TKNWW-1",
+        "coords": "Point(0.9 53.4)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7987061",
+        "itemLabel": "West of Duddon Sands Wind Farm",
+        "code": "WDNSO-1",
+        "coords": "Point(-3.463 53.983)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7987061",
+        "itemLabel": "West of Duddon Sands Wind Farm",
+        "code": "WDNSO-2",
+        "coords": "Point(-3.463 53.983)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q7987427",
+        "itemLabel": "Westermost Rough Wind Farm",
+        "code": "WTMSO-1",
+        "coords": "Point(0.149 53.805)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q8023409",
+        "itemLabel": "Wilton power stations",
+        "code": "WILCT-1",
+        "coords": "Point(-1.1185 54.5894)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q54327834",
+        "itemLabel": "Salt End Power Station",
+        "code": "SCCL-1",
+        "coords": "Point(-0.2431 53.7355)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q54327834",
+        "itemLabel": "Salt End Power Station",
+        "code": "SCCL-2",
+        "coords": "Point(-0.2431 53.7355)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q54327834",
+        "itemLabel": "Salt End Power Station",
+        "code": "SCCL-3",
+        "coords": "Point(-0.2431 53.7355)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q56026054",
+        "itemLabel": "Galloper Offshore Wind Farm",
+        "code": "GAOFO-1",
+        "coords": "Point(1.992222222 51.771111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q56026054",
+        "itemLabel": "Galloper Offshore Wind Farm",
+        "code": "GAOFO-2",
+        "coords": "Point(1.992222222 51.771111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q56026054",
+        "itemLabel": "Galloper Offshore Wind Farm",
+        "code": "GAOFO-3",
+        "coords": "Point(1.992222222 51.771111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q56026054",
+        "itemLabel": "Galloper Offshore Wind Farm",
+        "code": "GAOFO-4",
+        "coords": "Point(1.992222222 51.771111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q84277667",
+        "itemLabel": "Hornsea One Offshore Wind Farm",
+        "code": "HOWAO-1",
+        "coords": "Point(1.791 53.885)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q84277667",
+        "itemLabel": "Hornsea One Offshore Wind Farm",
+        "code": "HOWAO-2",
+        "coords": "Point(1.791 53.885)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q84277667",
+        "itemLabel": "Hornsea One Offshore Wind Farm",
+        "code": "HOWAO-3",
+        "coords": "Point(1.791 53.885)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11969812",
+        "itemLabel": "Foyers Power Station",
+        "code": "FOYE-1",
+        "coords": "Point(-4.483527777 57.262111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11969812",
+        "itemLabel": "Foyers Power Station",
+        "code": "FOYE-2",
+        "coords": "Point(-4.483527777 57.262111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11969812",
+        "itemLabel": "Foyers Power Station",
+        "code": "FOYED-1",
+        "coords": "Point(-4.483527777 57.262111111)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11972432",
+        "itemLabel": "Grain Power Station",
+        "code": "GRAI-6",
+        "coords": "Point(0.708055555 51.443055555)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11972432",
+        "itemLabel": "Grain Power Station",
+        "code": "GRAI-7",
+        "coords": "Point(0.708055555 51.443055555)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11972432",
+        "itemLabel": "Grain Power Station",
+        "code": "GRAI-8",
+        "coords": "Point(0.708055555 51.443055555)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11972432",
+        "itemLabel": "Grain Power Station",
+        "code": "GRAI1G",
+        "coords": "Point(0.708055555 51.443055555)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11972432",
+        "itemLabel": "Grain Power Station",
+        "code": "GRAI4G",
+        "coords": "Point(0.708055555 51.443055555)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11980683",
+        "itemLabel": "King's Lynn Power Station",
+        "code": "KLYN-A-1",
+        "coords": "Point(0.380117 52.7273)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11987128",
+        "itemLabel": "Lynemouth power station",
+        "code": "LNMTH-1",
+        "coords": "Point(-1.52083 55.2042)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11987128",
+        "itemLabel": "Lynemouth power station",
+        "code": "LNMTH-2",
+        "coords": "Point(-1.52083 55.2042)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q11987128",
+        "itemLabel": "Lynemouth power station",
+        "code": "LNMTH-3",
+        "coords": "Point(-1.52083 55.2042)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115952211",
+        "itemLabel": "Dogger Bank A Wind Farm",
+        "code": "DBAWO-1",
+        "coords": "Point(1.9301 54.7489)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q115952211",
+        "itemLabel": "Dogger Bank A Wind Farm",
+        "code": "DBAWO-2",
+        "coords": "Point(1.9301 54.7489)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877573",
+        "itemLabel": "Twentyshilling Hill Wind Farm",
+        "code": "TWSHW-1",
+        "coords": "Point(-3.9185 55.3142)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877635",
+        "itemLabel": "Whiteside Hill Wind Farm",
+        "code": "WHIHW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116877692",
+        "itemLabel": "Windy Rig Wind Farm",
+        "code": "WDRGW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878007",
+        "itemLabel": "West Burton B Battery",
+        "code": "WBURB-41"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878007",
+        "itemLabel": "West Burton B Battery",
+        "code": "WBURB-43"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878065",
+        "itemLabel": "Tullo Wind Farm",
+        "code": "TULWW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116878065",
+        "itemLabel": "Tullo Wind Farm",
+        "code": "TULWW-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116884580",
+        "itemLabel": "Whitelee Battery",
+        "code": "WHLWB-1",
+        "coords": "Point(-4.17331 55.6954)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116886657",
+        "itemLabel": "Claredown Battery Storage",
+        "code": "ZEN02A"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116889429",
+        "itemLabel": "Roundponds Battery",
+        "code": "AG-HEL01H"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116890267",
+        "itemLabel": "Kemsley Battery Storage",
+        "code": "KEMB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116890392",
+        "itemLabel": "Byers Brae Battery Storage",
+        "code": "NFSE02"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116894478",
+        "itemLabel": "Minety Battery Storage",
+        "code": "AG-HLIM03"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116894478",
+        "itemLabel": "Minety Battery Storage",
+        "code": "AG-HLIM04"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116894501",
+        "itemLabel": "Minety South Battery Storage",
+        "code": "AG-HSTK01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116894501",
+        "itemLabel": "Minety South Battery Storage",
+        "code": "AG-HSTK02"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116894543",
+        "itemLabel": "Newlands Farm Battery Storage",
+        "code": "AG-HLIM01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116894543",
+        "itemLabel": "Newlands Farm Battery Storage",
+        "code": "AG-HLIM02"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116895971",
+        "itemLabel": "Tynemouth Energy Storage System",
+        "code": "FFSE01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116896049",
+        "itemLabel": "Pelham Battery Storage",
+        "code": "AG-ASTK05"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116896378",
+        "itemLabel": "Dorking Battery Energy Storage System",
+        "code": "AG-JSTK02"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116896414",
+        "itemLabel": "Aldwarke Steelworks",
+        "code": "RHAMD-1",
+        "coords": "Point(-1.319 53.452)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116899982",
+        "itemLabel": "Derby Gas Power Station",
+        "code": "DERBY-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116900565",
+        "itemLabel": "Exeter Gas Power Station",
+        "code": "EXETR-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116901037",
+        "itemLabel": "Heartlands Power Station",
+        "code": "FDUNT-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116901863",
+        "itemLabel": "Thornhill Gas Power Station",
+        "code": "THRNL-1",
+        "coords": "Point(-1.654722222 53.677222222)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116902714",
+        "itemLabel": "Hallen Battery Storage",
+        "code": "AG-LLIM01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116903517",
+        "itemLabel": "Water Lane STOR",
+        "code": "WTRLN-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116904187",
+        "itemLabel": "Letchworth STOR",
+        "code": "LCHWT-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116904528",
+        "itemLabel": "Trafalgar Park Gas Peaking Plant",
+        "code": "TRFPK-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116907433",
+        "itemLabel": "Lascar Battery Storage",
+        "code": "AG-GEDF02"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116907451",
+        "itemLabel": "Hulley Road Battery Storage",
+        "code": "AG-GEDF01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116907489",
+        "itemLabel": "Chickerell Power Station",
+        "code": "CHICK-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116910664",
+        "itemLabel": "Pogbie Wind Farm",
+        "code": "PGBIW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116910739",
+        "itemLabel": "Blary Hill Wind Farm",
+        "code": "BLARW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116910963",
+        "itemLabel": "Burghfield Power Station",
+        "code": "BURGH-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116911000",
+        "itemLabel": "Keadby 2 Power Station",
+        "code": "KEAD-2",
+        "coords": "Point(-0.7522 53.5952)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q116913510",
+        "itemLabel": "JG Pears Newark CHP",
+        "code": "JGPR-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117011275",
+        "itemLabel": "Wishaw Battery",
+        "code": "WISHB-1",
+        "coords": "Point(-3.93867 55.76927)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117011275",
+        "itemLabel": "Wishaw Battery",
+        "code": "WISHD-1",
+        "coords": "Point(-3.93867 55.76927)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117011366",
+        "itemLabel": "Blackhillock Battery",
+        "code": "BLHLB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117011366",
+        "itemLabel": "Blackhillock Battery",
+        "code": "BLHLB-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117011366",
+        "itemLabel": "Blackhillock Battery",
+        "code": "BLHLB-3"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117011366",
+        "itemLabel": "Blackhillock Battery",
+        "code": "BLHLB-4"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117034611",
+        "itemLabel": "Clachan Flats Wind Farm",
+        "code": "CLFLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117034625",
+        "itemLabel": "Kincardine Offshore Wind Farm",
+        "code": "KINCW-1",
+        "coords": "Point(-1.8596 57.0046)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117034632",
+        "itemLabel": "Keith Hill Wind Farm",
+        "code": "KTHLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117035975",
+        "itemLabel": "Solutia District Energy",
+        "code": "SOLUU-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117035982",
+        "itemLabel": "Sevington District Energy",
+        "code": "SEVIU-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117035993",
+        "itemLabel": "Sudmeadow Road Power Station",
+        "code": "SUDME-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117036012",
+        "itemLabel": "Moorfield Drive Power Station",
+        "code": "MORFL-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117036041",
+        "itemLabel": "Rake Lane Power Station",
+        "code": "RAKE-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117036054",
+        "itemLabel": "Down Barn Farm Power Station",
+        "code": "DBFRM-1",
+        "coords": "Point(-1.153879 50.861673)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117036082",
+        "itemLabel": "Goose House Lane Power Station",
+        "code": "GOSHS-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117036789",
+        "itemLabel": "Bridgwater Power Station",
+        "code": "BRIDU-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117037179",
+        "itemLabel": "Coupar Battery Storage",
+        "code": "CUPAB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117037261",
+        "itemLabel": "Chatterley Power Station",
+        "code": "CHTRY-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117066391",
+        "itemLabel": "Fideoak Mill Battery Storage",
+        "code": "AG-LLIM02",
+        "coords": "Point(-3.157186 51.018497)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117262064",
+        "itemLabel": "Bispham Flexible Generation",
+        "code": "BSPHM-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117409488",
+        "itemLabel": "Brownieleys Wind Farm",
+        "code": "BRNLW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117422401",
+        "itemLabel": "Greengairs East Wind Farm",
+        "code": "GRGRW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117423271",
+        "itemLabel": "Broadditch Battery",
+        "code": "BROAB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117423578",
+        "itemLabel": "Middlewich Power Station",
+        "code": "MDLWH-1",
+        "coords": "Point(-2.42461 53.18726)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117423985",
+        "itemLabel": "Gowerton East Power Station",
+        "code": "ALCOA-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117462281",
+        "itemLabel": "Chapel Farm Battery Storage",
+        "code": "CHAPB-1",
+        "coords": "Point(-0.4963 51.9266)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117487883",
+        "itemLabel": "Tollgate Battery Storage",
+        "code": "TOLLB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117717825",
+        "itemLabel": "Craig Wind Farm",
+        "code": "CRGTW-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117748788",
+        "itemLabel": "Dogger Bank A & B Wind Farm Cluster",
+        "code": "DBAWO-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117748788",
+        "itemLabel": "Dogger Bank A & B Wind Farm Cluster",
+        "code": "DBAWO-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117768503",
+        "itemLabel": "Dollymans Battery Storage",
+        "code": "DOLLB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q117804710",
+        "itemLabel": "Rise Carr Battery Storage",
+        "code": "RSCRB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q118144516",
+        "itemLabel": "Larks Green Solar Farm",
+        "code": "LARKS-1",
+        "coords": "Point(-2.477369 51.57851)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q120356399",
+        "itemLabel": "West Gourdie Battery",
+        "code": "AG-PFLX01"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q120359695",
+        "itemLabel": "Farnham Battery Storage",
+        "code": "FARNB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q120360122",
+        "itemLabel": "Coventry Battery Storage",
+        "code": "COVNB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q120360277",
+        "itemLabel": "Fordtown Battery Storage",
+        "code": "AG-HEL0CP"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q120360537",
+        "itemLabel": "Camilla Battery Storage",
+        "code": "AG-HEL0DN"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q120401692",
+        "itemLabel": "Burwell Solar Farm",
+        "code": "BURWS-1",
+        "coords": "Point(0.302 52.283)"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q122170316",
+        "itemLabel": "Clay Tye Battery",
+        "code": "CLAYB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q122170316",
+        "itemLabel": "Clay Tye Battery",
+        "code": "CLAYB-2"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q122762065",
+        "itemLabel": "Little Raith Battery Storage",
+        "code": "LITRB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q122762222",
+        "itemLabel": "Newton Wood Farm Battery Storage",
+        "code": "NEWTB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q123580869",
+        "itemLabel": "Jamesfield Battery Storage",
+        "code": "JAMBB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q123580885",
+        "itemLabel": "Ilmer Lane Battery Storage",
+        "code": "ILMEB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q123581042",
+        "itemLabel": "Carnegie Road Battery",
+        "code": "CRSSB-1"
+    },
+    {
+        "item": "http://www.wikidata.org/entity/Q135526680",
+        "itemLabel": "Cumberhead Wind Farm",
+        "code": "CUMHW-1"
+    }
+]
