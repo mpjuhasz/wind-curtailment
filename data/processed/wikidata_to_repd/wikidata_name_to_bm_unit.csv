@@ -1,0 +1,519 @@
+name,bm_unit,lat,long
+Rothes Wind Farm,CAIRW-1,57.53,-3.36
+Rothes Wind Farm,CAIRW-2,57.53,-3.36
+Rothes Wind Farm,ROTHW-1,57.53,-3.36
+Fawley Cogen Power Station,FAWN-1,,
+Markinch Biomass Plant,MARK-1,,
+Lochluichart Wind Farm,LCLTW-1,,
+Clachan Power Station,CLAC-1,56.27745,-4.9218
+Garry Hydroelectric Scheme,CAS-GAR01,,
+Moriston Hydroelectric Scheme,CAS-MOR01,,
+Tom na Clach Wind Farm,TMNCW-1,,
+Killin Hydroelectric Scheme,CAS-KIL01,,
+Baillie Wind Farm,BABAW-1,,
+Croydon Power Station,CROYD-2,51.37644,-0.11637
+Camster Wind Farm,CMSTW-1,,
+Hill of Towie Wind Farm,HLTWW-1,,
+Dunbar Energy Recovery Facility,DNBAR-1,,
+Corriemoillie Wind Farm,CRMLW-1,,
+Halsary Wind Farm,HALSW-1,,
+Causeymire Wind Farm,CAUSW-1,,
+Coire Na Cloiche Wind Farm,CNCLW-1,,
+Edinbane Wind Farm,EDINW-1,,
+Bad a Cheo Wind Farm,BDCHW-1,,
+Rosehall Wind Farm,RSHLW-1,,
+Dalquhandy Wind Farm,DALQW-1,,
+Harburnhead Wind Farm,HBHDW-1,,
+Mid Hill Wind Farm,MDHLW-1,,
+Hill of Glaschyle Wind Farm,HLGLW-1,,
+Tralorg Wind Farm,TRLGW-1,,
+Beinn Tharsuinn Wind Farm,BETHW-1,,
+Sanquhar Community Wind Farm,SANQW-1,,
+Douglas West Wind Farm,DOUGW-1,,
+Burn of Whilk Wind Farm,BNWKW-1,,
+Tullymurdoch Wind Farm,TLYMW-1,,
+Cour Wind Farm,COUWW-1,,
+Middle Muir Wind Farm,MIDMW-1,,
+Gordonstown Hill Wind Farm,GDSTW-1,,
+Glens of Foudland Wind Farm,GLOFW-1,57.414,-2.65
+Hare Hill Wind Farm,HRHLW-1,,
+Crossdykes Wind Farm,CRDEW-1,,
+Crossdykes Wind Farm,CRDEW-2,,
+Capenhurst Battery,PINFB-1,53.265694444,-2.943583333
+Capenhurst Battery,PINFB-2,53.265694444,-2.943583333
+Capenhurst Battery,PINFB-3,53.265694444,-2.943583333
+Capenhurst Battery,PINFB-4,53.265694444,-2.943583333
+Capenhurst Battery,PINFB-5,53.265694444,-2.943583333
+Capenhurst Battery,PINFB-6,53.265694444,-2.943583333
+Freasdail Wind Farm,FSDLW-1,,
+Assel Valley Wind Farm,ASLVW-1,,
+Dalswinton Wind Farm,DALSW-1,,
+Minsca Wind Farm,MINSW-1,,
+Burwell Battery,BURWB-1,,
+Brook Farm Battery,BROFB-1,52.074,1.05
+Roosecote Battery,ROOSB-1,54.105,-3.189
+Arbroath Battery,ARBRB-1,56.56497,-2.619634
+Hutton Battery,ARNKB-2,,
+Hunningley Stairfoot Battery,BARNB-1,,
+Nant Power Station,NANT-1,56.338055555,-5.211666666
+Ewe Hill Wind Farm,EWHLW-1,,
+Airies Wind Farm,AIRSW-1,,
+An Suidhe Wind Farm,ANSUW-1,,
+Glen App Wind Farm,GNAPW-1,,
+Glenchamber Wind Farm,GLCHW-1,,
+Didcot B Power Station,DIDCB5,51.6254,-1.268
+Didcot B Power Station,DIDCB6,51.6254,-1.268
+Didcot OCGT Power Station,DIDC01G,51.6245,-1.2639
+Didcot OCGT Power Station,DIDC02G,51.6245,-1.2639
+Didcot OCGT Power Station,DIDC03G,51.6245,-1.2639
+Didcot OCGT Power Station,DIDC04G,51.6245,-1.2639
+Holes Bay Battery,BHOLB-1,,
+Contego Battery,CONTB-1,50.95526,-0.162756
+Hawkers Hill Energy Park,HAWKB-1,51.013772,-2.208174
+Nursling Battery,NURSB-1,50.942355,-1.484869
+Port of Tyne Energy Storage,POTES-1,54.977384,-1.455827
+Goole Fields Wind Farms,GFLDW-1,53.6643,-0.8822
+Minnygap Wind Farm,MYGPW-1,,
+Rugeley B Power Station,RUGGT-6,,
+Rugeley B Power Station,RUGGT-7,,
+Rugeley B Power Station,RUGPS-6,,
+Rugeley B Power Station,RUGPS-7,,
+Cowley Battery Storage,COWB-1,51.709925,-1.189058
+Redfield Road Gas Generation Plant,RDFRB-1,,
+Redfield Road Gas Generation Plant,RDFRD-1,,
+Tremorfa Steelworks,TRMFD-1,,
+Bloxwich Battery,ARNKB-1,,
+Pen y Cymoedd Battery,PNYCB-1,,
+Aylesford Battery,AG-ZEN03J,,
+Pillswood Battery,PILLB-1,,
+Pillswood Battery,PILLB-2,,
+Clunie Cascade,CAS-CLU01,,
+Bustleholme Battery,BUSTB-1,,
+Thurcroft Battery,AG-MFLX02,,
+Mannington Battery Storage,AG-HEDF01,,
+Skelmersdale Battery,SKELB-1,,
+Enderby Storage,BFSE01,,
+Creyke Beck Battery Storage,AG-MSTK01,,
+Lester Way Power Plant,LSTWY-1,,
+The Drove Power Plant,TDRVE-1,,
+Red Scar Peaking Plant,RDSCR-1,,
+Red Scar Battery Storage,AG-HEL00G,,
+Hunningley Stairfoot BESS,BARNB-1,53.54841,-1.45007
+Dinorwig Power Station,DINO-1,53.117842582,-4.107341766
+Dinorwig Power Station,DINO-2,53.117842582,-4.107341766
+Dinorwig Power Station,DINO-3,53.117842582,-4.107341766
+Dinorwig Power Station,DINO-4,53.117842582,-4.107341766
+Dinorwig Power Station,DINO-5,53.117842582,-4.107341766
+Dinorwig Power Station,DINO-6,53.117842582,-4.107341766
+Peterhead Power Station,PEHE-1,57.4772,-1.78888
+Peterhead Power Station,PEHE-2,57.4772,-1.78888
+Cruachan Power Station,CRUA-1,56.40638889,-5.11305556
+Cruachan Power Station,CRUA-2,56.40638889,-5.11305556
+Cruachan Power Station,CRUA-3,56.40638889,-5.11305556
+Cruachan Power Station,CRUA-4,56.40638889,-5.11305556
+Sizewell B power station,SIZB-1,52.215,1.61972
+Sizewell B power station,SIZB-2,52.215,1.61972
+Heysham 1 power station,HEYM11,54.0304,-2.91719
+Heysham 1 power station,HEYM12,54.0304,-2.91719
+Heysham 2 power station,HEYM27,54.0273,-2.91504
+Heysham 2 power station,HEYM28,54.0273,-2.91504
+Heysham 2 power station,HEYM2D-1,54.0273,-2.91504
+Dungeness B power station,DNGB21,50.9134,0.95976
+Dungeness B power station,DNGB22,50.9134,0.95976
+Dungeness B power station,DNGBD-1,50.9134,0.95976
+Conon Valley Hydro Electric Scheme,CAS-CON01,57.554,-4.598
+Finlarig power station,FINL-1,56.4816,-4.29872
+Hornsea Two Offshore Wind Farm,HOWBO-1,53.91,1.5518
+Hornsea Two Offshore Wind Farm,HOWBO-2,53.91,1.5518
+Hornsea Two Offshore Wind Farm,HOWBO-3,53.91,1.5518
+Griffin Wind Farm,GRIFW-1,56.583251,-3.7435659
+Griffin Wind Farm,GRIFW-2,56.583251,-3.7435659
+Clashindarroch Wind Farm,CLDRW-1,57.363336,-2.9640069
+Dun Law wind farm,DNLWW-1,55.805307,-2.8512555
+Harestanes Wind Farm,HRSTW-1,55.244384,-3.5596388
+Moy Wind Farm,MOYEW-1,57.406964,-4.0154701
+Seagreen Wind Farm,SGRWO-1,56.588,-1.741
+Seagreen Wind Farm,SGRWO-2,56.588,-1.741
+Seagreen Wind Farm,SGRWO-3,56.588,-1.741
+Seagreen Wind Farm,SGRWO-4,56.588,-1.741
+Seagreen Wind Farm,SGRWO-5,56.588,-1.741
+Seagreen Wind Farm,SGRWO-6,56.588,-1.741
+Stronelairg Wind Farm,STLGW-1,,
+Stronelairg Wind Farm,STLGW-2,,
+Stronelairg Wind Farm,STLGW-3,,
+Dorenell Wind Farm,DOREW-1,,
+Dorenell Wind Farm,DOREW-2,,
+Fallago Rig Wind Farm,FALGW-1,,
+Bhlaraidh Wind Farm,BHLAW-1,57.2456,-4.7158
+Dogger Bank A Wind Farm,DBAWO-3,54.7489,1.9301
+Dogger Bank A Wind Farm,DBAWO-4,54.7489,1.9301
+Dogger Bank A Wind Farm,DBAWO-5,54.7489,1.9301
+South Kyle Wind Farm,SOKYW-1,,
+Dunmaglass Wind Farm,DUNGW-1,,
+Brockloch Rig Wind Farm,WISTW-2,,
+Kype Muir Wind Farm,KPMRW-1,,
+Kype Muir Wind Farm,KYPEW-1,,
+Beinneun Wind Farm,BEINW-1,,
+Creag Riabhach Wind Farm,CREAW-1,,
+Gordonbush Wind Farm,GORDW-1,,
+Gordonbush Wind Farm,GORDW-2,,
+Corriegarth Wind Farm,CGTHW-1,,
+Dersalloch Wind Farm,DRSLW-1,,
+Strathy North Wind Farm,STRNW-1,,
+Berry Burn Wind Farm,BRYBW-1,,
+Galawhistle Wind Farm,GLWSW-1,,
+Paul's Hill Wind Farm,PAUHW-1,,
+Kennoxhead Wind Farm,KENNW-1,,
+Toddleburn Wind Farm,TDBNW-1,55.768,-2.872
+Moray West Offshore Wind Farm,MOWWO-1,58.094,-2.988
+Moray West Offshore Wind Farm,MOWWO-2,58.094,-2.988
+Moray West Offshore Wind Farm,MOWWO-3,58.094,-2.988
+Moray West Offshore Wind Farm,MOWWO-4,58.094,-2.988
+Andershaw Wind Farm,ASHWW-1,,
+Aikengall Community Wind Farm,AKGLW-1,,
+Aikengall Community Wind Farm,AKGLW-2,,
+Aikengall Community Wind Farm,AKGLW-3,,
+Indian Queens Power Station,INDQ-1,50.396,-4.8997
+Cottam Development Centre,CDCL-1,53.3062,-0.786
+Severn Power Station,SVRP-10,,
+Severn Power Station,SVRP-20,,
+West Burton A Power Station,WBUPS-1,,
+West Burton A Power Station,WBUPS-2,,
+West Burton A Power Station,WBUPS-3,,
+West Burton A Power Station,WBUPS-4,,
+West Burton B Power Station,WBURB-1,,
+West Burton B Power Station,WBURB-2,,
+West Burton B Power Station,WBURB-3,,
+Grangemouth CHP,GRMO-1,,
+A’Chruach Wind Farm,ACHRW-1,56.1292,-5.335
+Afton Wind Farm,AFTOW-1,,
+Blackcraig Wind Farm,BLKWW-1,,
+Kilbraur Wind Farm,KILBW-1,,
+Fellside Power Station,FELL-1,,
+Aberdare Power Station,ABERU-1,51.6975,-3.41613
+Auchrobert Wind Farm,ABRTW-1,,
+Carraig Gheal Wind Farm,CRGHW-1,,
+Mark Hill Wind Farm,MKHLW-1,,
+Millennium Wind Farm,MILWW-1,,
+Glen Kyllachy Wind Farm,GLNKW-1,,
+Tilbury Green Power,TIBG-1,,
+Sandy Knowe Wind Farm,SAKNW-1,,
+Back Lane Battery,AG-CBS06B,53.22386,-1.37484
+Gwynt y Môr Wind Farm,GYMRO-15,53.45,-3.58333333
+Gwynt y Môr Wind Farm,GYMRO-17,53.45,-3.58333333
+Gwynt y Môr Wind Farm,GYMRO-26,53.45,-3.58333333
+Gwynt y Môr Wind Farm,GYMRO-28,53.45,-3.58333333
+Walney Wind Farm,WLNYO-2,54.044,-3.522
+Walney Wind Farm,WLNYO-3,54.044,-3.522
+Walney Wind Farm,WLNYO-4,54.044,-3.522
+Walney Wind Farm,WLNYW-1,54.044,-3.522
+Torness Nuclear Power Station,TORN-1,55.968,-2.40908
+Torness Nuclear Power Station,TORN-2,55.968,-2.40908
+Torness Nuclear Power Station,TORND-1,55.968,-2.40908
+Hinkley Point B Nuclear Power Station,HINB-7,51.2088898,-3.1280887
+Hinkley Point B Nuclear Power Station,HINB-8,51.2088898,-3.1280887
+Hinkley Point B Nuclear Power Station,HINBD-1,51.2088898,-3.1280887
+Thanet Wind Farm,THNTO-1,51.4306,1.6331
+Thanet Wind Farm,THNTO-2,51.4306,1.6331
+Drax power station,DRAXD-2,53.7358,-0.996389
+Drax power station,DRAXX-1,53.7358,-0.996389
+Drax power station,DRAXX-2,53.7358,-0.996389
+Drax power station,DRAXX-3,53.7358,-0.996389
+Drax power station,DRAXX-4,53.7358,-0.996389
+Drax power station,DRAXX-5,53.7358,-0.996389
+Drax power station,DRAXX-6,53.7358,-0.996389
+Joint European Torus,CULJD-1,51.659166666,-1.226388888
+Joint European Torus,CULJD-1,51.75484,-1.237215
+Robin Rigg Wind Farm,RREW-1,54.75,-3.71667
+Robin Rigg Wind Farm,RRWW-1,54.75,-3.71667
+Wylfa Nuclear Power Station,WYLF-1,53.4167,-4.48333
+Wylfa Nuclear Power Station,WYLF-2,53.4167,-4.48333
+Wylfa Nuclear Power Station,WYLF-3,53.4167,-4.48333
+Wylfa Nuclear Power Station,WYLF-4,53.4167,-4.48333
+Barrow Offshore Wind Farm,BOWLW-1,53.9833,-3.28333
+Isle of Man to England Interconnector,MANXENR-1,54.0,-3.83333
+Burbo Bank Offshore Wind Farm,BRBEO-1,53.4833,-3.16667
+Burbo Bank Offshore Wind Farm,BURBW-1,53.4833,-3.16667
+Pembroke B Power Station,PEMB-11,51.6831,-4.98842
+Pembroke B Power Station,PEMB-21,51.6831,-4.98842
+Pembroke B Power Station,PEMB-31,51.6831,-4.98842
+Pembroke B Power Station,PEMB-41,51.6831,-4.98842
+Pembroke B Power Station,PEMB-51,51.6831,-4.98842
+Race Bank Wind Farm,RCBKO-1,53.275,0.83333333
+Race Bank Wind Farm,RCBKO-2,53.275,0.83333333
+Moray East Offshore Wind Farm,MOWEO-1,58.16708,-2.69852
+Moray East Offshore Wind Farm,MOWEO-2,58.16708,-2.69852
+Moray East Offshore Wind Farm,MOWEO-3,58.16708,-2.69852
+Medway Power Station,MEDP-1,51.44,0.69
+Whitelee Wind Farm,WHILW-1,55.672777777,-4.285555555
+Whitelee Wind Farm,WHILW-2,55.672777777,-4.285555555
+Viking Wind Farm,VKNGW-1,60.286611111,-1.261222222
+Viking Wind Farm,VKNGW-2,60.286611111,-1.261222222
+Viking Wind Farm,VKNGW-3,60.286611111,-1.261222222
+Viking Wind Farm,VKNGW-4,60.286611111,-1.261222222
+Affric-Beauly hydro-electric power scheme,CAS-BEU01,57.325,-4.794
+Anglesey Aluminium,ANGLD-1,,
+Arecleoch Wind Farm,ARCHW-1,55.0533,-4.88222
+Beatrice Wind Farm,BEATO-1,58.13,-3.07
+Beatrice Wind Farm,BEATO-2,58.13,-3.07
+Beatrice Wind Farm,BEATO-3,58.13,-3.07
+Beatrice Wind Farm,BEATO-4,58.13,-3.07
+Beinn an Tuirc Wind Farm,BTUIW-1,55.5714,-5.57611
+Beinn an Tuirc Wind Farm,BTUIW-2,55.5714,-5.57611
+Beinn an Tuirc Wind Farm,BTUIW-3,55.5714,-5.57611
+Black Law Wind Farm,BLLA-1,55.7669,-3.73889
+Black Law Wind Farm,BLLA-2,55.7669,-3.73889
+Carrington Power Station,CARR-1,53.4358,-2.41089
+Carrington Power Station,CARR-2,53.4358,-2.41089
+Clyde Wind Farm,CLDCW-1,55.4672,-3.65444
+Clyde Wind Farm,CLDNW-1,55.4672,-3.65444
+Clyde Wind Farm,CLDSW-1,55.4672,-3.65444
+Connah's Quay Power Station,CNQPS-1,53.2322,-3.0813
+Connah's Quay Power Station,CNQPS-2,53.2322,-3.0813
+Connah's Quay Power Station,CNQPS-3,53.2322,-3.0813
+Connah's Quay Power Station,CNQPS-4,53.2322,-3.0813
+Corby Power Station,CORB-1,52.5109,-0.68139
+Coryton Power Station,COSO-1,51.512,0.508
+Cowes Power Station,COWE1,50.7459,-1.2864
+Cowes Power Station,COWE2,50.7459,-1.2864
+Crystal Rig Wind Farm,CRYRW-2,55.9,-2.55
+Crystal Rig Wind Farm,CRYRW-3,55.9,-2.55
+Humber Gateway Wind Farm,HMGTO-1,53.644,0.293
+Humber Gateway Wind Farm,HMGTO-2,53.644,0.293
+Neart na Gaoithe Offshore Wind Farm,NNGAO-1,56.26777778,-2.32083333
+East Anglia ONE,EAAO-1,52.66,2.3
+East Anglia ONE,EAAO-2,52.66,2.3
+European Offshore Wind Deployment Centre,ABRBO-1,57.2167,-1.98333
+Fasnakyle Power Station,FASN-1,57.326083333,-4.794
+Fasnakyle Power Station,FASN-4,57.326083333,-4.794
+Fasnakyle Power Station,FASN2,57.326083333,-4.794
+Fasnakyle Power Station,FASN3,57.326083333,-4.794
+Kinlochleven Power Station,KNLCV-1,56.7129,-4.95803
+Errochty Dam,ERRO-1,56.7644,-4.10523
+Errochty Dam,ERRO-2,56.7644,-4.10523
+Errochty Dam,ERRO-3,56.7644,-4.10523
+Marchwood Power Station,MRWD-1,50.897777777,-1.438888888
+Killingholme B power station,KILLPG-1,53.65419,-0.25518
+Killingholme B power station,KILLPG-2,53.65419,-0.25518
+Kilgallioch Wind Farm,KLGLW-1,55.05,-4.76527778
+Thame Road Battery Storage,THMRB-1,,
+Peterborough STOR,PETDG-1,52.575703,-0.2037977
+Brigg STOR,BRGDG-1,53.540993,-0.508006
+Neart na Gaoithe Offshore Wind Farm,NNGAO-2,56.26777778,-2.32083333
+Cleve Hill Solar Park,CLVHS-1,51.3344,0.9429
+Cleve Hill Solar Park,CLVHS-2,51.3344,0.9429
+Mid Hill Wind Farm,2__PSTAT002,,
+Dogger Bank B Wind Farm,DBBWO-2,54.9866,1.6622
+Dogger Bank B Wind Farm,DBBWO-3,54.9866,1.6622
+Dogger Bank B Wind Farm,DBBWO-4,54.9866,1.6622
+Dogger Bank B Wind Farm,DBBWO-5,54.9866,1.6622
+Dogger Bank B Wind Farm,DBBWO-1,54.9866,1.6622
+Haghshaw Hill Wind Farm,HAHAW-1,,
+Haghshaw Hill Wind Farm,HAGHW-2,,
+Broken Cross wind farm,BROCW-1,55.6165211,-3.8280487
+North Kyle Wind Farm,NOKYW-1,,
+North Kyle Wind Farm,NOKYW-2,,
+Thurrock Storage,THURB-1,,
+Thurrock Storage,THURB-2,,
+Thurrock Storage,THURB-3,,
+Kirk Hill Wind Farm,KHLLW-1,,
+Hartlepool Nuclear Power Station,HRTL-1,54.635,-1.18083
+Hartlepool Nuclear Power Station,HRTL-2,54.635,-1.18083
+Braes of Doune Wind Farm,BRDUW-1,56.2761,-4.0625
+Ormonde Wind Farm,OMNDO-1,54.1,-3.4
+Hunterston B nuclear power station,HUNBD-1,55.7221,-4.89009
+Sloy Power Station,SLOY-1,56.251204,-4.711551
+Sloy Power Station,SLOY-2,56.251204,-4.711551
+Sloy Power Station,SLOY-3,56.251204,-4.711551
+Sloy Power Station,SLOY-4,56.251204,-4.711551
+Sloy Power Station,SLOYD-1,56.251204,-4.711551
+Greater Gabbard wind farm,GRGBW-1,51.88,1.94
+Greater Gabbard wind farm,GRGBW-2,51.88,1.94
+Greater Gabbard wind farm,GRGBW-3,51.88,1.94
+London Array,LARYO-1,51.6439,1.55361
+London Array,LARYO-2,51.6439,1.55361
+London Array,LARYO-3,51.6439,1.55361
+London Array,LARYO-4,51.6439,1.55361
+Cwm Dyli,CWMD-1,53.0659,-4.0115
+Damhead Creek power station,DAMC-1,51.4254,0.6001
+Derwent Power Station,DERW-1,52.9064,-1.4007
+Dudgeon Offshore Wind Farm,DDGNO-1,53.249,1.39
+Dudgeon Offshore Wind Farm,DDGNO-2,53.249,1.39
+Dudgeon Offshore Wind Farm,DDGNO-3,53.249,1.39
+Dudgeon Offshore Wind Farm,DDGNO-4,53.249,1.39
+East–West Interconnector,IED-EWIC1,53.5305,-4.8257
+East–West Interconnector,IEG-EWIC1,53.5305,-4.8257
+Enfield Power Station,EECL-1,51.6628,-0.0227778
+Farr Wind Farm,FAARW-1,57.325,-4.09417
+Farr Wind Farm,FAARW-2,57.325,-4.09417
+Ffestiniog Power Station,FFES-1,52.9808,-3.96889
+Ffestiniog Power Station,FFES-2,52.9808,-3.96889
+Ffestiniog Power Station,FFES-3,52.9808,-3.96889
+Ffestiniog Power Station,FFES-4,52.9808,-3.96889
+Glanford Brigg Power Station,BRGG-1,53.5406,-0.503635
+Glendoe Hydro Scheme,GLNDO-1,57.093,-4.556
+Great Yarmouth Power Station,GYAR-1,52.5839,1.73326
+Gunfleet Sands Offshore Wind Farm,GNFSW-1,51.7394,1.17444
+Gunfleet Sands Offshore Wind Farm,GNFSW-2,51.7394,1.17444
+Hadyard Hill Wind Farm,HADHW-1,55.2458,-4.72306
+Immingham Power Station,HUMR-1,53.6383,-0.23328
+Keadby Power Station,KEAD-1,53.5944,-0.750442
+Keadby Power Station,KEADGT-3,53.5944,-0.750442
+Langage Power Station,LAGA-1,50.3884,-4.01173
+Lincs Wind Farm,LNCSO-1,53.1833,0.483333
+Lincs Wind Farm,LNCSO-2,53.1833,0.483333
+Little Barford Power Station,LBAR-1,52.2044,-0.268889
+Little Barford Power Station,LBAR-1G,52.2044,-0.268889
+Lochaber hydroelectric scheme,LCSMH-1,56.829,-5.073
+Hywind Scotland,HYWDW-1,57.48333333,-1.35
+Pen y Cymoedd,PNYCW-1,51.711,-3.562
+Peterborough Power Station,PETEM1,52.5769,-0.204
+Peterhead Power Station,PEHED-1,57.4772,-1.78888
+Rampion Wind Farm,RMPNO-1,50.664722222,-0.278888888
+Rampion Wind Farm,RMPNO-2,50.664722222,-0.278888888
+Ratcliffe-on-Soar power station,RATS-1,52.8653,-1.255
+Ratcliffe-on-Soar power station,RATS-2,52.8653,-1.255
+Ratcliffe-on-Soar power station,RATS-3,52.8653,-1.255
+Ratcliffe-on-Soar power station,RATS-4,52.8653,-1.255
+Ratcliffe-on-Soar power station,RATSGT-2,52.8653,-1.255
+Ratcliffe-on-Soar power station,RATSGT-4,52.8653,-1.255
+Rheidol Power Station,RHEI-4,52.396,-3.9
+Rocksavage Power Station,ROCK-1,53.3154,-2.72541
+Rye House power station,RYHPS-1,51.7625,0.01077
+Seabank Power Station,SEAB-1,51.54,-2.669
+Seabank Power Station,SEAB-2,51.54,-2.669
+Seal Sands Power Station,VKING-2,54.6067,-1.20268
+Sheringham Shoal Offshore Wind Farm,SHRSO-1,53.1167,1.13333
+Sheringham Shoal Offshore Wind Farm,SHRSO-2,53.1167,1.13333
+Shoreham Power Station,SHOS-1,50.8294,-0.230556
+South Humber Bank Power Station,SHBA-1,53.603,-0.146
+South Humber Bank Power Station,SHBA-2,53.603,-0.146
+Spalding Power Station,SEEL-1,52.8078,-0.1321
+Spalding Power Station,SPLN-1,52.8078,-0.1321
+St Fergus Gas Terminal,SFERD-1,57.5706,-1.83803
+St Fergus Gas Terminal,SFGSD-1,57.5706,-1.83803
+St Fergus Gas Terminal,SFGSD-2,57.5706,-1.83803
+Staythorpe Power Station,STAY-1,53.0748,-0.85573
+Staythorpe Power Station,STAY-2,53.0748,-0.85573
+Staythorpe Power Station,STAY-3,53.0748,-0.85573
+Staythorpe Power Station,STAY-4,53.0748,-0.85573
+Sutton Bridge Power Station,SUTB-1,52.7572,0.19316
+Taylor's Lane Power Station,TAYL2G,51.546,-0.2575
+Taylor's Lane Power Station,TAYL3G,51.546,-0.2575
+Teesside power station,TSREP-1,54.5768,-1.12042
+Triton Knoll Wind Farm,TKNEW-1,53.4,0.9
+Triton Knoll Wind Farm,TKNWW-1,53.4,0.9
+West of Duddon Sands Wind Farm,WDNSO-1,53.983,-3.463
+West of Duddon Sands Wind Farm,WDNSO-2,53.983,-3.463
+Westermost Rough Wind Farm,WTMSO-1,53.805,0.149
+Wilton power stations,WILCT-1,54.5894,-1.1185
+Salt End Power Station,SCCL-1,53.7355,-0.2431
+Salt End Power Station,SCCL-2,53.7355,-0.2431
+Salt End Power Station,SCCL-3,53.7355,-0.2431
+Galloper Offshore Wind Farm,GAOFO-1,51.771111111,1.992222222
+Galloper Offshore Wind Farm,GAOFO-2,51.771111111,1.992222222
+Galloper Offshore Wind Farm,GAOFO-3,51.771111111,1.992222222
+Galloper Offshore Wind Farm,GAOFO-4,51.771111111,1.992222222
+Hornsea One Offshore Wind Farm,HOWAO-1,53.885,1.791
+Hornsea One Offshore Wind Farm,HOWAO-2,53.885,1.791
+Hornsea One Offshore Wind Farm,HOWAO-3,53.885,1.791
+Foyers Power Station,FOYE-1,57.262111111,-4.483527777
+Foyers Power Station,FOYE-2,57.262111111,-4.483527777
+Foyers Power Station,FOYED-1,57.262111111,-4.483527777
+Grain Power Station,GRAI-6,51.443055555,0.708055555
+Grain Power Station,GRAI-7,51.443055555,0.708055555
+Grain Power Station,GRAI-8,51.443055555,0.708055555
+Grain Power Station,GRAI1G,51.443055555,0.708055555
+Grain Power Station,GRAI4G,51.443055555,0.708055555
+King's Lynn Power Station,KLYN-A-1,52.7273,0.380117
+Lynemouth power station,LNMTH-1,55.2042,-1.52083
+Lynemouth power station,LNMTH-2,55.2042,-1.52083
+Lynemouth power station,LNMTH-3,55.2042,-1.52083
+Dogger Bank A Wind Farm,DBAWO-1,54.7489,1.9301
+Dogger Bank A Wind Farm,DBAWO-2,54.7489,1.9301
+Twentyshilling Hill Wind Farm,TWSHW-1,55.3142,-3.9185
+Whiteside Hill Wind Farm,WHIHW-1,,
+Windy Rig Wind Farm,WDRGW-1,,
+West Burton B Battery,WBURB-41,,
+West Burton B Battery,WBURB-43,,
+Tullo Wind Farm,TULWW-1,,
+Tullo Wind Farm,TULWW-2,,
+Whitelee Battery,WHLWB-1,55.6954,-4.17331
+Claredown Battery Storage,ZEN02A,,
+Roundponds Battery,AG-HEL01H,,
+Kemsley Battery Storage,KEMB-1,,
+Byers Brae Battery Storage,NFSE02,,
+Minety Battery Storage,AG-HLIM03,,
+Minety Battery Storage,AG-HLIM04,,
+Minety South Battery Storage,AG-HSTK01,,
+Minety South Battery Storage,AG-HSTK02,,
+Newlands Farm Battery Storage,AG-HLIM01,,
+Newlands Farm Battery Storage,AG-HLIM02,,
+Tynemouth Energy Storage System,FFSE01,,
+Pelham Battery Storage,AG-ASTK05,,
+Dorking Battery Energy Storage System,AG-JSTK02,,
+Aldwarke Steelworks,RHAMD-1,53.452,-1.319
+Derby Gas Power Station,DERBY-2,,
+Exeter Gas Power Station,EXETR-2,,
+Heartlands Power Station,FDUNT-1,,
+Thornhill Gas Power Station,THRNL-1,53.677222222,-1.654722222
+Hallen Battery Storage,AG-LLIM01,,
+Water Lane STOR,WTRLN-1,,
+Letchworth STOR,LCHWT-1,,
+Trafalgar Park Gas Peaking Plant,TRFPK-1,,
+Lascar Battery Storage,AG-GEDF02,,
+Hulley Road Battery Storage,AG-GEDF01,,
+Chickerell Power Station,CHICK-1,,
+Pogbie Wind Farm,PGBIW-1,,
+Blary Hill Wind Farm,BLARW-1,,
+Burghfield Power Station,BURGH-1,,
+Keadby 2 Power Station,KEAD-2,53.5952,-0.7522
+JG Pears Newark CHP,JGPR-1,,
+Wishaw Battery,WISHB-1,55.76927,-3.93867
+Wishaw Battery,WISHD-1,55.76927,-3.93867
+Blackhillock Battery,BLHLB-1,,
+Blackhillock Battery,BLHLB-2,,
+Blackhillock Battery,BLHLB-3,,
+Blackhillock Battery,BLHLB-4,,
+Clachan Flats Wind Farm,CLFLW-1,,
+Kincardine Offshore Wind Farm,KINCW-1,57.0046,-1.8596
+Keith Hill Wind Farm,KTHLW-1,,
+Solutia District Energy,SOLUU-1,,
+Sevington District Energy,SEVIU-1,,
+Sudmeadow Road Power Station,SUDME-1,,
+Moorfield Drive Power Station,MORFL-1,,
+Rake Lane Power Station,RAKE-1,,
+Down Barn Farm Power Station,DBFRM-1,50.861673,-1.153879
+Goose House Lane Power Station,GOSHS-1,,
+Bridgwater Power Station,BRIDU-1,,
+Coupar Battery Storage,CUPAB-1,,
+Chatterley Power Station,CHTRY-1,,
+Fideoak Mill Battery Storage,AG-LLIM02,51.018497,-3.157186
+Bispham Flexible Generation,BSPHM-1,,
+Brownieleys Wind Farm,BRNLW-1,,
+Greengairs East Wind Farm,GRGRW-1,,
+Broadditch Battery,BROAB-1,,
+Middlewich Power Station,MDLWH-1,53.18726,-2.42461
+Gowerton East Power Station,ALCOA-1,,
+Chapel Farm Battery Storage,CHAPB-1,51.9266,-0.4963
+Tollgate Battery Storage,TOLLB-1,,
+Craig Wind Farm,CRGTW-1,,
+Dogger Bank A & B Wind Farm Cluster,DBAWO-1,,
+Dogger Bank A & B Wind Farm Cluster,DBAWO-2,,
+Dollymans Battery Storage,DOLLB-1,,
+Rise Carr Battery Storage,RSCRB-1,,
+Larks Green Solar Farm,LARKS-1,51.57851,-2.477369
+West Gourdie Battery,AG-PFLX01,,
+Farnham Battery Storage,FARNB-1,,
+Coventry Battery Storage,COVNB-1,,
+Fordtown Battery Storage,AG-HEL0CP,,
+Camilla Battery Storage,AG-HEL0DN,,
+Burwell Solar Farm,BURWS-1,52.283,0.302
+Clay Tye Battery,CLAYB-1,,
+Clay Tye Battery,CLAYB-2,,
+Little Raith Battery Storage,LITRB-1,,
+Newton Wood Farm Battery Storage,NEWTB-1,,
+Jamesfield Battery Storage,JAMBB-1,,
+Ilmer Lane Battery Storage,ILMEB-1,,
+Carnegie Road Battery,CRSSB-1,,
+Cumberhead Wind Farm,CUMHW-1,,
