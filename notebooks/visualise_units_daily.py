@@ -16,7 +16,7 @@ def _():
     import polars as pl
     import pyproj
     import shapely
-    return Path, go, json, mo, pd, pl, px, shapely
+    return Path, go, json, mo, np, pd, pl, px, shapely
 
 
 @app.cell
@@ -336,6 +336,101 @@ def _(go, partition_and_aggregate_by_boundary, pl, weekly_folder):
         legend_title="Location"
     )
     fig3.show()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Now let's look at the peak generation vs the known maximum capacity of the B6 boundary (6.7GW)
+    """)
+    return
+
+
+@app.cell
+def _(go, partition_and_aggregate_by_boundary, pl, quarter_hourly_folder):
+    quarter_hour_aggregates = partition_and_aggregate_by_boundary(quarter_hourly_folder)
+
+
+    _aggregate = quarter_hour_aggregates
+    _fig3 = go.Figure()
+
+    # note, that our dataset is in GWh. Let's assume that generation is constant during the day, so that way we get the GW generation by dividing by 24. 
+
+    x_ticks = _aggregate["above"].select("time").to_numpy().flatten()
+
+    _fig3.add_trace(
+        go.Scatter(
+            x=x_ticks,
+            y=_aggregate["above"].select(pl.col("generated").mul(4)).to_numpy().flatten(),
+            mode='lines+markers',
+            name='Above B6 Generated',
+            line=dict(color='lightblue'),
+            stackgroup='one'
+        )
+    )
+
+    _fig3.add_trace(
+        go.Scatter(
+            x=x_ticks,
+            y=_aggregate["above"].select(pl.col("curtailment").mul(4)).to_numpy().flatten(),
+            mode='lines+markers',
+            name='Above B6 Curtailment',
+            line=dict(color='blue'),
+            stackgroup='one'
+        )
+    )
+
+    _fig3.add_trace(
+        go.Scatter(
+            x=x_ticks,
+            y=[6.7] * len(x_ticks),
+            mode='lines',
+            name='B6 Capacity (6.7GW)',
+            line=dict(color='red', dash='dash')
+        )
+    )
+    _fig3.update_layout(
+        title="Total Potential Generation Above B6 Boundary by Hour",
+        xaxis_title="Hour of Day",
+        yaxis_title="Generation (GW)",
+        legend_title="Type"
+    )
+
+    _fig3.show()
+
+    return (quarter_hour_aggregates,)
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    It seems like the curtailment isn't even kicking in at the 6.7GW level (of course there's internal demand + storage available). Let's take a look at how curtailment differes per generation level!
+
+    Note, that this is assuming that generation is constant during the day (which it isn't).
+    """)
+    return
+
+
+@app.cell
+def _(np, pl, quarter_hour_aggregates):
+    to_bin = quarter_hour_aggregates["above"].with_columns(
+        pl.col("curtailment").mul(4).alias("curtailment_gw"),
+        pl.col("generated").mul(4).alias("generated_gw")
+    )
+
+    quantiles = np.arange(0, to_bin.select(pl.col("generated_gw").max()).item() + 1, 0.5)
+
+    to_bin.with_columns(
+        pl.col("generated_gw").cut(
+        quantiles,
+        labels=[f"{i}-{i+0.5}GW" for i in [float(i) for i in quantiles] + [float(quantiles.max() + 1)]]
+    ).alias("bin")).group_by("bin").agg(
+        pl.col("curtailment_gw").sum(),
+        pl.col("generated_gw").sum()
+    ).with_columns(
+        (pl.col("curtailment_gw") / pl.col("generated_gw")).alias("curtailment_percent")
+    ).sort("bin").to_pandas()
     return
 
 
