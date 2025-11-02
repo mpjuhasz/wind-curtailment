@@ -20,6 +20,10 @@ raw:
   - name: GB-transmission-system-boundary-zone-map.pdf
     source: https://www.elexon.co.uk/bsc/documents/data/operational-data/gb-transmission-system-boundary-zone-map/
     description: map of the UK with transmission boundaries and main lines
+  - name: uk_counties_buc.geojson
+    source: https://geoportal.statistics.gov.uk/datasets/d3bcd109c2c6468b893549bde805a47b_0/explore
+    description: county boundaries in the UK
+
 
 interim:
   - name: gb-transmission-map/

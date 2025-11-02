@@ -637,18 +637,42 @@ def _(daily_folder, pl, units_with_boundary):
 
 @app.cell
 def _(pl, units_with_gen_and_curtailment):
-    units_with_gen_and_curtailment.group_by("county").agg(
+    county_to_curtailment = units_with_gen_and_curtailment.group_by("county").agg(
         pl.col("total_generated").sum(),
         pl.col("total_curtailment").sum()
     ).with_columns(
         (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
-    ).sort(pl.col("curtailment_ratio"), descending=True)
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("county", "curtailment_ratio")
     return
 
 
 @app.cell
-def _(Path, fig, go, json, uk):
+def _(Path, json):
     counties = json.load(Path("./data/raw/uk_counties_buc.geojson").open())
+
+    return (counties,)
+
+
+@app.cell
+def _(counties, shapely):
+    county_to_feature = {}
+
+
+    for f in counties['features']:
+        if len(f["geometry"]["coordinates"]) == 1:
+            pass
+            print(shapely.Polygon(shell=f["geometry"]["coordinates"][0]))
+        else:
+            if f["id"] == 134:
+                print(len(f["geometry"]["coordinates"]))
+                for i in f["geometry"]["coordinates"]:
+                    print(shapely.Polygon(shell=i))
+            print(shapely.MultiPolygon(polygons=f["geometry"]["coordinates"]))
+    return
+
+
+@app.cell
+def _(counties, fig, go):
 
     fig7 = go.Figure()
     for _feature in counties['features']:
@@ -667,7 +691,7 @@ def _(Path, fig, go, json, uk):
         go.Choropleth(
             geojson=counties,
             z=[1] * (len(counties['features']) + 1),  # Uniform values for white fill
-            locations=list(range(len(uk['features']) + 1)),
+            locations=list(range(len(counties['features']) + 1)),
             colorscale=[[0, 'white'], [1, 'white']],
             showscale=False,
             marker_line_color='gray',
@@ -696,6 +720,11 @@ def _(Path, fig, go, json, uk):
     )
 
     fig7.show()
+    return
+
+
+@app.cell
+def _():
     return
 
 
