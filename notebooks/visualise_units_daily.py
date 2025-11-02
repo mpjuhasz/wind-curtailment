@@ -172,7 +172,7 @@ def _(boundaries, go, pd, uk, units_with_boundary):
     )
 
     fig.show()
-    return
+    return (fig,)
 
 
 @app.cell(hide_code=True)
@@ -643,6 +643,59 @@ def _(pl, units_with_gen_and_curtailment):
     ).with_columns(
         (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
     ).sort(pl.col("curtailment_ratio"), descending=True)
+    return
+
+
+@app.cell
+def _(Path, fig, go, json, uk):
+    counties = json.load(Path("./data/raw/uk_counties_buc.geojson").open())
+
+    fig7 = go.Figure()
+    for _feature in counties['features']:
+        fig.add_trace(
+            go.Scattergeo(
+                lon=[],
+                lat=[],
+                mode='lines',
+                line=dict(width=1, color='gray'),
+                showlegend=False,
+                hoverinfo='skip'
+            )
+        )
+
+    fig7.add_trace(
+        go.Choropleth(
+            geojson=counties,
+            z=[1] * (len(counties['features']) + 1),  # Uniform values for white fill
+            locations=list(range(len(uk['features']) + 1)),
+            colorscale=[[0, 'white'], [1, 'white']],
+            showscale=False,
+            marker_line_color='gray',
+            marker_line_width=1,
+            hoverinfo='skip'
+        )
+    )
+
+
+
+
+    fig7.update_geos(
+        fitbounds="geojson", 
+        visible=False,
+        projection_type="mercator"
+    )
+
+    fig7.update_layout(
+        margin=dict(l=0, r=0, t=50, b=0),
+        title_text="Renewables in the UK",
+        geo=dict(
+            showframe=False,
+            showcoastlines=False,
+            projection_type="mercator"
+        )
+    )
+
+    fig7.show()
     return
 
 
