@@ -604,5 +604,47 @@ def _(px, units_with_curtailment):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Location granurality
+
+    Looking at country - region - county level aggregation
+    """)
+    return
+
+
+@app.cell
+def _(daily_folder, pl, units_with_boundary):
+    def get_gen_and_curtailment_for_unit(bm_unit: str) -> float:
+        _file_path = daily_folder / f"{bm_unit}.csv"
+        if _file_path.exists() is False:
+            print(f"No data for {bm_unit}")
+            return 0.0, 0.0
+        _df = pl.read_csv(_file_path)
+        total_generated = _df.select(pl.col("generated").sum()).item()
+        total_curtailment = _df.select(pl.col("curtailment").sum()).item()
+        if total_generated == 0:
+            return 0.0, 0.0
+        return total_generated, total_curtailment
+
+    units_with_gen_and_curtailment = units_with_boundary.filter(pl.col("technology_type").str.contains("Wind")).with_columns(
+        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[0], return_dtype=pl.Float64).alias("total_generated"),
+        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[1], return_dtype=pl.Float64).alias("total_curtailment")
+    )
+    return (units_with_gen_and_curtailment,)
+
+
+@app.cell
+def _(pl, units_with_gen_and_curtailment):
+    units_with_gen_and_curtailment.group_by("county").agg(
+        pl.col("total_generated").sum(),
+        pl.col("total_curtailment").sum()
+    ).with_columns(
+        (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True)
+    return
+
+
 if __name__ == "__main__":
     app.run()
