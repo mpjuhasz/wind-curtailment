@@ -209,6 +209,12 @@ def _(final_merge):
 
 @app.cell
 def _(final_merge):
+    final_merge[final_merge["bm_unit"].apply(lambda x: "HEYM" in x)]
+    return
+
+
+@app.cell
+def _(final_merge):
     final_merge.to_csv("data/processed/bm_unit_with_repd.csv")
     return
 
