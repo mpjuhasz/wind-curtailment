@@ -41,3 +41,14 @@ interim:
       - bm_units_with_locations.xlsx
       - bm_units.py
     description: cleaned version of the hackcollective manual mapping
+  - name: manual_wind_mappings.csv
+    sources:
+      - bm_units.json
+      - bm_units.py
+    description: small batch of manual mapping wind-farms to BM units (only those WIND BM units that weren't matched previously)
+
+processed:
+  - name: offshore_wind_locations.csv
+    source: interim/offshore_wind_locations.csv
+    description: hand-mapped offshore windfarms to onshore cable connection (for comparability with onshore data and regional grouping)
+  
