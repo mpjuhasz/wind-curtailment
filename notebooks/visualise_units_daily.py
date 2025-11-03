@@ -735,6 +735,20 @@ def _(
 
 
 @app.cell
+def _(pl, units_with_uk_county):
+    units_with_uk_county.group_by("repd_site_name", "repd_lat", "repd_long").agg(
+        pl.col("total_generated").sum(),
+        pl.col("total_curtailment").sum(),
+        pl.col("capacity").first(),
+        pl.col("bm_unit"),
+        pl.col("below_b6").first()
+    ).with_columns(
+        pl.col("bm_unit").list.join(",")
+    ).write_csv("./data/visual/units_summary.csv")
+    return
+
+
+@app.cell
 def _():
     # units_with_uk_county.filter(pl.col("uk_county") == "Offshore").unique(subset=["repd_site_name", "repd_lat", "repd_long"]).write_csv("./data/interim/offshore_wind_locations.csv")
     return
@@ -747,7 +761,7 @@ def _(pl, units_with_uk_county):
         pl.col("total_curtailment").sum().round(decimals=5)
     ).with_columns(
         (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
-    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "total_generated", "curtailment_ratio")
     return (county_to_curtailment,)
 
 
@@ -757,9 +771,12 @@ def _(counties, county_to_curtailment, pl):
         _county_name = _f["properties"]["CTYUA24NM"]
         if _county_name in county_to_curtailment.select("uk_county").to_numpy().flatten().tolist():
             curtailment_ratio = county_to_curtailment.filter(pl.col("uk_county") == _county_name).select("curtailment_ratio").item()
+            total_generation = county_to_curtailment.filter(pl.col("uk_county") == _county_name).select("total_generated").item()
             _f["curtailment_ratio"] = curtailment_ratio
+            _f["total_generation"] = total_generation
         else:
             _f["curtailment_ratio"] = None
+            _f["total_generation"] = None
     return
 
 
@@ -770,7 +787,7 @@ def _(pl, units_with_uk_county):
         pl.col("total_curtailment").sum().round(decimals=5)
     ).with_columns(
         (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
-    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_region", "curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_region", "total_generated", "curtailment_ratio")
     return (region_to_curtailment,)
 
 
@@ -780,9 +797,12 @@ def _(pl, region_to_curtailment, regions):
         _region_name = _f["properties"]["eer18nm"]
         if _region_name in region_to_curtailment.select("uk_region").to_numpy().flatten().tolist():
             _curtailment_ratio = region_to_curtailment.filter(pl.col("uk_region") == _region_name).select("curtailment_ratio").item()
+            _total_generation = region_to_curtailment.filter(pl.col("uk_region") == _region_name).select("total_generated").item()
             _f["curtailment_ratio"] = _curtailment_ratio
+            _f["total_generation"] = _total_generation
         else:
             _f["curtailment_ratio"] = None
+            _f["total_generation"] = None
     return
 
 
@@ -852,6 +872,16 @@ def _(go, regions):
     )
 
     fig7.show()
+    return
+
+
+@app.cell
+def _(counties, json, regions):
+    with open("./data/visual/regions_with_curtailment.geojson", "w") as _f:
+        json.dump(regions, _f)
+    
+    with open("./data/visual/counties_with_curtailment.geojson", "w") as _f:
+        json.dump(counties, _f)
     return
 
 
