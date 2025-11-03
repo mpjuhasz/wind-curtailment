@@ -172,7 +172,7 @@ def _(boundaries, go, pd, uk, units_with_boundary):
     )
 
     fig.show()
-    return (fig,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -636,67 +636,131 @@ def _(daily_folder, pl, units_with_boundary):
 
 
 @app.cell
-def _(pl, units_with_gen_and_curtailment):
-    county_to_curtailment = units_with_gen_and_curtailment.group_by("county").agg(
-        pl.col("total_generated").sum(),
-        pl.col("total_curtailment").sum()
-    ).with_columns(
-        (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
-    ).sort(pl.col("curtailment_ratio"), descending=True).select("county", "curtailment_ratio")
+def _():
     return
 
 
 @app.cell
 def _(Path, json):
     counties = json.load(Path("./data/raw/uk_counties_buc.geojson").open())
-
     return (counties,)
 
 
 @app.cell
-def _(counties, shapely):
-    county_to_feature = {}
-
-
-    for f in counties['features']:
-        if len(f["geometry"]["coordinates"]) == 1:
-            pass
-            print(shapely.Polygon(shell=f["geometry"]["coordinates"][0]))
-        else:
-            if f["id"] == 134:
-                print(len(f["geometry"]["coordinates"]))
-                for i in f["geometry"]["coordinates"]:
-                    print(shapely.Polygon(shell=i))
-            print(shapely.MultiPolygon(polygons=f["geometry"]["coordinates"]))
+def _(mo):
+    mo.md(r"""
+    After a few attempts at matching the ONS regions and county data with REPD, I've deemed it easier to use the polygons to map to the locations rather than attempts to convert the names at various levels and times to the ONS database... This means that offshore will have to be tagged by hand (but that would have been the case anyways, given it's its own category.)
+    """)
     return
 
 
 @app.cell
-def _(counties, fig, go):
+def _(counties, shapely):
+    county_name_to_polygon = {}
+
+    for f in counties['features']:
+        county_name = f["properties"]["CTYUA24NM"]
+
+        if f["geometry"]["type"] == "Polygon":
+            p = shapely.geometry.Polygon(f["geometry"]["coordinates"][0])
+        else:
+            p = shapely.geometry.MultiPolygon([shapely.Polygon(_i[0]) for _i in f["geometry"]["coordinates"]])
+
+        county_name_to_polygon[county_name] = p
+
+
+
+    def point_in_which_county(long: float, lat: float, county_polygons: dict) -> str:
+        point = shapely.Point(long, lat)
+        for county_name, polygon in county_polygons.items():
+            if polygon.contains(point):
+                return county_name
+        return "Offshore"
+    return county_name_to_polygon, point_in_which_county
+
+
+@app.cell
+def _(
+    county_name_to_polygon,
+    pl,
+    point_in_which_county,
+    units_with_gen_and_curtailment,
+):
+    units_with_uk_county = units_with_gen_and_curtailment.with_columns(
+        uk_county=pl.struct('repd_long', 'repd_lat').map_elements(lambda x: point_in_which_county(x['repd_long'], x['repd_lat'], county_name_to_polygon), return_dtype=pl.String).alias("uk_county")
+    )
+    return (units_with_uk_county,)
+
+
+@app.cell
+def _(pl, units_with_uk_county):
+    units_with_uk_county.filter(pl.col("uk_county") == "Offshore").unique(subset=["repd_site_name", "repd_lat", "repd_long"]).write_csv("./data/interim/offshore_wind_locations.csv")
+    return
+
+
+@app.cell
+def _(pl, units_with_uk_county):
+    county_to_curtailment = units_with_uk_county.group_by("uk_county").agg(
+        pl.col("total_generated").sum(),
+        pl.col("total_curtailment").sum()
+    ).with_columns(
+        (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "curtailment_ratio")
+    return (county_to_curtailment,)
+
+
+@app.cell
+def _(counties, county_to_curtailment, pl):
+    for _f in counties["features"]:
+        _county_name = _f["properties"]["CTYUA24NM"]
+        if _county_name in county_to_curtailment.select("uk_county").to_numpy().flatten().tolist():
+            curtailment_ratio = county_to_curtailment.filter(pl.col("uk_county") == _county_name).select("curtailment_ratio").item()
+            _f["curtailment_ratio"] = curtailment_ratio
+        else:
+            _f["curtailment_ratio"] = None
+    return
+
+
+@app.cell
+def _():
+    return
+
+
+@app.cell
+def _(counties):
+    counties["features"][0]
+    return
+
+
+@app.cell
+def _(counties, go):
 
     fig7 = go.Figure()
-    for _feature in counties['features']:
-        fig.add_trace(
-            go.Scattergeo(
-                lon=[],
-                lat=[],
-                mode='lines',
-                line=dict(width=1, color='gray'),
-                showlegend=False,
-                hoverinfo='skip'
-            )
-        )
+
+    z_values = [
+        i["curtailment_ratio"] if i["curtailment_ratio"] is not None else -0.001
+        for i in counties['features']
+    ]
+
+    actual_min = min([v for v in z_values if v > 0])
+
 
     fig7.add_trace(
         go.Choropleth(
             geojson=counties,
-            z=[1] * (len(counties['features']) + 1),  # Uniform values for white fill
-            locations=list(range(len(counties['features']) + 1)),
-            colorscale=[[0, 'white'], [1, 'white']],
+            featureidkey="id",
+            locations=[f["id"] for f in counties['features']],
+            z=z_values,
+            # z_min=actual_min,
+            colorscale="YlOrRd",
             showscale=False,
             marker_line_color='gray',
             marker_line_width=1,
-            hoverinfo='skip'
+            hovertemplate="%{customdata[0]}<br>Curtailment Ratio: %{z:.2%}",
+            customdata=[[i["properties"]["CTYUA24NM"]] for i in counties['features']],
+            marker=dict(
+                line=dict(width=0.5, color='darkgray'),
+            )
         )
     )
 
@@ -704,7 +768,7 @@ def _(counties, fig, go):
 
 
     fig7.update_geos(
-        fitbounds="geojson", 
+        fitbounds="locations", 
         visible=False,
         projection_type="mercator"
     )
