@@ -699,6 +699,14 @@ def _(pl, units_with_uk_county):
 
 
 @app.cell
+def _():
+    # manually mapped data:
+
+
+    return
+
+
+@app.cell
 def _(pl, units_with_uk_county):
     county_to_curtailment = units_with_uk_county.group_by("uk_county").agg(
         pl.col("total_generated").sum(),
