@@ -16,7 +16,8 @@ def _():
     import polars as pl
     import pyproj
     import shapely
-    return Path, go, json, mo, np, pd, pl, px, shapely
+    from typing import Optional
+    return Optional, Path, go, json, mo, np, pd, pl, px, shapely
 
 
 @app.cell
@@ -629,8 +630,8 @@ def _(daily_folder, pl, units_with_boundary):
         return total_generated, total_curtailment
 
     units_with_gen_and_curtailment = units_with_boundary.filter(pl.col("technology_type").str.contains("Wind")).with_columns(
-        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[0], return_dtype=pl.Float64).alias("total_generated"),
-        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[1], return_dtype=pl.Float64).alias("total_curtailment")
+        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[0], return_dtype=pl.Float64).round(decimals=5).alias("total_generated"),
+        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[1], return_dtype=pl.Float64).round(decimals=5).alias("total_curtailment")
     )
     return (units_with_gen_and_curtailment,)
 
@@ -655,7 +656,7 @@ def _(mo):
 
 
 @app.cell
-def _(counties, shapely):
+def _(Optional, counties, shapely):
     county_name_to_polygon = {}
 
     for f in counties['features']:
@@ -670,47 +671,61 @@ def _(counties, shapely):
 
 
 
-    def point_in_which_county(long: float, lat: float, county_polygons: dict) -> str:
+    def _match_long_lat_to_county(long: float, lat: float, county_polygons: dict) -> Optional[str]:
+        if long is None or lat is None:
+            return None
         point = shapely.Point(long, lat)
         for county_name, polygon in county_polygons.items():
             if polygon.contains(point):
                 return county_name
-        return "Offshore"
+        return None
+
+    def point_in_which_county(long: float, lat: float, connector_long: float, connector_lat: float, county_polygons: dict) -> Optional[str]:
+        county_name = _match_long_lat_to_county(long, lat, county_polygons)
+        if county_name is None:
+            # try the connector location
+            county_name = _match_long_lat_to_county(connector_long, connector_lat, county_polygons)
+
+        return county_name or "Unknown"
     return county_name_to_polygon, point_in_which_county
+
+
+@app.cell
+def _(pl):
+    # manually mapped data:
+
+    offshore_wind_connectors = pl.read_csv("./data/processed/offshore_wind_locations.csv")
+
+
+
+    return (offshore_wind_connectors,)
 
 
 @app.cell
 def _(
     county_name_to_polygon,
+    offshore_wind_connectors,
     pl,
     point_in_which_county,
     units_with_gen_and_curtailment,
 ):
-    units_with_uk_county = units_with_gen_and_curtailment.with_columns(
-        uk_county=pl.struct('repd_long', 'repd_lat').map_elements(lambda x: point_in_which_county(x['repd_long'], x['repd_lat'], county_name_to_polygon), return_dtype=pl.String).alias("uk_county")
+    units_with_uk_county = units_with_gen_and_curtailment.join(offshore_wind_connectors, on=["repd_site_name", "repd_long", "repd_lat"], how="left").with_columns(
+        uk_county=pl.struct('repd_long', 'repd_lat', 'connection_long', 'connection_lat').map_elements(lambda x: point_in_which_county(x['repd_long'], x['repd_lat'], x['connection_long'], x['connection_lat'], county_name_to_polygon), return_dtype=pl.String).alias("uk_county")
     )
     return (units_with_uk_county,)
 
 
 @app.cell
-def _(pl, units_with_uk_county):
-    units_with_uk_county.filter(pl.col("uk_county") == "Offshore").unique(subset=["repd_site_name", "repd_lat", "repd_long"]).write_csv("./data/interim/offshore_wind_locations.csv")
-    return
-
-
-@app.cell
 def _():
-    # manually mapped data:
-
-
+    # units_with_uk_county.filter(pl.col("uk_county") == "Offshore").unique(subset=["repd_site_name", "repd_lat", "repd_long"]).write_csv("./data/interim/offshore_wind_locations.csv")
     return
 
 
 @app.cell
 def _(pl, units_with_uk_county):
     county_to_curtailment = units_with_uk_county.group_by("uk_county").agg(
-        pl.col("total_generated").sum(),
-        pl.col("total_curtailment").sum()
+        pl.col("total_generated").sum().round(decimals=5),
+        pl.col("total_curtailment").sum().round(decimals=5)
     ).with_columns(
         (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
     ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "curtailment_ratio")
@@ -730,13 +745,14 @@ def _(counties, county_to_curtailment, pl):
 
 
 @app.cell
-def _():
+def _(pl, units_with_uk_county):
+    units_with_uk_county.filter(pl.col("repd_site_name") == "Seagreen")
     return
 
 
 @app.cell
-def _(counties):
-    counties["features"][0]
+def _(units_with_uk_county):
+    units_with_uk_county.select("bm_unit", "repd_site_name", "repd_lat", "repd_long", "connection_long", "connection_lat", "uk_county", "below_b6", "technology_type", "capacity", "total_generated", "total_curtailment").write_csv("./data/visual/units_with_county_and_curtailment.csv")
     return
 
 
