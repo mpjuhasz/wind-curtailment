@@ -644,7 +644,8 @@ def _():
 @app.cell
 def _(Path, json):
     counties = json.load(Path("./data/raw/uk_counties_buc.geojson").open())
-    return (counties,)
+    regions = json.load(Path("./data/raw/uk_regions_buc.geojson").open())
+    return counties, regions
 
 
 @app.cell
@@ -656,7 +657,7 @@ def _(mo):
 
 
 @app.cell
-def _(Optional, counties, shapely):
+def _(Optional, counties, regions, shapely):
     county_name_to_polygon = {}
 
     for f in counties['features']:
@@ -669,6 +670,18 @@ def _(Optional, counties, shapely):
 
         county_name_to_polygon[county_name] = p
 
+
+    region_name_to_polygon = {}
+
+    for f in regions['features']:
+        region_name = f["properties"]["eer18nm"]
+
+        if f["geometry"]["type"] == "Polygon":
+            p = shapely.geometry.Polygon(f["geometry"]["coordinates"][0])
+        else:
+            p = shapely.geometry.MultiPolygon([shapely.Polygon(_i[0]) for _i in f["geometry"]["coordinates"]])
+
+        region_name_to_polygon[region_name] = p
 
 
     def _match_long_lat_to_county(long: float, lat: float, county_polygons: dict) -> Optional[str]:
@@ -687,7 +700,11 @@ def _(Optional, counties, shapely):
             county_name = _match_long_lat_to_county(connector_long, connector_lat, county_polygons)
 
         return county_name or "Unknown"
-    return county_name_to_polygon, point_in_which_county
+    return (
+        county_name_to_polygon,
+        point_in_which_county,
+        region_name_to_polygon,
+    )
 
 
 @app.cell
@@ -707,10 +724,12 @@ def _(
     offshore_wind_connectors,
     pl,
     point_in_which_county,
+    region_name_to_polygon,
     units_with_gen_and_curtailment,
 ):
     units_with_uk_county = units_with_gen_and_curtailment.join(offshore_wind_connectors, on=["repd_site_name", "repd_long", "repd_lat"], how="left").with_columns(
-        uk_county=pl.struct('repd_long', 'repd_lat', 'connection_long', 'connection_lat').map_elements(lambda x: point_in_which_county(x['repd_long'], x['repd_lat'], x['connection_long'], x['connection_lat'], county_name_to_polygon), return_dtype=pl.String).alias("uk_county")
+        pl.struct('repd_long', 'repd_lat', 'connection_long', 'connection_lat').map_elements(lambda x: point_in_which_county(x['repd_long'], x['repd_lat'], x['connection_long'], x['connection_lat'], county_name_to_polygon), return_dtype=pl.String).alias("uk_county"),
+            pl.struct('repd_long', 'repd_lat', 'connection_long', 'connection_lat').map_elements(lambda x: point_in_which_county(x['repd_long'], x['repd_lat'], x['connection_long'], x['connection_lat'], region_name_to_polygon), return_dtype=pl.String).alias("uk_region"),
     )
     return (units_with_uk_county,)
 
@@ -746,24 +765,49 @@ def _(counties, county_to_curtailment, pl):
 
 @app.cell
 def _(pl, units_with_uk_county):
+    region_to_curtailment = units_with_uk_county.group_by("uk_region").agg(
+        pl.col("total_generated").sum().round(decimals=5),
+        pl.col("total_curtailment").sum().round(decimals=5)
+    ).with_columns(
+        (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_region", "curtailment_ratio")
+    return (region_to_curtailment,)
+
+
+@app.cell
+def _(pl, region_to_curtailment, regions):
+    for _f in regions["features"]:
+        _region_name = _f["properties"]["eer18nm"]
+        if _region_name in region_to_curtailment.select("uk_region").to_numpy().flatten().tolist():
+            _curtailment_ratio = region_to_curtailment.filter(pl.col("uk_region") == _region_name).select("curtailment_ratio").item()
+            _f["curtailment_ratio"] = _curtailment_ratio
+        else:
+            _f["curtailment_ratio"] = None
+    return
+
+
+@app.cell
+def _(pl, units_with_uk_county):
     units_with_uk_county.filter(pl.col("repd_site_name") == "Seagreen")
     return
 
 
 @app.cell
 def _(units_with_uk_county):
-    units_with_uk_county.select("bm_unit", "repd_site_name", "repd_lat", "repd_long", "connection_long", "connection_lat", "uk_county", "below_b6", "technology_type", "capacity", "total_generated", "total_curtailment").write_csv("./data/visual/units_with_county_and_curtailment.csv")
+    units_with_uk_county.select("bm_unit", "repd_site_name", "repd_lat", "repd_long", "connection_long", "connection_lat", "uk_county", "uk_region", "below_b6", "technology_type", "capacity", "total_generated", "total_curtailment").write_csv("./data/visual/units_with_county_region_and_curtailment.csv")
     return
 
 
 @app.cell
-def _(counties, go):
+def _(go, regions):
+    _features = regions
+    _name_property = "eer18nm"
 
     fig7 = go.Figure()
 
     z_values = [
         i["curtailment_ratio"] if i["curtailment_ratio"] is not None else -0.001
-        for i in counties['features']
+        for i in _features['features']
     ]
 
     actual_min = min([v for v in z_values if v > 0])
@@ -771,9 +815,9 @@ def _(counties, go):
 
     fig7.add_trace(
         go.Choropleth(
-            geojson=counties,
+            geojson=_features,
             featureidkey="id",
-            locations=[f["id"] for f in counties['features']],
+            locations=[f["id"] for f in _features['features']],
             z=z_values,
             # z_min=actual_min,
             colorscale="YlOrRd",
@@ -781,7 +825,7 @@ def _(counties, go):
             marker_line_color='gray',
             marker_line_width=1,
             hovertemplate="%{customdata[0]}<br>Curtailment Ratio: %{z:.2%}",
-            customdata=[[i["properties"]["CTYUA24NM"]] for i in counties['features']],
+            customdata=[[i["properties"][_name_property]] for i in _features['features']],
             marker=dict(
                 line=dict(width=0.5, color='darkgray'),
             )
