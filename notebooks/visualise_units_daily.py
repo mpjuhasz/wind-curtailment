@@ -486,7 +486,9 @@ def _(bin_results_above, bin_results_below, go):
 
 
 @app.cell
-def _():
+def _(bin_results_above, bin_results_below):
+    bin_results_above.write_csv("./data/visual/bin_results_above.csv")
+    bin_results_below.write_csv("./data/visual/bin_results_below.csv")
     return
 
 
@@ -743,7 +745,8 @@ def _(pl, units_with_uk_county):
         pl.col("bm_unit"),
         pl.col("below_b6").first()
     ).with_columns(
-        pl.col("bm_unit").list.join(",")
+        pl.col("bm_unit").list.join(","),
+        (pl.when(pl.col("total_generated") != 0.0).then(pl.col("total_curtailment") / pl.col("total_generated")).otherwise(pl.lit(0))).alias("curtailment_ratio")
     ).write_csv("./data/visual/units_summary.csv")
     return
 
@@ -760,7 +763,7 @@ def _(pl, units_with_uk_county):
         pl.col("total_generated").sum().round(decimals=5),
         pl.col("total_curtailment").sum().round(decimals=5)
     ).with_columns(
-        (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
+        (pl.when(pl.col("total_generated") != 0.0).then(pl.col("total_curtailment") / pl.col("total_generated")).otherwise(pl.lit(0))).alias("curtailment_ratio")
     ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "total_generated", "curtailment_ratio")
     return (county_to_curtailment,)
 
