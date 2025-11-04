@@ -502,6 +502,55 @@ def _(bin_results_above, bin_results_below):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Distribution or transmission?
+    """)
+    return
+
+
+@app.cell
+def _(pl, units_with_gen_and_curtailment):
+    units_with_gen_and_curtailment.with_columns(
+        pl.col("bm_unit").str.split(by="_").list.get(0).alias("connection_type")
+    ).select("connection_type").unique()
+    return
+
+
+@app.cell
+def _(pl, units_with_gen_and_curtailment):
+    curtailment_per_unit_type = units_with_gen_and_curtailment.with_columns(
+        pl.col("bm_unit").str.split(by="_").list.get(0).alias("connection_type")
+    ).group_by("connection_type").agg(
+        pl.col("total_generated").sum(),
+        pl.col("total_curtailment").sum(),
+        pl.col("total_curtailment").count().alias("count")
+    ).with_columns(
+        (pl.col("total_curtailment")).mul(pl.col("total_generated").pow(-1)).alias("curtailment_ratio")
+    )
+    return (curtailment_per_unit_type,)
+
+
+@app.cell
+def _(curtailment_per_unit_type, px):
+    # simple plotly histogram for the curtailment ratio by connection type:
+
+    fig8 = px.histogram(
+        curtailment_per_unit_type,
+        x="connection_type",
+        y="curtailment_ratio"
+    )
+
+    fig8.show()
+    return
+
+
+@app.cell
+def _():
+    return
+
+
 @app.cell
 def _(mo):
     mo.md(r"""
