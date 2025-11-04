@@ -76,12 +76,13 @@ def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.D
         pl.col("diff").clip(lower_bound=0).alias("curtailment"),
         pl.col("diff").clip(upper_bound=0).alias("extra_generation"),
     ).select(
-        "time", "diff", "generated", "curtailment", "extra_generation"
+        "physical_level", "time", "diff", "generated", "curtailment", "extra_generation"
     ).group_by_dynamic(
         index_column="time", every=downsample_frequency
     ).agg(
-        # turning everything into daily GWh figures
-        pl.col("diff").mul(1 / 60).mul(1 / 1_000).sum(),
+        # At this point we're aggregating power figures by the minute. 
+        # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
+        pl.col("physical_level").mul(1 / 60).mul(1 / 1_000).sum(),
         pl.col("extra_generation").mul(1 / 60).mul(1 / 1_000).sum(),
         pl.col("curtailment").mul(1 / 60).mul(1 / 1_000).sum(),
         pl.col("generated").mul(1 / 60).mul(1 / 1_000).sum(),
@@ -92,7 +93,6 @@ def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.D
 def aggregate_bm_unit_generation(accepted: pl.DataFrame, physical: pl.DataFrame) -> dict:
     """Calculating curtailmant, extra generation and total figures for the acceptance and PN datasets for a BM unit"""
     diffs = aggregate_acceptance_and_pn(accepted, physical)
-    print(diffs)
     
     return {
         "curtailment": round(diffs.filter(pl.col("diff") > 0).select("diff").sum().item(), 2),

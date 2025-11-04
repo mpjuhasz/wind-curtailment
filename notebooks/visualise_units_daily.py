@@ -415,6 +415,7 @@ def _(mo):
 @app.cell
 def _(np, pl, quarter_hour_aggregates):
     to_bin_above = quarter_hour_aggregates["above"].with_columns(
+        # Turning energy / quarter hour into power in GW
         pl.col("curtailment").mul(4).alias("curtailment_gw"),
         pl.col("generated").mul(4).alias("generated_gw")
     )
@@ -427,9 +428,10 @@ def _(np, pl, quarter_hour_aggregates):
         labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in quantiles] + [float(quantiles.max() + 1)]]
     ).cast(pl.String).alias("bin")).group_by("bin").agg(
         pl.col("curtailment_gw").sum(),
-        pl.col("generated_gw").sum()
+        pl.col("generated_gw").sum(),
+        pl.col("generated_gw").count().alias("count"),
     ).with_columns(
-        (pl.col("curtailment_gw") / pl.col("generated_gw")).alias("curtailment_percent")
+        (pl.col("curtailment_gw") / pl.col("generated_gw")).mul(100).alias("curtailment_percent")
     ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
     return (bin_results_above,)
 
@@ -437,6 +439,7 @@ def _(np, pl, quarter_hour_aggregates):
 @app.cell
 def _(np, pl, quarter_hour_aggregates):
     to_bin_below = quarter_hour_aggregates["below"].with_columns(
+        # Turning energy / quarter hour into power in GW
         pl.col("curtailment").mul(4).alias("curtailment_gw"),
         pl.col("generated").mul(4).alias("generated_gw")
     )
@@ -449,9 +452,10 @@ def _(np, pl, quarter_hour_aggregates):
         labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in _quantiles] + [float(_quantiles.max() + 1)]]
     ).cast(pl.String).alias("bin")).group_by("bin").agg(
         pl.col("curtailment_gw").sum(),
-        pl.col("generated_gw").sum()
+        pl.col("generated_gw").sum(),
+        pl.col("generated_gw").count().alias("count"),
     ).with_columns(
-        (pl.col("curtailment_gw") / pl.col("generated_gw")).alias("curtailment_percent")
+        (pl.col("curtailment_gw") / pl.col("generated_gw")).mul(100).alias("curtailment_percent")
     ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
     return (bin_results_below,)
 
@@ -486,9 +490,15 @@ def _(bin_results_above, bin_results_below, go):
 
 
 @app.cell
+def _(bin_results_above):
+    bin_results_above
+    return
+
+
+@app.cell
 def _(bin_results_above, bin_results_below):
-    bin_results_above.write_csv("./data/visual/bin_results_above.csv")
-    bin_results_below.write_csv("./data/visual/bin_results_below.csv")
+    bin_results_above.select("bin", "curtailment_percent", "count").write_csv("./data/visual/bin_results_above.csv")
+    bin_results_below.select("bin", "curtailment_percent", "count").write_csv("./data/visual/bin_results_below.csv")
     return
 
 
