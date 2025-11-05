@@ -40,6 +40,12 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
 
 
 def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.DataFrame, downsample_frequency: str = "1d") -> pl.DataFrame:
+    """
+    Aggregates and upsamples the accepted-level and physical notification dataframes
+    
+    It takes the difference as `accepted - physical`. This means, that curtailment will have negative sign, and extra generation
+    will be positive. This makes more sense than the other way around (which is how I've initially set this up).
+    """
     physical_smoothened = physical.select(
         pl.col("timeFrom").alias("time"),
         pl.col("levelFrom").alias("level"),
@@ -61,7 +67,8 @@ def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.D
             pl.col("level").alias("accepted_level"),
             pl.col("level_right").alias("physical_level"),
             pl.col("time"),
-            pl.when(pl.col("level").is_not_null()).then(pl.col("level_right").sub(pl.col("level"))).otherwise(0).alias("diff"),
+            # accepted - physical => curtailment (-), or extra (+)
+            pl.when(pl.col("level").is_not_null()).then(pl.col("level").sub(pl.col("level_right"))).otherwise(0).alias("diff"),
         )
     else:
         diffs = physical_smoothened.with_columns(
@@ -72,18 +79,20 @@ def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.D
         )
 
     output = diffs.with_columns(
+        # this roundabout way is required to account for no accepted level cases (where diff = 0)
         pl.col("physical_level").add(pl.col("diff")).alias("generated"),
-        pl.col("diff").clip(lower_bound=0).alias("curtailment"),
-        pl.col("diff").clip(upper_bound=0).alias("extra_generation"),
+        pl.col("diff").clip(lower_bound=0).alias("extra"),
+        pl.col("diff").clip(upper_bound=0).alias("curtailment"),
     ).select(
-        "physical_level", "time", "diff", "generated", "curtailment", "extra_generation"
+        "physical_level", "time", "diff", "generated", "curtailment", "extra"
     ).group_by_dynamic(
         index_column="time", every=downsample_frequency
     ).agg(
         # At this point we're aggregating power figures by the minute. 
         # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
+        # Keeping physical level for validation: G = E + C + PL
         pl.col("physical_level").mul(1 / 60).mul(1 / 1_000).sum(),
-        pl.col("extra_generation").mul(1 / 60).mul(1 / 1_000).sum(),
+        pl.col("extra").mul(1 / 60).mul(1 / 1_000).sum(),
         pl.col("curtailment").mul(1 / 60).mul(1 / 1_000).sum(),
         pl.col("generated").mul(1 / 60).mul(1 / 1_000).sum(),
     )
