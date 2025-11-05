@@ -33,6 +33,12 @@ def _(october_by_fuel_and_time, pl):
 
 
 @app.cell
+def _(to_plot):
+    to_plot.write_csv("./data/processed/analysis/october_imbalance_over_time.csv")
+    return
+
+
+@app.cell
 def _(px, to_plot):
     # plotly plot to show imbalance, total_curtailment and total_extra over time:
 
@@ -52,6 +58,12 @@ def _(px, to_plot):
         template="plotly_white"
     )
     fig.show()
+    return
+
+
+@app.cell
+def _(to_plot):
+    to_plot
     return
 
 
