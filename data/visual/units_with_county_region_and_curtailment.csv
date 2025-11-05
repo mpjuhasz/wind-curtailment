@@ -1,330 +1,330 @@
 bm_unit,repd_site_name,repd_lat,repd_long,connection_long,connection_lat,uk_county,uk_region,below_b6,technology_type,capacity,total_generated,total_curtailment
-T_ACHRW-1,A'Chruach (Phase 1),56.15277,-5.31022,,,Argyll and Bute,Scotland,false,Wind Onshore,48.3,82.90493,0.64835
-T_ACHRW-1,A'Chruach (Phase 2),56.12445,-5.3102,,,Argyll and Bute,Scotland,false,Wind Onshore,4.0,82.90493,0.64835
-T_AFTOW-1,Afton Wind Farm,55.3116,-4.17428,,,East Ayrshire,Scotland,false,Wind Onshore,50.0,111.02928,0.23889
-T_AKGLW-3,Aikengall,55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,48.0,257.57362,46.35247
-T_AKGLW-2,Aikengall,55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,48.0,201.75499,14.4575
-T_AKGLW-2,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,60.8,201.75499,14.4575
-T_AKGLW-3,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,60.8,257.57362,46.35247
-T_AKGLW-3,Aikengall IIa Community Wind Farm,55.89342,-2.45259,,,East Lothian,Scotland,false,Wind Onshore,81.7,257.57362,46.35247
-T_AKGLW-2,Aikengall IIa Community Wind Farm,55.89342,-2.45259,,,East Lothian,Scotland,false,Wind Onshore,81.7,201.75499,14.4575
-E_AIRSW-1,Airies Farm,54.80205,-4.65774,,,Dumfries and Galloway,Scotland,false,Wind Onshore,35.0,54.95477,0.0
-T_ANSUW-1,An Suidhe,56.21867,-5.21937,,,Argyll and Bute,Scotland,false,Wind Onshore,19.3,34.80245,0.0
-E_ASHWW-1,Andershaw,55.50933,-3.84626,,,South Lanarkshire,Scotland,false,Wind Onshore,36.0,76.59882,2.62815
-T_ARCHW-1,Arecleoch Wind Farm (extension),55.06878,-4.79705,,,South Ayrshire,Scotland,false,Wind Onshore,73.0,183.83255,11.04718
-T_ARCHW-1,Arecleoch Windfarm,55.06878,-4.79705,,,South Ayrshire,Scotland,false,Wind Onshore,120.0,183.83255,11.04718
-E_ASLVW-1,Assel Valley Wind Farm,55.22648,-4.77871,,,South Ayrshire,Scotland,false,Wind Onshore,25.0,50.38439,0.73641
-E_ABRTW-1,Auchrobert Wind Farm,55.624,-3.98421,,,South Lanarkshire,Scotland,false,Wind Onshore,36.0,72.33097,1.83162
+T_ACHRW-1,A'Chruach (Phase 1),56.15277,-5.31022,,,Argyll and Bute,Scotland,false,Wind Onshore,48.3,84.17803,0.64835
+T_ACHRW-1,A'Chruach (Phase 2),56.12445,-5.3102,,,Argyll and Bute,Scotland,false,Wind Onshore,4.0,84.17803,0.64835
+T_AFTOW-1,Afton Wind Farm,55.3116,-4.17428,,,East Ayrshire,Scotland,false,Wind Onshore,50.0,113.03731,0.23886
+T_AKGLW-2,Aikengall,55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,48.0,205.15949,15.03948
+T_AKGLW-3,Aikengall,55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,48.0,261.4174,47.17476
+T_AKGLW-2,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,60.8,205.15949,15.03948
+T_AKGLW-3,"Aikengall II, Wester Dod Community Wind Farm",55.91721,-2.49007,,,East Lothian,Scotland,false,Wind Onshore,60.8,261.4174,47.17476
+T_AKGLW-2,Aikengall IIa Community Wind Farm,55.89342,-2.45259,,,East Lothian,Scotland,false,Wind Onshore,81.7,205.15949,15.03948
+T_AKGLW-3,Aikengall IIa Community Wind Farm,55.89342,-2.45259,,,East Lothian,Scotland,false,Wind Onshore,81.7,261.4174,47.17476
+E_AIRSW-1,Airies Farm,54.80205,-4.65774,,,Dumfries and Galloway,Scotland,false,Wind Onshore,35.0,55.97677,0.0
+T_ANSUW-1,An Suidhe,56.21867,-5.21937,,,Argyll and Bute,Scotland,false,Wind Onshore,19.3,35.302,0.0
+E_ASHWW-1,Andershaw,55.50933,-3.84626,,,South Lanarkshire,Scotland,false,Wind Onshore,36.0,78.02277,2.6282
+T_ARCHW-1,Arecleoch Wind Farm (extension),55.06878,-4.79705,,,South Ayrshire,Scotland,false,Wind Onshore,73.0,187.63407,11.04718
+T_ARCHW-1,Arecleoch Windfarm,55.06878,-4.79705,,,South Ayrshire,Scotland,false,Wind Onshore,120.0,187.63407,11.04718
+E_ASLVW-1,Assel Valley Wind Farm,55.22648,-4.77871,,,South Ayrshire,Scotland,false,Wind Onshore,25.0,51.50718,0.83474
+E_ABRTW-1,Auchrobert Wind Farm,55.624,-3.98421,,,South Lanarkshire,Scotland,false,Wind Onshore,36.0,73.63185,1.83162
 E_BRNLW-1,BROWNIELEYS - 3 WIND TURBINES,56.83991,-2.37915,,,Aberdeenshire,Scotland,false,Wind Onshore,7.5,0.0,0.0
-T_BDCHW-1,Bad a Cheo Wind Farm,58.42046,-3.42919,,,Highland,Scotland,false,Wind Onshore,26.7,66.35196,1.45163
-E_BABAW-1,Baillie Wind Farm,58.56792,-3.67702,,,Highland,Scotland,false,Wind Onshore,52.5,131.28018,34.47389
-T_BOWLW-1,Barrow,53.99146,-3.29828,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,90.0,132.3406,2.2624
-T_BEATO-4,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,458.6167,0.55727
-T_BEATO-2,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,315.9919,0.8245
-T_BEATO-1,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,335.27398,0.92661
-T_BEATO-3,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,464.84193,1.35008
-E_BETHW-1,Beinn Tharsuinn Extension (Beinn nan Oighrean),57.78823,-4.24815,,,Highland,Scotland,false,Wind Onshore,4.6,65.65907,13.87468
-E_BETHW-1,Beinn Tharsuinn Windfarm Project,57.80527,-4.329,,,Highland,Scotland,false,Wind Onshore,29.8,65.65907,13.87468
-E_BTUIW-2,Beinn an Tuirc,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,29.7,80.8628,6.22093
-E_BTUIW-3,Beinn an Tuirc,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,29.7,167.66261,40.49004
-E_BTUIW-2,Beinn an Tuirc Phase 2,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,43.7,80.8628,6.22093
-E_BTUIW-3,Beinn an Tuirc Phase 2,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,43.7,167.66261,40.49004
-T_BEINW-1,Beinneun,57.09561,-4.96548,,,Highland,Scotland,false,Wind Onshore,85.0,210.04484,6.20206
-E_BRYBW-1,Berry Burn,57.44661,-3.47539,,,Moray,Scotland,false,Wind Onshore,66.7,136.53194,26.89904
-2__PSTAT002,Berry Burn,57.44661,-3.47539,,,Moray,Scotland,false,Wind Onshore,66.7,114.42648,22.5602
-T_BHLAW-1,Bhlaraidh (previously Balmacaan),57.21915,-4.58191,,,Highland,Scotland,false,Wind Onshore,110.0,286.67609,76.64156
-T_BHLAW-1,Bhlaraidh Wind Farm Extension,57.25136,-4.66179,,,Highland,Scotland,false,Wind Onshore,84.0,286.67609,76.64156
-T_BLLA-2,Black Law,55.76219,-3.76257,,,South Lanarkshire,Scotland,false,Wind Onshore,124.0,120.81967,14.65922
-T_BLLA-1,Black Law,55.76219,-3.76257,,,South Lanarkshire,Scotland,false,Wind Onshore,124.0,170.63532,16.00057
-T_BLLA-2,Black Law Extension - 1b,55.76219,-3.76257,,,South Lanarkshire,Scotland,false,Wind Onshore,15.0,120.81967,14.65922
-T_BLKWW-1,Blackcraig,55.11991,-4.03212,,,Dumfries and Galloway,Scotland,false,Wind Onshore,52.9,129.34332,0.22962
-E_BLARW-1,Blary Hill Wind Farm,55.56826,-5.64354,,,Argyll and Bute,Scotland,false,Wind Onshore,35.0,75.47873,8.71237
-E_BRDUW-1,Braes O'Doune,56.26983,-4.05894,,,Stirling,Scotland,false,Wind Onshore,72.0,125.74325,5.97233
-T_NOKYW-1,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,,,East Ayrshire,Scotland,false,Wind Onshore,100.0,104.63103,0.0
-T_NOKYW-2,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,,,East Ayrshire,Scotland,false,Wind Onshore,100.0,109.2803,0.0
-T_WISTW-2,Brochloch Rig (formerly Windy Standard II),55.29221,-4.20315,,,Dumfries and Galloway,Scotland,false,Wind Onshore,90.0,183.00889,19.45334
-T_BROCW-1,Broken Cross (Former Surface Mine),55.6045,-3.81617,,,South Lanarkshire,Scotland,false,Wind Onshore,48.0,98.12657,18.49353
-E_BURBO,Burbo Bank,53.48818,-3.18492,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,90.0,186.97535,0.73202
-T_BRBEO-1,Burbo Bank,53.48818,-3.18492,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,90.0,643.58105,0.0
-E_BNWKW-1,Burn of Whilk,58.35676,-3.20385,,,Highland,Scotland,false,Wind Onshore,22.5,63.4129,7.58368
-2__PEDGE003,Camster,58.40865,-3.27151,,,Highland,Scotland,false,Wind Onshore,50.0,120.91589,3.35308
-T_CRGHW-1,Carraig Gheal,56.33901,-5.29454,,,Argyll and Bute,Scotland,false,Wind Onshore,46.0,111.22337,13.98272
-2__PSMAE001,Causeymire,58.44347,-3.08542,,,Unknown,Unknown,false,Wind Onshore,48.3,79.35763,6.60176
-T_LNCSW-1,Centrica (Lincs),53.18417,0.49808,0.2899,53.2095,Lincolnshire,East Midlands,true,Wind Offshore,270.0,342.68452,0.0
-T_LNCSW-2,Centrica (Lincs),53.18417,0.49808,0.2899,53.2095,Lincolnshire,East Midlands,true,Wind Offshore,270.0,372.09307,0.0
-E_CLFLW-1,Clachan Flats Wind Farm,56.28809,-4.94289,,,Argyll and Bute,Scotland,false,Wind Onshore,15.0,11.38363,0.13452
-E_CLAC-1,Clachan Flats Wind Farm,56.28809,-4.94289,,,Argyll and Bute,Scotland,false,Wind Onshore,15.0,72.9457,10.15703
-E_CLDRW-1,Clashindarroch,57.37103,-2.85794,,,Aberdeenshire,Scotland,false,Wind Onshore,129.0,88.05412,14.71005
-E_CLDRW-1,Clashindarroch,57.36648,-2.86615,,,Aberdeenshire,Scotland,false,Wind Onshore,37.0,88.05412,14.71005
-E_CLDRW-1,Clashindarroch 2,57.38397,-2.93309,,,Aberdeenshire,Scotland,false,Wind Onshore,77.0,88.05412,14.71005
-T_CLDSW-1,Clyde Wind Farm,55.44163,-3.54273,,,South Lanarkshire,Scotland,false,Wind Onshore,350.0,248.79552,3.06358
-T_CLDNW-1,Clyde Wind Farm,55.44163,-3.54273,,,South Lanarkshire,Scotland,false,Wind Onshore,350.0,432.58656,11.17502
-T_CLDCW-1,Clyde Wind Farm,55.44163,-3.54273,,,South Lanarkshire,Scotland,false,Wind Onshore,350.0,369.19355,5.66102
-E_CNCLW-1,Coire Na Cloiche Wind Farm,57.76962,-4.37316,,,Highland,Scotland,false,Wind Onshore,29.9,67.16202,0.0
-T_CGTHW-1,Corriegarth,57.19008,-4.35964,,,Highland,Scotland,false,Wind Onshore,69.5,195.39139,40.25312
-T_CRMLW-1,Corriemoillie,57.66873,-4.77302,,,Highland,Scotland,false,Wind Onshore,54.4,115.73768,33.6364
-T_CDCL-1,Cottam Wind Farm,53.31057,-0.80286,,,Nottinghamshire,East Midlands,true,Wind Onshore,27.6,1006.35099,47.28797
-T_CDCL-1,Cottam wind farm,53.32322,-0.78503,,,Nottinghamshire,East Midlands,true,Wind Onshore,6.9,1006.35099,47.28797
-T_COUWW-1,Cour Wind Farm,55.68068,-5.48493,,,Argyll and Bute,Scotland,false,Wind Onshore,20.5,61.96598,0.03022
-E_CRGTW-1,Craig Wind Farm,55.16412,-3.06899,,,Dumfries and Galloway,Scotland,false,Wind Onshore,10.0,12.27757,0.1318
-T_CREAW-1,Creag Riabhach Wind Farm,58.2193,-4.51121,,,Highland,Scotland,false,Wind Onshore,92.4,242.08721,62.22115
-T_CRDEW-2,Crossdykes,55.17615,-3.17287,,,Dumfries and Galloway,Scotland,false,Wind Onshore,48.0,66.6145,13.71898
-T_CRDEW-1,Crossdykes,55.17615,-3.17287,,,Dumfries and Galloway,Scotland,false,Wind Onshore,48.0,66.0688,13.17228
-T_CRYRW-3,Crystal Rig Extension II,55.91289,-2.54549,,,East Lothian,Scotland,false,Wind Onshore,20.7,37.12505,2.93885
-T_CRYRW-3,Crystal Rig Wind Farm Phase 2a,55.89948,-2.52931,,,Scottish Borders,Scotland,false,Wind Onshore,138.0,37.12505,2.93885
-T_CRYRW-2,Crystal Rig Wind Farm Phase 2a,55.89948,-2.52931,,,Scottish Borders,Scotland,false,Wind Onshore,138.0,286.63282,31.5956
-T_CRYRW-3,Crystal Rig Wind Farm Phase III,55.92641,-2.53448,,,East Lothian,Scotland,false,Wind Onshore,13.8,37.12505,2.93885
-T_CRYRW-2,Crystal Rig Wind Farm Phase III,55.92641,-2.53448,,,East Lothian,Scotland,false,Wind Onshore,13.8,286.63282,31.5956
-T_CRYRW-2,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,,,Scottish Borders,Scotland,false,Wind Onshore,48.0,286.63282,31.5956
-T_CRYRW-3,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,,,Scottish Borders,Scotland,false,Wind Onshore,48.0,37.12505,2.93885
-T_CUMHW-1,Cumberhead Wind Farm,55.57184,-3.95894,,,South Lanarkshire,Scotland,false,Wind Onshore,48.0,154.93274,26.71406
-T_DALQW-1,Dalquhandy Windfarm,55.18061,-4.90958,,,South Ayrshire,Scotland,false,Wind Onshore,45.0,103.32435,14.719
-E_DALSW-1,Dalswinton,55.1841,-3.65056,,,Dumfries and Galloway,Scotland,false,Wind Onshore,30.0,51.92015,2.77428
-T_DRSLW-1,Dersalloch,55.30426,-4.48822,,,South Ayrshire,Scotland,false,Wind Onshore,69.0,151.69646,27.95228
-T_DBAWO-1,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,275.67947,0.0
-T_DBAWO-3,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,376.318,0.0
-T_DBAWO-2,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,316.16787,0.0
-T_DBAWO-5,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,53.8188,0.0
+T_BDCHW-1,Bad a Cheo Wind Farm,58.42046,-3.42919,,,Highland,Scotland,false,Wind Onshore,26.7,67.28881,1.47272
+E_BABAW-1,Baillie Wind Farm,58.56792,-3.67702,,,Highland,Scotland,false,Wind Onshore,52.5,133.83577,35.47692
+T_BOWLW-1,Barrow,53.99146,-3.29828,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,90.0,135.00012,2.2624
+T_BEATO-4,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,466.16375,0.55727
+T_BEATO-1,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,340.63856,0.92661
+T_BEATO-2,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,319.70863,0.8245
+T_BEATO-3,Beatrice,58.08823,-2.95016,-3.06187,57.59922,Moray,Scotland,false,Wind Offshore,588.0,472.43962,1.35008
+E_BETHW-1,Beinn Tharsuinn Extension (Beinn nan Oighrean),57.78823,-4.24815,,,Highland,Scotland,false,Wind Onshore,4.6,66.78272,14.26872
+E_BETHW-1,Beinn Tharsuinn Windfarm Project,57.80527,-4.329,,,Highland,Scotland,false,Wind Onshore,29.8,66.78272,14.26872
+E_BTUIW-3,Beinn an Tuirc,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,29.7,170.75211,41.26263
+E_BTUIW-2,Beinn an Tuirc,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,29.7,82.2077,6.22093
+E_BTUIW-2,Beinn an Tuirc Phase 2,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,43.7,82.2077,6.22093
+E_BTUIW-3,Beinn an Tuirc Phase 2,55.57317,-5.58735,,,Argyll and Bute,Scotland,false,Wind Onshore,43.7,170.75211,41.26263
+T_BEINW-1,Beinneun,57.09561,-4.96548,,,Highland,Scotland,false,Wind Onshore,85.0,213.98153,6.97942
+E_BRYBW-1,Berry Burn,57.44661,-3.47539,,,Moray,Scotland,false,Wind Onshore,66.7,137.46967,26.89846
+2__PSTAT002,Berry Burn,57.44661,-3.47539,,,Moray,Scotland,false,Wind Onshore,66.7,114.42918,22.5629
+T_BHLAW-1,Bhlaraidh (previously Balmacaan),57.21915,-4.58191,,,Highland,Scotland,false,Wind Onshore,110.0,292.17604,78.64886
+T_BHLAW-1,Bhlaraidh Wind Farm Extension,57.25136,-4.66179,,,Highland,Scotland,false,Wind Onshore,84.0,292.17604,78.64886
+T_BLLA-1,Black Law,55.76219,-3.76257,,,South Lanarkshire,Scotland,false,Wind Onshore,124.0,173.35808,15.9989
+T_BLLA-2,Black Law,55.76219,-3.76257,,,South Lanarkshire,Scotland,false,Wind Onshore,124.0,122.66628,14.65922
+T_BLLA-2,Black Law Extension - 1b,55.76219,-3.76257,,,South Lanarkshire,Scotland,false,Wind Onshore,15.0,122.66628,14.65922
+T_BLKWW-1,Blackcraig,55.11991,-4.03212,,,Dumfries and Galloway,Scotland,false,Wind Onshore,52.9,131.80791,0.22962
+E_BLARW-1,Blary Hill Wind Farm,55.56826,-5.64354,,,Argyll and Bute,Scotland,false,Wind Onshore,35.0,76.88372,8.79793
+E_BRDUW-1,Braes O'Doune,56.26983,-4.05894,,,Stirling,Scotland,false,Wind Onshore,72.0,127.4811,6.01672
+T_NOKYW-2,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,,,East Ayrshire,Scotland,false,Wind Onshore,100.0,113.82908,0.0
+T_NOKYW-1,"Breezy Hill, North Kyle Forest Estate - Wind Turbines",55.32376,-4.40614,,,East Ayrshire,Scotland,false,Wind Onshore,100.0,109.18382,0.0
+T_WISTW-2,Brochloch Rig (formerly Windy Standard II),55.29221,-4.20315,,,Dumfries and Galloway,Scotland,false,Wind Onshore,90.0,186.29888,19.84711
+T_BROCW-1,Broken Cross (Former Surface Mine),55.6045,-3.81617,,,South Lanarkshire,Scotland,false,Wind Onshore,48.0,99.76162,18.67167
+T_BRBEO-1,Burbo Bank,53.48818,-3.18492,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,90.0,655.17032,0.0
+E_BURBO,Burbo Bank,53.48818,-3.18492,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,90.0,191.01662,0.73202
+E_BNWKW-1,Burn of Whilk,58.35676,-3.20385,,,Highland,Scotland,false,Wind Onshore,22.5,64.2365,7.6061
+2__PEDGE003,Camster,58.40865,-3.27151,,,Highland,Scotland,false,Wind Onshore,50.0,122.76112,3.35291
+T_CRGHW-1,Carraig Gheal,56.33901,-5.29454,,,Argyll and Bute,Scotland,false,Wind Onshore,46.0,112.72532,13.98272
+2__PSMAE001,Causeymire,58.44347,-3.08542,,,Unknown,Unknown,false,Wind Onshore,48.3,80.77922,6.60176
+T_LNCSW-1,Centrica (Lincs),53.18417,0.49808,0.2899,53.2095,Lincolnshire,East Midlands,true,Wind Offshore,270.0,347.98142,0.0
+T_LNCSW-2,Centrica (Lincs),53.18417,0.49808,0.2899,53.2095,Lincolnshire,East Midlands,true,Wind Offshore,270.0,377.43458,0.0
+E_CLFLW-1,Clachan Flats Wind Farm,56.28809,-4.94289,,,Argyll and Bute,Scotland,false,Wind Onshore,15.0,11.6121,0.13452
+E_CLAC-1,Clachan Flats Wind Farm,56.28809,-4.94289,,,Argyll and Bute,Scotland,false,Wind Onshore,15.0,75.50403,10.25403
+E_CLDRW-1,Clashindarroch,57.37103,-2.85794,,,Aberdeenshire,Scotland,false,Wind Onshore,129.0,89.36812,14.86548
+E_CLDRW-1,Clashindarroch,57.36648,-2.86615,,,Aberdeenshire,Scotland,false,Wind Onshore,37.0,89.36812,14.86548
+E_CLDRW-1,Clashindarroch 2,57.38397,-2.93309,,,Aberdeenshire,Scotland,false,Wind Onshore,77.0,89.36812,14.86548
+T_CLDNW-1,Clyde Wind Farm,55.44163,-3.54273,,,South Lanarkshire,Scotland,false,Wind Onshore,350.0,440.29671,11.17502
+T_CLDCW-1,Clyde Wind Farm,55.44163,-3.54273,,,South Lanarkshire,Scotland,false,Wind Onshore,350.0,376.29142,5.66102
+T_CLDSW-1,Clyde Wind Farm,55.44163,-3.54273,,,South Lanarkshire,Scotland,false,Wind Onshore,350.0,253.96039,3.06358
+E_CNCLW-1,Coire Na Cloiche Wind Farm,57.76962,-4.37316,,,Highland,Scotland,false,Wind Onshore,29.9,67.93565,0.0
+T_CGTHW-1,Corriegarth,57.19008,-4.35964,,,Highland,Scotland,false,Wind Onshore,69.5,199.51084,41.84996
+T_CRMLW-1,Corriemoillie,57.66873,-4.77302,,,Highland,Scotland,false,Wind Onshore,54.4,117.63617,34.49907
+T_CDCL-1,Cottam Wind Farm,53.31057,-0.80286,,,Nottinghamshire,East Midlands,true,Wind Onshore,27.6,1006.36999,47.28799
+T_CDCL-1,Cottam wind farm,53.32322,-0.78503,,,Nottinghamshire,East Midlands,true,Wind Onshore,6.9,1006.36999,47.28799
+T_COUWW-1,Cour Wind Farm,55.68068,-5.48493,,,Argyll and Bute,Scotland,false,Wind Onshore,20.5,62.85693,0.03022
+E_CRGTW-1,Craig Wind Farm,55.16412,-3.06899,,,Dumfries and Galloway,Scotland,false,Wind Onshore,10.0,12.44858,0.1318
+T_CREAW-1,Creag Riabhach Wind Farm,58.2193,-4.51121,,,Highland,Scotland,false,Wind Onshore,92.4,246.61436,63.6397
+T_CRDEW-1,Crossdykes,55.17615,-3.17287,,,Dumfries and Galloway,Scotland,false,Wind Onshore,48.0,67.05732,13.24337
+T_CRDEW-2,Crossdykes,55.17615,-3.17287,,,Dumfries and Galloway,Scotland,false,Wind Onshore,48.0,67.54447,13.73152
+T_CRYRW-3,Crystal Rig Extension II,55.91289,-2.54549,,,East Lothian,Scotland,false,Wind Onshore,20.7,37.69416,3.04153
+T_CRYRW-2,Crystal Rig Wind Farm Phase 2a,55.89948,-2.52931,,,Scottish Borders,Scotland,false,Wind Onshore,138.0,291.68628,32.55428
+T_CRYRW-3,Crystal Rig Wind Farm Phase 2a,55.89948,-2.52931,,,Scottish Borders,Scotland,false,Wind Onshore,138.0,37.69416,3.04153
+T_CRYRW-2,Crystal Rig Wind Farm Phase III,55.92641,-2.53448,,,East Lothian,Scotland,false,Wind Onshore,13.8,291.68628,32.55428
+T_CRYRW-3,Crystal Rig Wind Farm Phase III,55.92641,-2.53448,,,East Lothian,Scotland,false,Wind Onshore,13.8,37.69416,3.04153
+T_CRYRW-2,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,,,Scottish Borders,Scotland,false,Wind Onshore,48.0,291.68628,32.55428
+T_CRYRW-3,Crystal Rig Wind Farm Phase IV,55.90308,-2.52776,,,Scottish Borders,Scotland,false,Wind Onshore,48.0,37.69416,3.04153
+T_CUMHW-1,Cumberhead Wind Farm,55.57184,-3.95894,,,South Lanarkshire,Scotland,false,Wind Onshore,48.0,157.78185,27.38893
+T_DALQW-1,Dalquhandy Windfarm,55.18061,-4.90958,,,South Ayrshire,Scotland,false,Wind Onshore,45.0,105.09188,14.83
+E_DALSW-1,Dalswinton,55.1841,-3.65056,,,Dumfries and Galloway,Scotland,false,Wind Onshore,30.0,52.68125,2.77428
+T_DRSLW-1,Dersalloch,55.30426,-4.48822,,,South Ayrshire,Scotland,false,Wind Onshore,69.0,155.39199,28.99299
+T_DBAWO-1,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,282.89137,0.0
 T_DBAWO-4,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,0.0,0.0
-T_DOREW-2,Dorenell Wind Farm (Previously Site A and B Scaut Hill),57.3509,-3.13168,,,Moray,Scotland,false,Wind Onshore,177.0,303.56011,104.94609
-T_DOREW-1,Dorenell Wind Farm (Previously Site A and B Scaut Hill),57.3509,-3.13168,,,Moray,Scotland,false,Wind Onshore,177.0,393.43428,131.46174
-T_DOUGW-1,Douglas West Wind Farm (extension),55.58736,-3.8901,,,South Lanarkshire,Scotland,false,Wind Onshore,78.0,105.521,22.87552
-T_DALQW-1,Douglas West and Dalquhandy Renewable Energy Project,55.58736,-3.8901,,,South Lanarkshire,Scotland,false,Wind Onshore,49.0,103.32435,14.719
-T_DOUGW-1,Douglas West and Dalquhandy Renewable Energy Project,55.58736,-3.8901,,,South Lanarkshire,Scotland,false,Wind Onshore,49.0,105.521,22.87552
-T_DDGNO-2,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,267.72488,0.0
-T_DDGNO-1,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,330.95155,0.0
-T_DDGNO-3,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,304.20623,0.0
-T_DDGNO-4,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,294.55095,0.0
-T_DDGNO-4,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,294.55095,0.0
-T_DDGNO-2,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,267.72488,0.0
-T_DDGNO-1,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,330.95155,0.0
-T_DDGNO-3,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,304.20623,0.0
-T_DNLWW-1,Dun Law,55.80646,-2.84603,,,Scottish Borders,Scotland,false,Wind Onshore,17.2,43.46277,2.40285
-T_DUNGW-1,Dunmaglass Wind Farm,57.25148,-4.2558,,,Highland,Scotland,false,Wind Onshore,94.0,294.19454,41.88074
-T_EAAO-1,East Anglia 1 (EA 1),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,714.0,1111.17404,1.47993
-T_EAAO-2,East Anglia 1 (EA 1),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,714.0,1108.23423,1.20803
-T_EAAO-2,East Anglia 1 North (EA 4),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,800.0,1108.23423,1.20803
-T_EAAO-1,East Anglia 1 North (EA 4),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,800.0,1111.17404,1.47993
-T_EAAO-2,East Anglia 2 (EA 2),52.72099,2.16871,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,900.0,1108.23423,1.20803
-E_TULWW-2,Easter Tulloch Wind Farm (Tullo Extension),56.83639,-2.3957,,,Aberdeenshire,Scotland,false,Wind Onshore,25.0,48.33381,7.03851
-T_EDINW-1,Edinbane Wind Farm,57.46913,-6.43221,,,Highland,Scotland,false,Wind Onshore,41.4,97.39182,18.96133
-T_ABRBO-1,European Offshore Wind Deployment Centre (EOWDC) (Aberdeen Bay - Demonstration site),57.1462,-2.07281,,,Aberdeen City,Unknown,false,Wind Offshore,96.8,188.1335,0.0
-T_EWHLW-1,Ewe Hill,55.10709,-3.33387,,,Dumfries and Galloway,Scotland,false,Wind Onshore,13.8,80.33162,9.48852
-T_FALGW-1,Fallago Rig,55.83131,-2.68803,,,Scottish Borders,Scotland,false,Wind Onshore,144.0,356.18057,24.354
-T_FARR-1,Farr Wind Farm,57.33392,-4.10301,,,Highland,Scotland,false,Wind Onshore,92.0,125.31429,14.75967
-T_FARR-2,Farr Wind Farm,57.33392,-4.10301,,,Highland,Scotland,false,Wind Onshore,92.0,123.24028,15.21536
-2__PSTAT002,Fetteresso Wind Farm (Mid Hill 3),56.96441,-2.34737,,,Aberdeenshire,Scotland,false,Wind Onshore,42.0,114.42648,22.5602
-T_FSDLW-1,Freasdail Wind Farm,55.77701,-5.47064,,,Argyll and Bute,Scotland,false,Wind Onshore,22.5,46.49463,0.0
-T_GLWSW-1,Galawhistle,55.53957,-3.97542,,,East Ayrshire,Scotland,false,Wind Onshore,66.0,97.24787,3.57505
-T_GANW-22,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,283.3452,0.0
-T_GANW-11,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,278.66242,0.06338
-T_GANW-13,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,285.91577,0.0
-T_GANW-24,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,284.35673,0.0
-T_GNAPW-1,Glen App,55.00066,-4.98968,,,Dumfries and Galloway,Scotland,false,Wind Onshore,22.0,38.83088,2.64238
-T_GLNKW-1,Glen Kyllachy Wind Farm,57.32073,-4.08565,,,Highland,Scotland,false,Wind Onshore,48.5,170.19537,59.10639
-E_GLCHW-1,Glenchamber Wind Farm,54.96342,-4.75433,,,Dumfries and Galloway,Scotland,false,Wind Onshore,27.5,53.1637,0.0
-E_GLOFW-1,Glens of Foudland,57.42535,-2.63607,,,Aberdeenshire,Scotland,false,Wind Onshore,26.0,51.3442,0.74487
-E_GFLDW-1,Goole Fields,53.66593,-0.88928,,,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Onshore,32.8,54.15932,0.0
-E_GFLDW-1,Goole Fields ll Wind Farm,53.67678,-0.8868,,,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Onshore,34.9,54.15932,0.0
-T_GORDW-1,Gordonbush,58.0595,-3.95905,,,Highland,Scotland,false,Wind Onshore,70.0,189.94098,40.48967
-T_GORDW-2,Gordonbush,58.0595,-3.95905,,,Highland,Scotland,false,Wind Onshore,70.0,135.50964,56.12542
-E_GDSTW-1,Gordonstown Hill Wind Farm,57.46192,-2.48276,,,Aberdeenshire,Scotland,false,Wind Onshore,12.5,21.85142,0.41854
-T_GRGBW-3,Greater Gabbard Wind Farm,51.91764,1.92842,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,504.0,378.46497,17.31484
-T_GRGBW-2,Greater Gabbard Wind Farm,51.91764,1.92842,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,504.0,412.00909,17.83261
-T_GRGBW-1,Greater Gabbard Wind Farm,51.91764,1.92842,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,504.0,402.19275,20.32085
-E_GRGRW-1,Greengairs East Wind Farm,55.90107,-3.91201,,,North Lanarkshire,Scotland,false,Wind Onshore,24.0,109.14833,21.31331
-T_GRIFW-1,Griffin Wind farm,56.58122,-3.73375,,,Perth and Kinross,Scotland,false,Wind Onshore,156.0,132.52277,8.08052
-T_GRIFW-2,Griffin Wind farm,56.58122,-3.73375,,,Perth and Kinross,Scotland,false,Wind Onshore,156.0,133.40065,8.0385
-T_GNFSW-2,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,12.0,142.02382,0.12198
-T_GNFSW-1,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,12.0,223.31895,0.1578
-T_GNFSW-2,Gunfleet Sands II,51.72719,1.24592,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,64.8,142.02382,0.12198
-T_GNFSW-1,Gunfleet Sands II,51.72719,1.24592,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,64.8,223.31895,0.1578
-T_GNFSW-2,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,108.0,142.02382,0.12198
-T_GNFSW-1,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,108.0,223.31895,0.1578
-T_GYMR-26,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,346.86082,1.76779
-T_GYMR-17,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,267.6574,0.85985
-T_GYMR-28,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,333.75058,1.2847
-T_GYMR-15,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,371.34899,1.56498
-T_HADHW-1,Hadyard Hill,55.25682,-4.73191,,,South Ayrshire,Scotland,false,Wind Onshore,120.0,166.79102,1.69717
-T_HAHAW-1,Hagshaw Hill Wind Farm,55.55537,-3.92033,,,South Lanarkshire,Scotland,false,Wind Onshore,7.8,33.18803,0.0
-T_HAHAW-1,Hagshaw Hill Wind Farm,55.55528,-3.92008,,,South Lanarkshire,Scotland,false,Wind Onshore,7.8,33.18803,0.0
-T_HAHAW-1,Hagshaw Hill Wind Farm Extension,55.5666,-3.92032,,,South Lanarkshire,Scotland,false,Wind Onshore,26.0,33.18803,0.0
-T_HALSW-1,Halsary Wind Farm,58.4309,-3.44445,,,Highland,Scotland,false,Wind Onshore,34.0,143.60553,57.63422
-E_HBHDW-1,Harburnhead Wind Farm,55.80868,-3.53217,,,West Lothian,Scotland,false,Wind Onshore,51.7,116.48027,0.0
-E_HRHLW-1,Hare Hill,54.76158,-1.41511,,,County Durham,North East,true,Wind Onshore,1.3,62.16478,6.98332
-E_HRHLW-1,Hare Hill (East Ayrshire),55.3628,-4.12628,,,East Ayrshire,Scotland,false,Wind Onshore,13.2,62.16478,6.98332
-T_HRSTW-1,Harestanes,55.23903,-3.5742,,,Dumfries and Galloway,Scotland,false,Wind Onshore,136.0,207.93193,19.15018
-E_HLGLW-1,Hill of Glaschyle Wind Farm,57.51052,-3.61559,,,Moray,Scotland,false,Wind Onshore,27.6,41.33743,0.0
-E_HLTWW-1,Hill of Towie (Drummuir),57.62284,-3.34105,,,Moray,Scotland,false,Wind Onshore,48.0,84.17282,3.59183
-E_HLTWW-1,Hill of Towie II Wind Farm,57.62284,-3.34105,,,Moray,Scotland,false,Wind Onshore,48.0,84.17282,3.59183
-T_HOWAO-2,Hornsea 1 - Heron & Njord,53.68154,1.42074,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1218.0,1218.92771,0.23595
-T_HOWAO-1,Hornsea 1 - Heron & Njord,53.68154,1.42074,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1218.0,1199.15686,0.38207
-T_HOWAO-3,Hornsea 1 - Heron & Njord,53.68154,1.42074,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1218.0,1225.91695,0.07967
-T_HOWBO-3,Hornsea 2 - Optimus and Breesea,53.96,1.53999,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1320.0,1409.48024,27.56438
-T_HOWBO-1,Hornsea 2 - Optimus and Breesea,53.96,1.53999,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1320.0,1421.56399,24.71695
-T_HOWBO-2,Hornsea 2 - Optimus and Breesea,53.96,1.53999,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1320.0,969.34215,5.91403
-T_HMGTO-2,Humber Gateway A,53.38746,0.50064,-0.1262,53.827,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,219.0,306.36205,0.0
-T_HMGTO-1,Humber Gateway A,53.38746,0.50064,-0.1262,53.827,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,219.0,304.07047,0.0
-E_HYWDW-1,Hywind Scotland Pilot Park (Hywind 2) Demonstrator,57.50746,-1.44258,-1.84229,57.52191,Aberdeenshire,Scotland,false,Wind Offshore,30.0,96.6718,0.0
-T_KEAD-2,Keadby Wind Farm,53.6118,-0.76369,,,North Lincolnshire,Yorkshire and The Humber,true,Wind Onshore,68.0,2289.8409,68.02043
-T_KEAD-1,Keadby Wind Farm,53.6118,-0.76369,,,North Lincolnshire,Yorkshire and The Humber,true,Wind Onshore,68.0,396.57036,7.2212
+T_DBAWO-3,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,385.60793,0.0
+T_DBAWO-5,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,59.7318,0.0
+T_DBAWO-2,Dogger Bank A & B (was Creyke Beck A & B),55.96734,1.66792,-0.3173,53.8635,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,2400.0,321.64808,0.0
+T_DOREW-1,Dorenell Wind Farm (Previously Site A and B Scaut Hill),57.3509,-3.13168,,,Moray,Scotland,false,Wind Onshore,177.0,399.61816,133.92101
+T_DOREW-2,Dorenell Wind Farm (Previously Site A and B Scaut Hill),57.3509,-3.13168,,,Moray,Scotland,false,Wind Onshore,177.0,308.67229,107.14093
+T_DOUGW-1,Douglas West Wind Farm (extension),55.58736,-3.8901,,,South Lanarkshire,Scotland,false,Wind Onshore,78.0,107.21189,23.21835
+T_DOUGW-1,Douglas West and Dalquhandy Renewable Energy Project,55.58736,-3.8901,,,South Lanarkshire,Scotland,false,Wind Onshore,49.0,107.21189,23.21835
+T_DALQW-1,Douglas West and Dalquhandy Renewable Energy Project,55.58736,-3.8901,,,South Lanarkshire,Scotland,false,Wind Onshore,49.0,105.09188,14.83
+T_DDGNO-4,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,299.26015,0.0
+T_DDGNO-1,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,336.26108,0.0
+T_DDGNO-2,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,271.9179,0.0
+T_DDGNO-3,Dudgeon East,53.11746,0.61347,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,308.87475,0.0
+T_DDGNO-4,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,299.26015,0.0
+T_DDGNO-2,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,271.9179,0.0
+T_DDGNO-3,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,308.87475,0.0
+T_DDGNO-1,Dudgeon Extension Project,53.14934,1.18427,0.7948,52.7597,Norfolk,Eastern,true,Wind Offshore,402.0,336.26108,0.0
+T_DNLWW-1,Dun Law,55.80646,-2.84603,,,Scottish Borders,Scotland,false,Wind Onshore,17.2,44.2508,2.40285
+T_DUNGW-1,Dunmaglass Wind Farm,57.25148,-4.2558,,,Highland,Scotland,false,Wind Onshore,94.0,299.699,43.82742
+T_EAAO-2,East Anglia 1 (EA 1),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,714.0,1129.43692,1.20803
+T_EAAO-1,East Anglia 1 (EA 1),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,714.0,1132.37673,1.47993
+T_EAAO-1,East Anglia 1 North (EA 4),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,800.0,1132.37673,1.47993
+T_EAAO-2,East Anglia 1 North (EA 4),52.13696,2.1728,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,800.0,1129.43692,1.20803
+T_EAAO-2,East Anglia 2 (EA 2),52.72099,2.16871,1.1007,52.108,Suffolk,Eastern,true,Wind Offshore,900.0,1129.43692,1.20803
+E_TULWW-2,Easter Tulloch Wind Farm (Tullo Extension),56.83639,-2.3957,,,Aberdeenshire,Scotland,false,Wind Onshore,25.0,49.23672,7.10173
+T_EDINW-1,Edinbane Wind Farm,57.46913,-6.43221,,,Highland,Scotland,false,Wind Onshore,41.4,98.98193,19.23752
+T_ABRBO-1,European Offshore Wind Deployment Centre (EOWDC) (Aberdeen Bay - Demonstration site),57.1462,-2.07281,,,Aberdeen City,Unknown,false,Wind Offshore,96.8,191.8074,0.0
+T_EWHLW-1,Ewe Hill,55.10709,-3.33387,,,Dumfries and Galloway,Scotland,false,Wind Onshore,13.8,81.62902,9.48852
+T_FALGW-1,Fallago Rig,55.83131,-2.68803,,,Scottish Borders,Scotland,false,Wind Onshore,144.0,362.7996,24.35587
+T_FARR-1,Farr Wind Farm,57.33392,-4.10301,,,Highland,Scotland,false,Wind Onshore,92.0,126.74506,14.82571
+T_FARR-2,Farr Wind Farm,57.33392,-4.10301,,,Highland,Scotland,false,Wind Onshore,92.0,124.4229,15.24228
+2__PSTAT002,Fetteresso Wind Farm (Mid Hill 3),56.96441,-2.34737,,,Aberdeenshire,Scotland,false,Wind Onshore,42.0,114.42918,22.5629
+T_FSDLW-1,Freasdail Wind Farm,55.77701,-5.47064,,,Argyll and Bute,Scotland,false,Wind Onshore,22.5,47.35528,0.0
+T_GLWSW-1,Galawhistle,55.53957,-3.97542,,,East Ayrshire,Scotland,false,Wind Onshore,66.0,99.21873,3.57505
+T_GANW-22,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,288.16452,0.0
+T_GANW-13,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,291.10043,0.0
+T_GANW-24,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,289.13725,0.0
+T_GANW-11,Galloper Wind Farm,51.87999,2.03999,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,353.0,283.35508,0.06338
+T_GNAPW-1,Glen App,55.00066,-4.98968,,,Dumfries and Galloway,Scotland,false,Wind Onshore,22.0,39.74403,2.86953
+T_GLNKW-1,Glen Kyllachy Wind Farm,57.32073,-4.08565,,,Highland,Scotland,false,Wind Onshore,48.5,173.16178,60.26816
+E_GLCHW-1,Glenchamber Wind Farm,54.96342,-4.75433,,,Dumfries and Galloway,Scotland,false,Wind Onshore,27.5,54.11813,0.0
+E_GLOFW-1,Glens of Foudland,57.42535,-2.63607,,,Aberdeenshire,Scotland,false,Wind Onshore,26.0,52.01978,0.74487
+E_GFLDW-1,Goole Fields,53.66593,-0.88928,,,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Onshore,32.8,55.16263,0.0
+E_GFLDW-1,Goole Fields ll Wind Farm,53.67678,-0.8868,,,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Onshore,34.9,55.16263,0.0
+T_GORDW-1,Gordonbush,58.0595,-3.95905,,,Highland,Scotland,false,Wind Onshore,70.0,193.23062,41.56328
+T_GORDW-2,Gordonbush,58.0595,-3.95905,,,Highland,Scotland,false,Wind Onshore,70.0,138.06456,57.35403
+E_GDSTW-1,Gordonstown Hill Wind Farm,57.46192,-2.48276,,,Aberdeenshire,Scotland,false,Wind Onshore,12.5,22.25952,0.41854
+T_GRGBW-3,Greater Gabbard Wind Farm,51.91764,1.92842,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,504.0,385.27166,17.31259
+T_GRGBW-2,Greater Gabbard Wind Farm,51.91764,1.92842,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,504.0,419.42749,17.83261
+T_GRGBW-1,Greater Gabbard Wind Farm,51.91764,1.92842,1.5979,52.2451,Suffolk,Eastern,true,Wind Offshore,504.0,409.11695,20.32459
+E_GRGRW-1,Greengairs East Wind Farm,55.90107,-3.91201,,,North Lanarkshire,Scotland,false,Wind Onshore,24.0,111.57666,22.19602
+T_GRIFW-2,Griffin Wind farm,56.58122,-3.73375,,,Perth and Kinross,Scotland,false,Wind Onshore,156.0,136.22898,8.66957
+T_GRIFW-1,Griffin Wind farm,56.58122,-3.73375,,,Perth and Kinross,Scotland,false,Wind Onshore,156.0,135.39127,8.69928
+T_GNFSW-1,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,12.0,227.59993,0.1578
+T_GNFSW-2,Gunfleet Sands - (Demo) Extension,51.70301,1.19191,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,12.0,144.86385,0.12198
+T_GNFSW-1,Gunfleet Sands II,51.72719,1.24592,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,64.8,227.59993,0.1578
+T_GNFSW-2,Gunfleet Sands II,51.72719,1.24592,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,64.8,144.86385,0.12198
+T_GNFSW-1,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,108.0,227.59993,0.1578
+T_GNFSW-2,Gunfleet Sands Offshore Wind Scheme,51.73082,1.21801,1.0992,52.1074,Suffolk,Eastern,true,Wind Offshore,108.0,144.86385,0.12198
+T_GYMR-26,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,353.18096,1.76779
+T_GYMR-17,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,275.0811,0.85985
+T_GYMR-28,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,340.27332,1.2847
+T_GYMR-15,Gwynt y Mor,53.454,-3.62665,-3.4857,53.2808,Denbighshire,Wales,true,Wind Offshore,576.0,376.76228,1.56498
+T_HADHW-1,Hadyard Hill,55.25682,-4.73191,,,South Ayrshire,Scotland,false,Wind Onshore,120.0,171.6711,2.66295
+T_HAHAW-1,Hagshaw Hill Wind Farm,55.55537,-3.92033,,,South Lanarkshire,Scotland,false,Wind Onshore,7.8,34.4231,0.0
+T_HAHAW-1,Hagshaw Hill Wind Farm,55.55528,-3.92008,,,South Lanarkshire,Scotland,false,Wind Onshore,7.8,34.4231,0.0
+T_HAHAW-1,Hagshaw Hill Wind Farm Extension,55.5666,-3.92032,,,South Lanarkshire,Scotland,false,Wind Onshore,26.0,34.4231,0.0
+T_HALSW-1,Halsary Wind Farm,58.4309,-3.44445,,,Highland,Scotland,false,Wind Onshore,34.0,145.64612,58.61399
+E_HBHDW-1,Harburnhead Wind Farm,55.80868,-3.53217,,,West Lothian,Scotland,false,Wind Onshore,51.7,118.45603,0.0
+E_HRHLW-1,Hare Hill,54.76158,-1.41511,,,County Durham,North East,true,Wind Onshore,1.3,63.2846,7.14805
+E_HRHLW-1,Hare Hill (East Ayrshire),55.3628,-4.12628,,,East Ayrshire,Scotland,false,Wind Onshore,13.2,63.2846,7.14805
+T_HRSTW-1,Harestanes,55.23903,-3.5742,,,Dumfries and Galloway,Scotland,false,Wind Onshore,136.0,211.44715,19.15018
+E_HLGLW-1,Hill of Glaschyle Wind Farm,57.51052,-3.61559,,,Moray,Scotland,false,Wind Onshore,27.6,42.02405,0.0
+E_HLTWW-1,Hill of Towie (Drummuir),57.62284,-3.34105,,,Moray,Scotland,false,Wind Onshore,48.0,85.49033,3.59178
+E_HLTWW-1,Hill of Towie II Wind Farm,57.62284,-3.34105,,,Moray,Scotland,false,Wind Onshore,48.0,85.49033,3.59178
+T_HOWAO-1,Hornsea 1 - Heron & Njord,53.68154,1.42074,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1218.0,1217.80755,0.38207
+T_HOWAO-3,Hornsea 1 - Heron & Njord,53.68154,1.42074,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1218.0,1244.46763,0.07967
+T_HOWAO-2,Hornsea 1 - Heron & Njord,53.68154,1.42074,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1218.0,1237.56906,0.23595
+T_HOWBO-2,Hornsea 2 - Optimus and Breesea,53.96,1.53999,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1320.0,990.95193,6.49666
+T_HOWBO-3,Hornsea 2 - Optimus and Breesea,53.96,1.53999,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1320.0,1431.1302,28.15961
+T_HOWBO-1,Hornsea 2 - Optimus and Breesea,53.96,1.53999,-0.1644,53.5485,North East Lincolnshire,Yorkshire and The Humber,true,Wind Offshore,1320.0,1442.59689,24.7287
+T_HMGTO-2,Humber Gateway A,53.38746,0.50064,-0.1262,53.827,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,219.0,311.06443,0.0
+T_HMGTO-1,Humber Gateway A,53.38746,0.50064,-0.1262,53.827,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,219.0,308.99973,0.0
+E_HYWDW-1,Hywind Scotland Pilot Park (Hywind 2) Demonstrator,57.50746,-1.44258,-1.84229,57.52191,Aberdeenshire,Scotland,false,Wind Offshore,30.0,97.63898,0.0
 T_KEADGT-3,Keadby Wind Farm,53.6118,-0.76369,,,North Lincolnshire,Yorkshire and The Humber,true,Wind Onshore,68.0,0.34238,0.00097
-T_KTHLW-1,Keith Hill,55.83945,-2.8421,,,East Lothian,Scotland,false,Wind Onshore,25.0,5.23292,0.0
-T_KTHLW-1,Keith Hill,55.81727,-2.82546,,,Scottish Borders,Scotland,false,Wind Onshore,4.5,5.23292,0.0
-T_KENNW-1,Kennoxhead Wind Farm,55.49792,-3.94631,,,South Lanarkshire,Scotland,false,Wind Onshore,62.0,157.76983,24.98764
-T_KILBW-1,Kilbraur Windfarm,58.0404,-4.0588,,,Highland,Scotland,false,Wind Onshore,47.5,154.44213,30.194
-T_KILBW-1,Kilbraur Windfarm Farlary - Extension,57.99239,-3.97866,,,Highland,Scotland,false,Wind Onshore,20.0,154.44213,30.194
-T_KLGLW-1,Kilgallioch wind farm,54.98845,-4.80172,,,Dumfries and Galloway,Scotland,false,Wind Onshore,239.0,597.12433,66.62766
-E_KINCW-1,Kincardine Offshore Windfarm,56.99728,-1.8738,-2.10342,57.11559,Aberdeen City,Scotland,false,Wind Offshore,49.5,126.78,0.0
+T_KEAD-1,Keadby Wind Farm,53.6118,-0.76369,,,North Lincolnshire,Yorkshire and The Humber,true,Wind Onshore,68.0,404.58431,7.21849
+T_KEAD-2,Keadby Wind Farm,53.6118,-0.76369,,,North Lincolnshire,Yorkshire and The Humber,true,Wind Onshore,68.0,2314.85548,70.23576
+T_KTHLW-1,Keith Hill,55.83945,-2.8421,,,East Lothian,Scotland,false,Wind Onshore,25.0,5.39842,0.0
+T_KTHLW-1,Keith Hill,55.81727,-2.82546,,,Scottish Borders,Scotland,false,Wind Onshore,4.5,5.39842,0.0
+T_KENNW-1,Kennoxhead Wind Farm,55.49792,-3.94631,,,South Lanarkshire,Scotland,false,Wind Onshore,62.0,160.66044,25.43276
+T_KILBW-1,Kilbraur Windfarm,58.0404,-4.0588,,,Highland,Scotland,false,Wind Onshore,47.5,156.6074,30.82587
+T_KILBW-1,Kilbraur Windfarm Farlary - Extension,57.99239,-3.97866,,,Highland,Scotland,false,Wind Onshore,20.0,156.6074,30.82587
+T_KLGLW-1,Kilgallioch wind farm,54.98845,-4.80172,,,Dumfries and Galloway,Scotland,false,Wind Onshore,239.0,607.00719,66.62576
+E_KINCW-1,Kincardine Offshore Windfarm,56.99728,-1.8738,-2.10342,57.11559,Aberdeen City,Scotland,false,Wind Offshore,49.5,127.84008,0.0
 E_KHLLW-1,Kirk Hill Wind Farm,55.30642,-4.73986,,,South Ayrshire,Scotland,false,Wind Onshore,18.8,0.0,0.0
-T_KPMRW-1,Kype Muir Wind Farm,55.63265,-4.0361,,,South Lanarkshire,Scotland,false,Wind Onshore,88.4,181.26321,15.63441
-T_KYPEW-1,Kype Muir Wind Farm,55.63265,-4.0361,,,South Lanarkshire,Scotland,false,Wind Onshore,88.4,170.31565,22.39968
-T_LIMKW-1,Limekiln Wind Farm,58.52848,-3.74205,,,Highland,Scotland,false,Wind Onshore,79.8,260.99091,84.13553
-T_LIMKW-1,Limekiln Wind Farm (Extension),58.52844,-3.71381,,,Highland,Scotland,false,Wind Onshore,21.0,260.99091,84.13553
-T_LCLTW-1,Lochluichart,57.65459,-4.8167,,,Highland,Scotland,false,Wind Onshore,51.0,145.74755,22.50185
-T_LCLTW-1,Lochluichart (Extension),57.68011,-4.84136,,,Highland,Scotland,false,Wind Onshore,18.0,145.74755,22.50185
-T_LCLTW-1,Lochluichart Extension II,57.67466,-4.81059,,,Highland,Scotland,false,Wind Onshore,18.0,145.74755,22.50185
-T_LCLTW-1,Lochluichart Wind Farm Extension 2,57.69346,-4.76759,,,Highland,Scotland,false,Wind Onshore,24.0,145.74755,22.50185
-T_LARYW-3,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,396.01217,2.79434
-T_LARYW-1,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,373.08528,2.87407
-T_LARYW-4,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,409.02642,3.40523
-T_LARYW-2,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,363.56162,2.51341
-T_LARYW-2,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,363.56162,2.51341
-T_LARYW-3,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,396.01217,2.79434
-T_LARYW-4,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,409.02642,3.40523
-T_LARYW-1,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,373.08528,2.87407
-T_MKHLW-1,Mark Hill,55.12837,-4.74631,,,South Ayrshire,Scotland,false,Wind Onshore,56.0,84.0999,6.87073
-2__PSTAT002,Mid Hill - Phase II,56.96877,-2.48616,,,Aberdeenshire,Scotland,false,Wind Onshore,18.4,114.42648,22.5602
-2__PSTAT002,Mid Hill I,56.96877,-2.48616,,,Aberdeenshire,Scotland,false,Wind Onshore,57.5,114.42648,22.5602
-T_MIDMW-1,Middle Muir Wind Farm,55.51289,-3.80402,,,South Lanarkshire,Scotland,false,Wind Onshore,51.0,90.83935,6.51655
-T_MILWW-1,Millennium Extension,57.1502,-4.89117,,,Highland,Scotland,false,Wind Onshore,10.0,105.65355,0.05057
-T_MILWW-1,Millennium Extension II,57.15523,-4.88364,,,Highland,Scotland,false,Wind Onshore,15.0,105.65355,0.05057
-T_MILWW-1,Millennium Windfarm,57.15523,-4.88364,,,Highland,Scotland,false,Wind Onshore,40.0,105.65355,0.05057
-T_MYGPW-1,Minnygap,55.24877,-3.5148,,,Dumfries and Galloway,Scotland,false,Wind Onshore,25.0,40.52193,0.77135
-T_MYGPW-1,Minnygap,55.24877,-3.5148,,,Dumfries and Galloway,Scotland,false,Wind Onshore,30.0,40.52193,0.77135
-E_MINSW-1,Minsca,55.12207,-3.35286,,,Dumfries and Galloway,Scotland,false,Wind Onshore,36.8,86.05931,5.48109
-T_MOWEO-2,Moray East,57.96732,-2.79054,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,950.0,1323.33891,447.28516
-T_MOWEO-1,Moray East,57.96732,-2.79054,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,950.0,1378.4272,455.28551
-T_MOWEO-3,Moray East,57.96732,-2.79054,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,950.0,1379.26681,463.09761
-T_MOWWO-1,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,728.48529,268.64084
-T_MOWWO-4,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,1231.08054,412.24304
-T_MOWWO-2,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,655.18272,238.63855
-T_MOWWO-3,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,632.69919,218.87381
-E_MOYEW-1,Moy Wind Farm,57.38883,-4.0488,,,Highland,Scotland,false,Wind Onshore,40.0,112.01818,16.96155
-E_MOYEW-1,Moy Wind Farm (2nd Application),57.38883,-4.0488,,,Highland,Scotland,false,Wind Onshore,66.0,112.01818,16.96155
-T_NNGAO-1,Neart na Gaoithe,56.27,-2.25,-2.6943,56.2778,Fife,Scotland,false,Wind Offshore,450.0,723.39635,51.3013
-T_NNGAO-2,Neart na Gaoithe,56.27,-2.25,-2.6943,56.2778,Fife,Scotland,false,Wind Offshore,450.0,754.09566,58.27558
-T_NOKYW-1,North Kyle Energy Project,55.35173,-4.35966,,,East Ayrshire,Scotland,false,Wind Onshore,205.8,104.63103,0.0
-T_NOKYW-2,North Kyle Energy Project,55.35173,-4.35966,,,East Ayrshire,Scotland,false,Wind Onshore,205.8,109.2803,0.0
-T_OMNDW-1,Ormonde Offshore,54.08887,-3.43859,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,150.0,322.88594,2.43904
-2__PENEC002,Paul's Hill and Extension,57.44615,-3.47621,,,Moray,Scotland,false,Wind Onshore,65.0,162.53028,27.87508
-2__PENEC002,Pauls Hill 2,57.44615,-3.47621,,,Moray,Scotland,false,Wind Onshore,28.0,162.53028,27.87508
-T_PNYCW-1,Pen Y Cymoedd,51.65554,-3.69573,,,Neath Port Talbot,Wales,true,Wind Onshore,228.0,455.70493,3.24756
-E_PIBUW-1,Pines Burn Wind Farm,55.35374,-2.73027,,,Scottish Borders,Scotland,false,Wind Onshore,33.0,129.01657,0.0
-T_PGBIW-1,Pogbie Wind Farm 1,55.82185,-2.83302,,,Scottish Borders,Scotland,false,Wind Onshore,5.1,20.22322,0.0
-T_PGBIW-1,Pogbie Wind Farm 2,55.83945,-2.8421,,,East Lothian,Scotland,false,Wind Onshore,4.8,20.22322,0.0
-T_RCBKO-2,Race Bank (Phase 1),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,289.8,708.42077,0.18882
-T_RCBKO-1,Race Bank (Phase 1),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,289.8,776.9618,0.29155
-T_RCBKO-2,Race Bank (Phase 2),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,283.5,708.42077,0.18882
-T_RCBKO-1,Race Bank (Phase 2),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,283.5,776.9618,0.29155
-T_RMPNO-1,Rampion Offshore Wind Farm (Hastings Zone),50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,400.0,536.64637,2.01194
-T_RMPNO-2,Rampion Offshore Wind Farm (Hastings Zone),50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,400.0,538.47374,1.76888
-T_RMPNO-1,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,1200.0,536.64637,2.01194
-T_RMPNO-2,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,1200.0,538.47374,1.76888
-E_RHEI-1,Rheidol Wind Farm,52.40758,-3.87723,,,Ceredigion,Wales,true,Wind Onshore,2.4,43.76109,0.02951
-T_RREW-1,Robin Rigg East,54.76419,-3.69552,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,84.0,190.61873,0.0
-T_RRWW-1,Robin Rigg East,54.76419,-3.69552,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,84.0,186.92518,0.0
-T_RREW-1,Robin Rigg West,54.7473,-3.72931,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,90.0,190.61873,0.0
-T_RRWW-1,Robin Rigg West,54.7473,-3.72931,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,90.0,186.92518,0.0
-2__PEDGE004,Rosehall Hill Forest Windfarm,57.99562,-4.54695,,,Highland,Scotland,false,Wind Onshore,24.7,41.07038,1.36626
-2__PSTAT001,Rothes Wind (Cairn Uish),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,50.6,120.53886,28.44139
-2__PENEC001,Rothes Wind (Cairn Uish),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,50.6,106.98867,20.82744
-2__PENEC001,Rothes Wind Farm (Extension) (II),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,41.4,106.98867,20.82744
-2__PSTAT001,Rothes Wind Farm (Extension) (II),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,41.4,120.53886,28.44139
-2__PSTAT001,Rothes Wind Farm III,57.51526,-3.3204,,,Moray,Scotland,false,Wind Onshore,132.0,120.53886,28.44139
-2__PENEC001,Rothes Wind Farm III,57.51526,-3.3204,,,Moray,Scotland,false,Wind Onshore,132.0,106.98867,20.82744
-T_SAKNW-1,Sandy Knowe Wind Farm,55.36893,-4.05055,,,Dumfries and Galloway,Scotland,false,Wind Onshore,90.0,165.97397,25.55092
-T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,49.4,165.97397,25.55092
-T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,81.6,165.97397,25.55092
-T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,49.4,165.97397,25.55092
-T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,81.6,165.97397,25.55092
-T_SANQW-1,Sanquhar Community Windfarm,55.34418,-4.04657,,,Dumfries and Galloway,Scotland,false,Wind Onshore,32.4,91.57694,3.22169
-T_SGRWO-2,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,426.6051,156.77172
-T_SGRWO-4,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,701.2143,264.20393
-T_SGRWO-3,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,822.16918,312.14272
-T_SGRWO-5,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,406.33385,150.40323
-T_SGRWO-1,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,1574.16445,607.22
-T_SGRWO-6,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,1963.0065,766.97373
-T_SHRSW-1,Sheringham Shoal,53.13532,1.14792,1.2599,52.6444,Norfolk,Eastern,true,Wind Offshore,317.0,363.34126,0.32113
-T_SHRSW-2,Sheringham Shoal,53.13532,1.14792,1.2599,52.6444,Norfolk,Eastern,true,Wind Offshore,317.0,366.67189,0.27879
-E_SOLUTIA,Solutia UK Ltd,51.56658,-2.96262,,,Newport,Wales,true,Wind Onshore,5.0,0.88124,0.02423
-E_SWBKW-1,Solwaybank Wind Farm,55.10017,-3.10775,,,Dumfries and Galloway,Scotland,false,Wind Onshore,30.0,70.01147,0.0
-T_KILBW-1,South Kilbraur Wind Farm,58.03566,-4.06173,,,Highland,Scotland,false,Wind Onshore,28.0,154.44213,30.194
-T_SOKYW-1,South Kyle Wind Farm,55.31733,-4.29318,,,East Ayrshire,Scotland,false,Wind Onshore,240.0,549.60058,113.22486
-T_STRNW-1,Strathy North,58.49,-4.03359,,,Highland,Scotland,false,Wind Onshore,67.7,198.9039,52.21982
-T_STLGW-2,Stronelairg Wind Farm,57.12692,-4.52637,,,Highland,Scotland,false,Wind Onshore,227.7,241.34615,33.52118
-T_STLGW-1,Stronelairg Wind Farm,57.12692,-4.52637,,,Highland,Scotland,false,Wind Onshore,227.7,198.544,27.06687
-T_STLGW-3,Stronelairg Wind Farm,57.12692,-4.52637,,,Highland,Scotland,false,Wind Onshore,227.7,208.25535,29.24152
-T_THNTO-1,Thanet,51.42993,1.63341,1.3425,51.2981,Kent,South East,true,Wind Offshore,300.0,303.19267,1.17643
-T_THNTO-2,Thanet,51.42993,1.63341,1.3425,51.2981,Kent,South East,true,Wind Offshore,300.0,298.64485,1.16527
-T_TDBNW-1,Toddleburn,55.76855,-2.87739,,,Scottish Borders,Scotland,false,Wind Onshore,27.6,51.0214,0.28952
-C__PSTAT011,Tom Na Clach - Wind Farm Extension,57.38458,-3.88793,,,Highland,Scotland,false,Wind Onshore,31.5,155.72352,22.8277
-T_TRLGW-1,Tralorg Wind Farm,55.24977,-4.80617,,,South Ayrshire,Scotland,false,Wind Onshore,20.0,28.95868,0.00155
-T_TKNWW-1,Triton Knoll,53.21227,0.86164,0.2532,53.3068,Lincolnshire,East Midlands,true,Wind Offshore,857.0,1009.80481,1.44472
-T_TKNEW-1,Triton Knoll,53.21227,0.86164,0.2532,53.3068,Lincolnshire,East Midlands,true,Wind Offshore,857.0,802.12855,1.77515
-E_TULWW-1,Tullo Farm,56.96391,-2.21076,,,Aberdeenshire,Scotland,false,Wind Onshore,17.5,32.00027,2.48482
-E_TULWW-2,Tullo Farm,56.96391,-2.21076,,,Aberdeenshire,Scotland,false,Wind Onshore,17.5,48.33381,7.03851
-E_TULWW-1,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,,,Aberdeenshire,Scotland,false,Wind Onshore,7.5,32.00027,2.48482
-E_TULWW-2,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,,,Aberdeenshire,Scotland,false,Wind Onshore,7.5,48.33381,7.03851
-E_TULWW-2,Tullo Wind Farm South (Ext.),56.82742,-2.40489,,,Aberdeenshire,Scotland,false,Wind Onshore,10.0,48.33381,7.03851
-E_TULWW-1,Tullo Wind Farm South (Ext.),56.82742,-2.40489,,,Aberdeenshire,Scotland,false,Wind Onshore,10.0,32.00027,2.48482
-E_TLYMW-1,Tullymurdoch Wind Farm,56.65491,-3.31341,,,Perth and Kinross,Scotland,false,Wind Onshore,14.4,23.74302,0.0
-T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,27.0,125.24768,22.23584
-T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,37.8,125.24768,22.23584
-T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,27.0,125.24768,22.23584
-T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,37.8,125.24768,22.23584
-T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,515.37205,201.653
-T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,515.37205,201.653
-T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,516.39633,201.97472
-T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,516.39633,201.97472
-T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,575.33091,223.67268
-T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,575.33091,223.67268
-T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,565.55641,218.71391
-T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,565.55641,218.71391
-T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,575.33091,223.67268
-T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,575.33091,223.67268
-T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,565.55641,218.71391
-T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,565.55641,218.71391
-T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,515.37205,201.653
-T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,515.37205,201.653
-T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,516.39633,201.97472
-T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,516.39633,201.97472
-T_WLNYW-1,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,449.02102,0.17607
-T_WLNYO-2,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,489.81758,0.30882
-T_WLNYO-4,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,980.08087,3.63201
-T_WLNYO-2,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,489.81758,0.30882
-T_WLNYO-3,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,979.19894,1.48098
-T_WLNYW-1,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,449.02102,0.17607
-T_WLNYO-3,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,979.19894,1.48098
-T_WLNYO-2,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,489.81758,0.30882
-T_WLNYO-4,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,980.08087,3.63201
-T_WLNYW-1,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,449.02102,0.17607
-T_WLNYW-1,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,449.02102,0.17607
-T_WLNYO-3,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,979.19894,1.48098
-T_WLNYO-2,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,489.81758,0.30882
-T_WLNYO-4,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,980.08087,3.63201
-T_WDNSO-2,West of Duddon Sands,53.98515,-3.46201,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,389.0,569.7245,0.75103
-T_WDNSO-1,West of Duddon Sands,53.98515,-3.46201,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,389.0,567.14962,0.49523
-T_WTMSO-1,Westermost Rough A,53.09773,0.56148,-0.1262,53.827,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,210.0,625.47125,0.0
-T_WHILW-2,Whitelee,55.68121,-4.27906,,,East Ayrshire,Scotland,false,Wind Onshore,322.0,316.37434,17.36414
-T_WHILW-1,Whitelee,55.68121,-4.27906,,,East Ayrshire,Scotland,false,Wind Onshore,322.0,559.67188,44.04568
-T_WHILW-2,Whitelee Windfarm Extension Phase 1,55.67715,-4.28678,,,East Ayrshire,Scotland,false,Wind Onshore,108.0,316.37434,17.36414
-T_WHIHW-1,Whiteside Hill,55.35741,-4.02944,,,Dumfries and Galloway,Scotland,false,Wind Onshore,25.3,76.87853,2.90778
-T_WILCT-1,Wilton,54.57663,-1.08069,,,Redcar and Cleveland,North East,true,Wind Onshore,6.6,-10.3947,0.0
-T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,148.01725,27.3552
-T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,148.01725,27.3552
-T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,148.01725,27.3552
-T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,148.01725,27.3552
-2__PSTAT001,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,120.53886,28.44139
-2__PSTAT001,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,120.53886,28.44139
-T_WISTW-2,Windy Standard III Wind Farm (Brockloch Rig Phase 2),55.27641,-4.24171,,,Dumfries and Galloway,Scotland,false,Wind Onshore,87.6,183.00889,19.45334
+T_KPMRW-1,Kype Muir Wind Farm,55.63265,-4.0361,,,South Lanarkshire,Scotland,false,Wind Onshore,88.4,184.59393,15.8369
+T_KYPEW-1,Kype Muir Wind Farm,55.63265,-4.0361,,,South Lanarkshire,Scotland,false,Wind Onshore,88.4,173.53952,23.29056
+T_LIMKW-1,Limekiln Wind Farm,58.52848,-3.74205,,,Highland,Scotland,false,Wind Onshore,79.8,268.19842,87.3945
+T_LIMKW-1,Limekiln Wind Farm (Extension),58.52844,-3.71381,,,Highland,Scotland,false,Wind Onshore,21.0,268.19842,87.3945
+T_LCLTW-1,Lochluichart,57.65459,-4.8167,,,Highland,Scotland,false,Wind Onshore,51.0,147.55869,22.96436
+T_LCLTW-1,Lochluichart (Extension),57.68011,-4.84136,,,Highland,Scotland,false,Wind Onshore,18.0,147.55869,22.96436
+T_LCLTW-1,Lochluichart Extension II,57.67466,-4.81059,,,Highland,Scotland,false,Wind Onshore,18.0,147.55869,22.96436
+T_LCLTW-1,Lochluichart Wind Farm Extension 2,57.69346,-4.76759,,,Highland,Scotland,false,Wind Onshore,24.0,147.55869,22.96436
+T_LARYW-1,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,381.30892,2.92922
+T_LARYW-3,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,403.73081,2.79434
+T_LARYW-2,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,371.35302,2.56477
+T_LARYW-4,London Array Phase 1,51.62168,1.49583,0.9952,51.3287,Kent,South East,true,Wind Offshore,630.0,417.0957,3.40523
+T_LARYW-1,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,381.30892,2.92922
+T_LARYW-3,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,403.73081,2.79434
+T_LARYW-2,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,371.35302,2.56477
+T_LARYW-4,London Array Phase 2,51.47158,1.04077,0.9952,51.3287,Kent,South East,true,Wind Offshore,240.0,417.0957,3.40523
+T_MKHLW-1,Mark Hill,55.12837,-4.74631,,,South Ayrshire,Scotland,false,Wind Onshore,56.0,85.80295,7.07503
+2__PSTAT002,Mid Hill - Phase II,56.96877,-2.48616,,,Aberdeenshire,Scotland,false,Wind Onshore,18.4,114.42918,22.5629
+2__PSTAT002,Mid Hill I,56.96877,-2.48616,,,Aberdeenshire,Scotland,false,Wind Onshore,57.5,114.42918,22.5629
+T_MIDMW-1,Middle Muir Wind Farm,55.51289,-3.80402,,,South Lanarkshire,Scotland,false,Wind Onshore,51.0,92.78838,6.63902
+T_MILWW-1,Millennium Extension,57.1502,-4.89117,,,Highland,Scotland,false,Wind Onshore,10.0,107.37635,0.05057
+T_MILWW-1,Millennium Extension II,57.15523,-4.88364,,,Highland,Scotland,false,Wind Onshore,15.0,107.37635,0.05057
+T_MILWW-1,Millennium Windfarm,57.15523,-4.88364,,,Highland,Scotland,false,Wind Onshore,40.0,107.37635,0.05057
+T_MYGPW-1,Minnygap,55.24877,-3.5148,,,Dumfries and Galloway,Scotland,false,Wind Onshore,25.0,41.34748,0.77142
+T_MYGPW-1,Minnygap,55.24877,-3.5148,,,Dumfries and Galloway,Scotland,false,Wind Onshore,30.0,41.34748,0.77142
+E_MINSW-1,Minsca,55.12207,-3.35286,,,Dumfries and Galloway,Scotland,false,Wind Onshore,36.8,87.28633,5.48141
+T_MOWEO-2,Moray East,57.96732,-2.79054,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,950.0,1347.71291,458.35047
+T_MOWEO-1,Moray East,57.96732,-2.79054,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,950.0,1403.5544,466.4442
+T_MOWEO-3,Moray East,57.96732,-2.79054,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,950.0,1403.64536,473.94458
+T_MOWWO-3,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,641.95043,222.57593
+T_MOWWO-2,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,671.03075,245.2713
+T_MOWWO-1,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,744.71923,275.85222
+T_MOWWO-4,Moray West Offshore Wind Farm Project,58.06989,-3.31307,-2.0262,57.6572,Aberdeenshire,Scotland,false,Wind Offshore,882.0,1249.36825,420.10415
+E_MOYEW-1,Moy Wind Farm,57.38883,-4.0488,,,Highland,Scotland,false,Wind Onshore,40.0,114.49602,17.65402
+E_MOYEW-1,Moy Wind Farm (2nd Application),57.38883,-4.0488,,,Highland,Scotland,false,Wind Onshore,66.0,114.49602,17.65402
+T_NNGAO-2,Neart na Gaoithe,56.27,-2.25,-2.6943,56.2778,Fife,Scotland,false,Wind Offshore,450.0,766.29501,58.7771
+T_NNGAO-1,Neart na Gaoithe,56.27,-2.25,-2.6943,56.2778,Fife,Scotland,false,Wind Offshore,450.0,734.99968,51.29666
+T_NOKYW-2,North Kyle Energy Project,55.35173,-4.35966,,,East Ayrshire,Scotland,false,Wind Onshore,205.8,113.82908,0.0
+T_NOKYW-1,North Kyle Energy Project,55.35173,-4.35966,,,East Ayrshire,Scotland,false,Wind Onshore,205.8,109.18382,0.0
+T_OMNDW-1,Ormonde Offshore,54.08887,-3.43859,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,150.0,329.31683,2.43904
+2__PENEC002,Paul's Hill and Extension,57.44615,-3.47621,,,Moray,Scotland,false,Wind Onshore,65.0,164.98393,28.21597
+2__PENEC002,Pauls Hill 2,57.44615,-3.47621,,,Moray,Scotland,false,Wind Onshore,28.0,164.98393,28.21597
+T_PNYCW-1,Pen Y Cymoedd,51.65554,-3.69573,,,Neath Port Talbot,Wales,true,Wind Onshore,228.0,464.66016,3.24756
+E_PIBUW-1,Pines Burn Wind Farm,55.35374,-2.73027,,,Scottish Borders,Scotland,false,Wind Onshore,33.0,130.4081,0.0
+T_PGBIW-1,Pogbie Wind Farm 1,55.82185,-2.83302,,,Scottish Borders,Scotland,false,Wind Onshore,5.1,20.53777,0.0
+T_PGBIW-1,Pogbie Wind Farm 2,55.83945,-2.8421,,,East Lothian,Scotland,false,Wind Onshore,4.8,20.53777,0.0
+T_RCBKO-2,Race Bank (Phase 1),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,289.8,720.87852,0.18882
+T_RCBKO-1,Race Bank (Phase 1),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,289.8,789.2969,0.29155
+T_RCBKO-1,Race Bank (Phase 2),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,283.5,789.2969,0.29155
+T_RCBKO-2,Race Bank (Phase 2),53.13597,0.58917,0.1461,52.7882,Lincolnshire,East Midlands,true,Wind Offshore,283.5,720.87852,0.18882
+T_RMPNO-1,Rampion Offshore Wind Farm (Hastings Zone),50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,400.0,548.20376,2.01182
+T_RMPNO-2,Rampion Offshore Wind Farm (Hastings Zone),50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,400.0,549.79821,1.76864
+T_RMPNO-1,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,1200.0,548.20376,2.01182
+T_RMPNO-2,"Rampion Wind Farm (Extension), (Rampion 2)",50.63999,-0.18,-0.1813,50.9921,West Sussex,South East,true,Wind Offshore,1200.0,549.79821,1.76864
+E_RHEI-1,Rheidol Wind Farm,52.40758,-3.87723,,,Ceredigion,Wales,true,Wind Onshore,2.4,44.63439,0.02951
+T_RREW-1,Robin Rigg East,54.76419,-3.69552,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,84.0,194.0058,0.0
+T_RRWW-1,Robin Rigg East,54.76419,-3.69552,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,84.0,190.8921,0.0
+T_RRWW-1,Robin Rigg West,54.7473,-3.72931,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,90.0,190.8921,0.0
+T_RREW-1,Robin Rigg West,54.7473,-3.72931,-3.5133,54.6592,Cumberland,North West,true,Wind Offshore,90.0,194.0058,0.0
+2__PEDGE004,Rosehall Hill Forest Windfarm,57.99562,-4.54695,,,Highland,Scotland,false,Wind Onshore,24.7,41.61944,1.36626
+2__PSTAT001,Rothes Wind (Cairn Uish),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,50.6,122.70626,29.16954
+2__PENEC001,Rothes Wind (Cairn Uish),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,50.6,109.45248,21.89897
+2__PSTAT001,Rothes Wind Farm (Extension) (II),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,41.4,122.70626,29.16954
+2__PENEC001,Rothes Wind Farm (Extension) (II),57.53726,-3.36296,,,Moray,Scotland,false,Wind Onshore,41.4,109.45248,21.89897
+2__PENEC001,Rothes Wind Farm III,57.51526,-3.3204,,,Moray,Scotland,false,Wind Onshore,132.0,109.45248,21.89897
+2__PSTAT001,Rothes Wind Farm III,57.51526,-3.3204,,,Moray,Scotland,false,Wind Onshore,132.0,122.70626,29.16954
+T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,49.4,170.78429,27.11567
+T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,81.6,170.78429,27.11567
+T_SAKNW-1,Sandy Knowe Wind Farm,55.36893,-4.05055,,,Dumfries and Galloway,Scotland,false,Wind Onshore,90.0,170.78429,27.11567
+T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,49.4,170.78429,27.11567
+T_SAKNW-1,Sandy Knowe Wind Farm,55.37215,-4.05134,,,Dumfries and Galloway,Scotland,false,Wind Onshore,81.6,170.78429,27.11567
+T_SANQW-1,Sanquhar Community Windfarm,55.34418,-4.04657,,,Dumfries and Galloway,Scotland,false,Wind Onshore,32.4,93.00592,3.22169
+T_SGRWO-1,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,1597.22809,616.60161
+T_SGRWO-3,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,835.05413,317.29138
+T_SGRWO-6,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,1993.25322,779.60056
+T_SGRWO-5,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,412.3817,152.5762
+T_SGRWO-4,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,712.00503,268.36095
+T_SGRWO-2,Seagreen,56.63551,-1.92662,-2.7035,56.5853,Angus,Scotland,false,Wind Offshore,1075.0,432.62403,158.95233
+T_SHRSW-2,Sheringham Shoal,53.13532,1.14792,1.2599,52.6444,Norfolk,Eastern,true,Wind Offshore,317.0,372.13569,0.27879
+T_SHRSW-1,Sheringham Shoal,53.13532,1.14792,1.2599,52.6444,Norfolk,Eastern,true,Wind Offshore,317.0,368.97443,0.32113
+E_SOLUTIA,Solutia UK Ltd,51.56658,-2.96262,,,Newport,Wales,true,Wind Onshore,5.0,0.881,0.02423
+E_SWBKW-1,Solwaybank Wind Farm,55.10017,-3.10775,,,Dumfries and Galloway,Scotland,false,Wind Onshore,30.0,71.1706,0.0
+T_KILBW-1,South Kilbraur Wind Farm,58.03566,-4.06173,,,Highland,Scotland,false,Wind Onshore,28.0,156.6074,30.82587
+T_SOKYW-1,South Kyle Wind Farm,55.31733,-4.29318,,,East Ayrshire,Scotland,false,Wind Onshore,240.0,561.44873,116.89201
+T_STRNW-1,Strathy North,58.49,-4.03359,,,Highland,Scotland,false,Wind Onshore,67.7,202.2714,53.37342
+T_STLGW-2,Stronelairg Wind Farm,57.12692,-4.52637,,,Highland,Scotland,false,Wind Onshore,227.7,246.32122,34.96177
+T_STLGW-1,Stronelairg Wind Farm,57.12692,-4.52637,,,Highland,Scotland,false,Wind Onshore,227.7,203.13448,28.6369
+T_STLGW-3,Stronelairg Wind Farm,57.12692,-4.52637,,,Highland,Scotland,false,Wind Onshore,227.7,212.52578,30.49208
+T_THNTO-2,Thanet,51.42993,1.63341,1.3425,51.2981,Kent,South East,true,Wind Offshore,300.0,304.82133,1.16527
+T_THNTO-1,Thanet,51.42993,1.63341,1.3425,51.2981,Kent,South East,true,Wind Offshore,300.0,309.36915,1.17643
+T_TDBNW-1,Toddleburn,55.76855,-2.87739,,,Scottish Borders,Scotland,false,Wind Onshore,27.6,51.89832,0.28952
+C__PSTAT011,Tom Na Clach - Wind Farm Extension,57.38458,-3.88793,,,Highland,Scotland,false,Wind Onshore,31.5,158.80614,24.02392
+T_TRLGW-1,Tralorg Wind Farm,55.24977,-4.80617,,,South Ayrshire,Scotland,false,Wind Onshore,20.0,29.05018,0.00155
+T_TKNWW-1,Triton Knoll,53.21227,0.86164,0.2532,53.3068,Lincolnshire,East Midlands,true,Wind Offshore,857.0,1028.17279,1.44472
+T_TKNEW-1,Triton Knoll,53.21227,0.86164,0.2532,53.3068,Lincolnshire,East Midlands,true,Wind Offshore,857.0,819.47409,1.78191
+E_TULWW-1,Tullo Farm,56.96391,-2.21076,,,Aberdeenshire,Scotland,false,Wind Onshore,17.5,32.6364,2.50887
+E_TULWW-2,Tullo Farm,56.96391,-2.21076,,,Aberdeenshire,Scotland,false,Wind Onshore,17.5,49.23672,7.10173
+E_TULWW-2,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,,,Aberdeenshire,Scotland,false,Wind Onshore,7.5,49.23672,7.10173
+E_TULWW-1,Tullo Wind Farm North Extension (Shiels Wind Farm),56.844,-2.41012,,,Aberdeenshire,Scotland,false,Wind Onshore,7.5,32.6364,2.50887
+E_TULWW-1,Tullo Wind Farm South (Ext.),56.82742,-2.40489,,,Aberdeenshire,Scotland,false,Wind Onshore,10.0,32.6364,2.50887
+E_TULWW-2,Tullo Wind Farm South (Ext.),56.82742,-2.40489,,,Aberdeenshire,Scotland,false,Wind Onshore,10.0,49.23672,7.10173
+E_TLYMW-1,Tullymurdoch Wind Farm,56.65491,-3.31341,,,Perth and Kinross,Scotland,false,Wind Onshore,14.4,24.13407,0.0
+T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,27.0,127.81502,23.10999
+T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,37.8,127.81502,23.10999
+T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,27.0,127.81502,23.10999
+T_TWSHW-1,Twentyshilling Hill Wind Farm,55.31976,-3.90048,,,Dumfries and Galloway,Scotland,false,Wind Onshore,37.8,127.81502,23.10999
+T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,584.3255,227.88945
+T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,584.3255,227.88945
+T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,524.01066,205.64379
+T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,524.01066,205.64379
+T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,574.45473,222.87739
+T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,574.45473,222.87739
+T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,524.72056,205.87927
+T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,524.72056,205.87927
+T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,524.01066,205.64379
+T_VKNGW-4,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,524.01066,205.64379
+T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,584.3255,227.88945
+T_VKNGW-2,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,584.3255,227.88945
+T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,574.45473,222.87739
+T_VKNGW-1,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,574.45473,222.87739
+T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,370.0,524.72056,205.87927
+T_VKNGW-3,Viking Wind Farm,60.33933,-1.20843,,,Shetland Islands,Scotland,false,Wind Onshore,443.0,524.72056,205.87927
+T_WLNYW-1,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,457.01295,0.17607
+T_WLNYO-2,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,499.14712,0.30882
+T_WLNYO-4,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,998.16649,3.63201
+T_WLNYW-1,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,457.01295,0.17607
+T_WLNYO-3,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,996.53984,1.48098
+T_WLNYO-2,Walney 3,54.08999,-3.74001,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,659.0,499.14712,0.30882
+T_WLNYO-3,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,996.53984,1.48098
+T_WLNYO-2,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,499.14712,0.30882
+T_WLNYW-1,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,457.01295,0.17607
+T_WLNYO-4,Walney 1,54.03945,-3.51579,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,998.16649,3.63201
+T_WLNYO-2,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,499.14712,0.30882
+T_WLNYO-4,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,998.16649,3.63201
+T_WLNYO-3,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,996.53984,1.48098
+T_WLNYW-1,Walney 2,54.08074,-3.60897,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,183.6,457.01295,0.17607
+T_WDNSO-1,West of Duddon Sands,53.98515,-3.46201,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,389.0,577.40583,0.49523
+T_WDNSO-2,West of Duddon Sands,53.98515,-3.46201,-2.87226,54.03577,Lancashire,North West,true,Wind Offshore,389.0,579.97528,0.75103
+T_WTMSO-1,Westermost Rough A,53.09773,0.56148,-0.1262,53.827,East Riding of Yorkshire,Yorkshire and The Humber,true,Wind Offshore,210.0,634.55715,0.0
+T_WHILW-1,Whitelee,55.68121,-4.27906,,,East Ayrshire,Scotland,false,Wind Onshore,322.0,569.41065,44.04975
+T_WHILW-2,Whitelee,55.68121,-4.27906,,,East Ayrshire,Scotland,false,Wind Onshore,322.0,321.81016,17.36414
+T_WHILW-2,Whitelee Windfarm Extension Phase 1,55.67715,-4.28678,,,East Ayrshire,Scotland,false,Wind Onshore,108.0,321.81016,17.36414
+T_WHIHW-1,Whiteside Hill,55.35741,-4.02944,,,Dumfries and Galloway,Scotland,false,Wind Onshore,25.3,78.15393,2.94613
+T_WILCT-1,Wilton,54.57663,-1.08069,,,Redcar and Cleveland,North East,true,Wind Onshore,6.6,-10.72207,0.0
+T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,150.91897,28.34191
+T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,150.91897,28.34191
+T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,150.91897,28.34191
+T_WDRGW-1,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,150.91897,28.34191
+2__PSTAT001,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,122.70626,29.16954
+2__PSTAT001,Windy Rig Wind Farm,55.27467,-4.17856,,,Dumfries and Galloway,Scotland,false,Wind Onshore,43.0,122.70626,29.16954
+T_WISTW-2,Windy Standard III Wind Farm (Brockloch Rig Phase 2),55.27641,-4.24171,,,Dumfries and Galloway,Scotland,false,Wind Onshore,87.6,186.29888,19.84711

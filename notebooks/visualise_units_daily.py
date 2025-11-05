@@ -23,7 +23,6 @@ def _():
 @app.cell
 def _(Path, json):
     uk = json.load(Path("./data/raw/uk_buc.geojson").open())
-    list(range(len(uk['features'])))
     return (uk,)
 
 
@@ -31,12 +30,6 @@ def _(Path, json):
 def _(pd):
     boundaries = pd.read_json("./data/processed/boundary.json").T
     return (boundaries,)
-
-
-@app.cell
-def _(boundaries):
-    boundaries
-    return
 
 
 @app.cell(hide_code=True)
@@ -189,7 +182,7 @@ def _(mo):
 @app.cell
 def _(Path):
     bm_unit = "T_SGRWO-1"
-    daily_folder = Path(f"./data/processed/daily/")
+    daily_folder = Path(f"./data/processed/daily-2025-wind/")
     weekly_folder = Path(f"./data/processed/weekly/")
     quarter_hourly_folder = Path(f"./data/processed/15m/")
     return bm_unit, daily_folder, quarter_hourly_folder, weekly_folder
@@ -249,9 +242,9 @@ def _(Path, daily_folder, pl, units_with_boundary):
             _df = pl.read_csv(folder / f"{_bm_unit}.csv")
 
             if _below_b6:
-                below.append(_df.select("time", "curtailment", "generated"))
+                below.append(_df.select("time", "curtailment", "physical_level"))
             else:
-                above.append(_df.select("time", "curtailment", "generated"))
+                above.append(_df.select("time", "curtailment", "physical_level"))
 
 
         df_above = pl.concat(above).group_by("time").sum().sort("time")
@@ -272,7 +265,7 @@ def _(daily_aggregates, go, pl):
     fig2.add_trace(
         go.Scatter(
             x=daily_aggregates["above"].select("time").to_numpy().flatten(),
-            y=daily_aggregates["above"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            y=daily_aggregates["above"].select(pl.col("curtailment").mul(pl.col("physical_level").pow(-1))).to_numpy().flatten(),
             mode='lines',
             name='Above B6 Curtailment',
             line=dict(color='blue')
@@ -281,7 +274,7 @@ def _(daily_aggregates, go, pl):
     fig2.add_trace(
         go.Scatter(
             x=daily_aggregates["below"].select("time").to_numpy().flatten(),
-            y=daily_aggregates["below"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            y=daily_aggregates["below"].select(pl.col("curtailment").mul(pl.col("physical_level").pow(-1))).to_numpy().flatten(),
             mode='lines',
             name='Below B6 Curtailment',
             line=dict(color='green')
@@ -775,7 +768,6 @@ def _(pl):
     offshore_wind_connectors = pl.read_csv("./data/processed/offshore_wind_locations.csv")
 
 
-
     return (offshore_wind_connectors,)
 
 
@@ -941,7 +933,7 @@ def _(go, regions):
 def _(counties, json, regions):
     with open("./data/visual/regions_with_curtailment.geojson", "w") as _f:
         json.dump(regions, _f)
-    
+
     with open("./data/visual/counties_with_curtailment.geojson", "w") as _f:
         json.dump(counties, _f)
     return
