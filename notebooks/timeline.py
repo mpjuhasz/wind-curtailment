@@ -11,7 +11,17 @@ def _():
     import pandas as pd
     from pathlib import Path
     import plotly.express as px
-    return pd, pl, px
+    return mo, pd, pl, px
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    ## Timeline plots for the BM
+
+    Below looking at the 15m October data for all the units from `./data/processed/15m-october-all/`. This data is aggregated in duckdb, and exports are created. For further info on the exports, check out `/src/db_scripts/`.
+    """)
+    return
 
 
 @app.cell
@@ -68,6 +78,16 @@ def _(to_plot):
 
 
 @app.cell
+def _(mo):
+    mo.md(r"""
+    ## Completing metadata for the top extra generators
+
+    First matching these elexonBmUnits to the Wikidata sites to get the locations. For the missing few, adding it manually. This can be found in `./data/processed/extra_generators_metadata.csv`
+    """)
+    return
+
+
+@app.cell
 def _(pl):
     top_extra_generators = pl.read_csv("./data/processed/analysis/extra_generators.csv")
     return (top_extra_generators,)
@@ -106,14 +126,14 @@ def _(extra_generator_metadata):
 
 
 @app.cell
-def _(extra_generator_metadata):
+def _(extra_generator_metadata, pd):
     def process_point_string(point: str) -> tuple[float, float]:
         point = point.replace("Point(", "").replace(")", "")
         long_str, lat_str = point.split(" ")
         return float(long_str), float(lat_str)
 
     extra_generator_metadata[["long", "lat"]] = extra_generator_metadata.apply(
-        lambda x: process_point_string(x["coords"]) if x["coords"] else (None, None), axis=1, result_type="expand"
+        lambda x: process_point_string(x["coords"]) if not pd.isna(x["coords"]) else (None, None), axis=1, result_type="expand"
     )
     return
 
@@ -123,16 +143,6 @@ def _(extra_generator_metadata):
     extra_generator_metadata.rename(columns={"itemLabel": "site_name"}, inplace=True)
 
     extra_generator_metadata[["bm_unit", "site_name", "long", "lat"]].to_csv("./data/interim/extra_generator_metadata.csv", index=False)
-    return
-
-
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _():
     return
 
 
