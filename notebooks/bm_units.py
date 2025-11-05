@@ -101,7 +101,7 @@ def _(wikidata_to_repd, wikidata_with_bm_unit):
 def _(pd):
     bm_units = pd.read_json("data/raw/bm_units.json")
     unit_mapping = bm_units.dropna(subset="elexonBmUnit")[["nationalGridBmUnit", "elexonBmUnit"]]
-    return (unit_mapping,)
+    return bm_units, unit_mapping
 
 
 @app.cell
@@ -229,6 +229,19 @@ def _(final_merge):
 def _(bm_units_to_query):
     for unit in bm_units_to_query:
         print(f'- {unit}')
+    return
+
+
+@app.cell
+def _(bm_units):
+    bm_units
+    return
+
+
+@app.cell
+def _(bm_units):
+    for _unit in [i for i in bm_units[bm_units["generationCapacity"] != 0]["elexonBmUnit"].unique().tolist() if i is not None]:
+        print(f'- {_unit}')
     return
 
 
