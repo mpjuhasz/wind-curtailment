@@ -20,6 +20,26 @@ def _():
     return Optional, Path, go, json, mo, np, pd, pl, px, shapely
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Visualisation of the Elexon + location data
+
+    Below are a bunch of visuals that I've created to understand the data better. Those that are useful for the main writeup are recreated in a nicer way in D3.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Boundary
+
+    Using the geojson for the boundary to understand the difference between the wind farms below and above B6
+    """)
+    return
+
+
 @app.cell
 def _(Path, json):
     uk = json.load(Path("./data/raw/uk_buc.geojson").open())
@@ -183,9 +203,13 @@ def _(mo):
 def _(Path):
     bm_unit = "T_SGRWO-1"
     daily_folder = Path(f"./data/processed/daily-2025-wind/")
-    weekly_folder = Path(f"./data/processed/weekly/")
-    quarter_hourly_folder = Path(f"./data/processed/15m/")
-    return bm_unit, daily_folder, quarter_hourly_folder, weekly_folder
+    quarter_hourly_folder = Path(f"./data/processed/15m-2025-wind/")
+    return bm_unit, daily_folder, quarter_hourly_folder
+
+
+@app.cell
+def _():
+    return
 
 
 @app.cell
@@ -195,24 +219,10 @@ def _(bm_unit, daily_folder, pl):
 
 
 @app.cell
-def _(df):
-    df
-    return
+def _(df, pl):
+    # validate data:
 
-
-@app.cell
-def _(bm_unit, df, px):
-    # create a stacked area plot with generated + curtailment:
-    _fig = px.area(
-        df.to_pandas(),
-        x='time',
-        y=['curtailment','generated'],
-        labels={'value': 'MW', 'datetime': 'DateTime', 'variable': 'Type'},
-        title=f"Daily Generation and Curtailment for {bm_unit}",
-
-    )
-
-    _fig.show()
+    df.select(pl.col("physical_level").add(pl.col("curtailment")).add(pl.col("extra")).add(pl.col("generated").mul(pl.lit(-1)))).sum().item()
     return
 
 
@@ -242,9 +252,9 @@ def _(Path, daily_folder, pl, units_with_boundary):
             _df = pl.read_csv(folder / f"{_bm_unit}.csv")
 
             if _below_b6:
-                below.append(_df.select("time", "curtailment", "physical_level"))
+                below.append(_df.select("time", "curtailment", "physical_level", "generated"))
             else:
-                above.append(_df.select("time", "curtailment", "physical_level"))
+                above.append(_df.select("time", "curtailment", "physical_level", "generated"))
 
 
         df_above = pl.concat(above).group_by("time").sum().sort("time")
@@ -265,7 +275,7 @@ def _(daily_aggregates, go, pl):
     fig2.add_trace(
         go.Scatter(
             x=daily_aggregates["above"].select("time").to_numpy().flatten(),
-            y=daily_aggregates["above"].select(pl.col("curtailment").mul(pl.col("physical_level").pow(-1))).to_numpy().flatten(),
+            y=daily_aggregates["above"].select(pl.col("curtailment").mul(pl.lit(-1)).mul(pl.col("physical_level").pow(-1))).to_numpy().flatten(),
             mode='lines',
             name='Above B6 Curtailment',
             line=dict(color='blue')
@@ -274,7 +284,7 @@ def _(daily_aggregates, go, pl):
     fig2.add_trace(
         go.Scatter(
             x=daily_aggregates["below"].select("time").to_numpy().flatten(),
-            y=daily_aggregates["below"].select(pl.col("curtailment").mul(pl.col("physical_level").pow(-1))).to_numpy().flatten(),
+            y=daily_aggregates["below"].select(pl.col("curtailment").mul(pl.lit(-1)).mul(pl.col("physical_level").pow(-1))).to_numpy().flatten(),
             mode='lines',
             name='Below B6 Curtailment',
             line=dict(color='green')
@@ -293,7 +303,7 @@ def _(daily_aggregates, go, pl):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    I mean, this is crystal clear. Above the B6 it's hitting 20 - 35% curtailment of the total potential generation regularly, whereas below it's pretty decent with the spikes only being around 5 - 10%.
+    I mean, this is crystal clear. Above the B6 it's hitting 40 - 50% curtailment of the total potential generation regularly, whereas below it's pretty decent with the spikes only being around 5 - 10%.
 
     Let's look at a weekly aggregation which makes it more manageable:
     """)
@@ -301,14 +311,30 @@ def _(mo):
 
 
 @app.cell
-def _(go, partition_and_aggregate_by_boundary, pl, weekly_folder):
-    weekly_aggregates = partition_and_aggregate_by_boundary(weekly_folder)
+def _(daily_aggregates, pl):
+    weekly_aggregates = {}
 
+    for key, value in daily_aggregates.items():
+        weekly_aggregates[key] = value.with_columns(
+            pl.col("time").str.to_datetime(format="%Y-%m-%dT%H:%M:%S%.f")
+        ).group_by_dynamic(
+            index_column="time", every="7d"
+        ).agg(
+            pl.col("curtailment").sum(),
+            pl.col("physical_level").sum()
+        ).with_columns(
+            (pl.col("curtailment").mul(pl.lit(-1)) / pl.col("physical_level")).alias("curtailment_ratio")
+        )
+    return (weekly_aggregates,)
+
+
+@app.cell
+def _(go, weekly_aggregates):
     fig3 = go.Figure()
     fig3.add_trace(
         go.Scatter(
             x=weekly_aggregates["above"].select("time").to_numpy().flatten(),
-            y=weekly_aggregates["above"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            y=weekly_aggregates["above"].select("curtailment_ratio").to_numpy().flatten(),
             mode='lines',
             name='Above B6 Curtailment',
             line=dict(color='blue')
@@ -317,7 +343,7 @@ def _(go, partition_and_aggregate_by_boundary, pl, weekly_folder):
     fig3.add_trace(
         go.Scatter(
             x=weekly_aggregates["below"].select("time").to_numpy().flatten(),
-            y=weekly_aggregates["below"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            y=weekly_aggregates["below"].select("curtailment_ratio").to_numpy().flatten(),
             mode='lines',
             name='Below B6 Curtailment',
             line=dict(color='green')
@@ -349,14 +375,12 @@ def _(go, partition_and_aggregate_by_boundary, pl, quarter_hourly_folder):
     _aggregate = quarter_hour_aggregates
     _fig3 = go.Figure()
 
-    # note, that our dataset is in GWh. Let's assume that generation is constant during the day, so that way we get the GW generation by dividing by 24. 
-
     x_ticks = _aggregate["above"].select("time").to_numpy().flatten()
 
     _fig3.add_trace(
         go.Scatter(
             x=x_ticks,
-            y=_aggregate["above"].select(pl.col("generated").mul(4)).to_numpy().flatten(),
+            y=_aggregate["above"].select(pl.col("physical_level").mul(4)).to_numpy().flatten(),
             mode='lines+markers',
             name='Above B6 Generated',
             line=dict(color='lightblue'),
@@ -364,16 +388,16 @@ def _(go, partition_and_aggregate_by_boundary, pl, quarter_hourly_folder):
         )
     )
 
-    _fig3.add_trace(
-        go.Scatter(
-            x=x_ticks,
-            y=_aggregate["above"].select(pl.col("curtailment").mul(4)).to_numpy().flatten(),
-            mode='lines+markers',
-            name='Above B6 Curtailment',
-            line=dict(color='blue'),
-            stackgroup='one'
-        )
-    )
+    # _fig3.add_trace(
+    #     go.Scatter(
+    #         x=x_ticks,
+    #         y=_aggregate["above"].select(pl.col("curtailment").mul(-4)).to_numpy().flatten(),
+    #         mode='lines+markers',
+    #         name='Above B6 Curtailment',
+    #         line=dict(color='blue'),
+    #         stackgroup='one'
+    #     )
+    # )
 
     _fig3.add_trace(
         go.Scatter(
@@ -406,68 +430,54 @@ def _(mo):
 
 
 @app.cell
-def _(np, pl, quarter_hour_aggregates):
-    to_bin_above = quarter_hour_aggregates["above"].with_columns(
-        # Turning energy / quarter hour into power in GW
-        pl.col("curtailment").mul(4).alias("curtailment_gw"),
-        pl.col("generated").mul(4).alias("generated_gw")
-    )
-
-    quantiles = np.arange(0, to_bin_above.select(pl.col("generated_gw").max()).item() + 1, 0.5)
-
-    bin_results_above = to_bin_above.with_columns(
-        pl.col("generated_gw").cut(
-        quantiles,
-        labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in quantiles] + [float(quantiles.max() + 1)]]
-    ).cast(pl.String).alias("bin")).group_by("bin").agg(
-        pl.col("curtailment_gw").sum(),
-        pl.col("generated_gw").sum(),
-        pl.col("generated_gw").count().alias("count"),
-    ).with_columns(
-        (pl.col("curtailment_gw") / pl.col("generated_gw")).mul(100).alias("curtailment_percent")
-    ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
-    return (bin_results_above,)
+def _(pl, quarter_hour_aggregates):
+    quarter_hour_aggregates["above"].select(pl.col("generated").mul(4))
+    return
 
 
 @app.cell
 def _(np, pl, quarter_hour_aggregates):
-    to_bin_below = quarter_hour_aggregates["below"].with_columns(
-        # Turning energy / quarter hour into power in GW
-        pl.col("curtailment").mul(4).alias("curtailment_gw"),
-        pl.col("generated").mul(4).alias("generated_gw")
-    )
+    bin_results = {}
 
-    _quantiles = np.arange(0, to_bin_below.select(pl.col("generated_gw").max()).item() + 1, 0.5)
-
-    bin_results_below = to_bin_below.with_columns(
-        pl.col("generated_gw").cut(
-        _quantiles,
-        labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in _quantiles] + [float(_quantiles.max() + 1)]]
-    ).cast(pl.String).alias("bin")).group_by("bin").agg(
-        pl.col("curtailment_gw").sum(),
-        pl.col("generated_gw").sum(),
-        pl.col("generated_gw").count().alias("count"),
-    ).with_columns(
-        (pl.col("curtailment_gw") / pl.col("generated_gw")).mul(100).alias("curtailment_percent")
-    ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
-    return (bin_results_below,)
+    for _key, _value in quarter_hour_aggregates.items():
+        to_bin = _value.with_columns(
+            # Turning energy / quarter hour into power in GW
+            pl.col("curtailment").mul(4).alias("curtailment_gw"),
+            pl.col("physical_level").mul(4).alias("pn_gw"),
+            pl.col("generated").mul(4).alias("generated_gw")
+        )
+    
+        quantiles = np.arange(0, to_bin.select(pl.col("pn_gw").max()).item() + 1, 0.5)
+    
+        bin_results[_key] = to_bin.with_columns(
+            pl.col("pn_gw").cut(
+            quantiles,
+            labels=[f"{i}-{i+0.5} GW" for i in [float(i) for i in quantiles] + [float(quantiles.max() + 1)]]
+        ).cast(pl.String).alias("bin")).group_by("bin").agg(
+            pl.col("curtailment_gw").sum(),
+            pl.col("pn_gw").sum(),
+            pl.col("pn_gw").count().alias("count"),
+        ).with_columns(
+            (pl.col("curtailment_gw").mul(pl.lit(-1)) / pl.col("pn_gw")).mul(100).alias("curtailment_percent")
+        ).sort(pl.col("bin").str.split(by="-").list.get(0).cast(pl.Float64))
+    return (bin_results,)
 
 
 @app.cell
-def _(bin_results_above, bin_results_below, go):
+def _(bin_results, go):
     fig6 = go.Figure()
 
     fig6.add_bar(
-        x=bin_results_above.select("bin").to_numpy().flatten(),
-        y=bin_results_above.select("curtailment_percent").to_numpy().flatten(),
+        x=bin_results["above"].select("bin").to_numpy().flatten(),
+        y=bin_results["above"].select("curtailment_percent").to_numpy().flatten(),
         name='Above B6 Boundary',
         marker_color='blue',
         opacity=0.8,
     )
 
     fig6.add_bar(
-        x=bin_results_below.select("bin").to_numpy().flatten(),
-        y=bin_results_below.select("curtailment_percent").to_numpy().flatten(),
+        x=bin_results["below"].select("bin").to_numpy().flatten(),
+        y=bin_results["below"].select("curtailment_percent").to_numpy().flatten(),
         name='Below B6 Boundary',
         marker_color='lightgreen',
         opacity=0.8,
@@ -483,15 +493,15 @@ def _(bin_results_above, bin_results_below, go):
 
 
 @app.cell
-def _(bin_results_above):
-    bin_results_above
+def _(bin_results):
+    bin_results["above"]
     return
 
 
 @app.cell
-def _(bin_results_above, bin_results_below):
-    bin_results_above.select("bin", "curtailment_percent", "count").write_csv("./data/visual/bin_results_above.csv")
-    bin_results_below.select("bin", "curtailment_percent", "count").write_csv("./data/visual/bin_results_below.csv")
+def _(bin_results):
+    bin_results['above'].select("bin", "curtailment_percent", "count").write_csv("./data/visual/bin_results_above.csv")
+    bin_results['below'].select("bin", "curtailment_percent", "count").write_csv("./data/visual/bin_results_below.csv")
     return
 
 
@@ -593,7 +603,7 @@ def _(go, hourly_data, pl):
     fig4.add_trace(
         go.Scatter(
             x=hourly_data["above"].select("hour").to_numpy().flatten(),
-            y=hourly_data["above"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            y=hourly_data["above"].select(pl.col("curtailment").mul(pl.lit(-1)).mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
             mode='lines+markers',
             name='Above B6 Curtailment',
             line=dict(color='blue')
@@ -603,7 +613,7 @@ def _(go, hourly_data, pl):
     fig4.add_trace(
         go.Scatter(
             x=hourly_data["below"].select("hour").to_numpy().flatten(),
-            y=hourly_data["below"].select(pl.col("curtailment").mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
+            y=hourly_data["below"].select(pl.col("curtailment").mul(pl.lit(-1)).mul(pl.col("generated").pow(-1))).to_numpy().flatten(),
             mode='lines+markers',
             name='Below B6 Curtailment',
             line=dict(color='green')
@@ -675,23 +685,24 @@ def _(daily_folder, pl, units_with_boundary):
         _file_path = daily_folder / f"{bm_unit}.csv"
         if _file_path.exists() is False:
             print(f"No data for {bm_unit}")
-            return 0.0, 0.0
+            return 0.0, 0.0, 0.0
         _df = pl.read_csv(_file_path)
         total_generated = _df.select(pl.col("generated").sum()).item()
         total_curtailment = _df.select(pl.col("curtailment").sum()).item()
-        if total_generated == 0:
-            return 0.0, 0.0
-        return total_generated, total_curtailment
+        total_pn = _df.select(pl.col("physical_level").sum()).item()
+        return total_generated, total_curtailment, total_pn
 
     units_with_gen_and_curtailment = units_with_boundary.filter(pl.col("technology_type").str.contains("Wind")).with_columns(
         pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[0], return_dtype=pl.Float64).round(decimals=5).alias("total_generated"),
-        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[1], return_dtype=pl.Float64).round(decimals=5).alias("total_curtailment")
+        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[1], return_dtype=pl.Float64).round(decimals=5).alias("total_curtailment"),
+        pl.col("bm_unit").map_elements(lambda x: get_gen_and_curtailment_for_unit(x)[2], return_dtype=pl.Float64).round(decimals=5).alias("total_pn")
     )
     return (units_with_gen_and_curtailment,)
 
 
 @app.cell
-def _():
+def _(units_with_gen_and_curtailment):
+    units_with_gen_and_curtailment
     return
 
 
@@ -792,12 +803,13 @@ def _(pl, units_with_uk_county):
     units_with_uk_county.group_by("repd_site_name", "repd_lat", "repd_long").agg(
         pl.col("total_generated").sum(),
         pl.col("total_curtailment").sum(),
+        pl.col("total_pn").sum(),
         pl.col("capacity").first(),
         pl.col("bm_unit"),
         pl.col("below_b6").first()
     ).with_columns(
         pl.col("bm_unit").list.join(","),
-        (pl.when(pl.col("total_generated") != 0.0).then(pl.col("total_curtailment") / pl.col("total_generated")).otherwise(pl.lit(0))).alias("curtailment_ratio")
+        (pl.col("total_curtailment").mul(-1) / pl.col("total_pn")).alias("curtailment_ratio")
     ).write_csv("./data/visual/units_summary.csv")
     return
 
@@ -811,11 +823,12 @@ def _():
 @app.cell
 def _(pl, units_with_uk_county):
     county_to_curtailment = units_with_uk_county.group_by("uk_county").agg(
+        pl.col("total_pn").sum().round(decimals=5),
         pl.col("total_generated").sum().round(decimals=5),
         pl.col("total_curtailment").sum().round(decimals=5)
     ).with_columns(
-        (pl.when(pl.col("total_generated") != 0.0).then(pl.col("total_curtailment") / pl.col("total_generated")).otherwise(pl.lit(0))).alias("curtailment_ratio")
-    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "total_generated", "curtailment_ratio")
+        (pl.col("total_curtailment").mul(-1) / pl.col("total_pn")).alias("curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_county", "total_pn", "total_generated", "curtailment_ratio")
     return (county_to_curtailment,)
 
 
@@ -837,11 +850,12 @@ def _(counties, county_to_curtailment, pl):
 @app.cell
 def _(pl, units_with_uk_county):
     region_to_curtailment = units_with_uk_county.group_by("uk_region").agg(
+        pl.col("total_pn").sum().round(decimals=5),
         pl.col("total_generated").sum().round(decimals=5),
         pl.col("total_curtailment").sum().round(decimals=5)
     ).with_columns(
-        (pl.col("total_curtailment") / pl.col("total_generated")).alias("curtailment_ratio")
-    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_region", "total_generated", "curtailment_ratio")
+        (pl.col("total_curtailment").mul(-1) / pl.col("total_pn")).alias("curtailment_ratio")
+    ).sort(pl.col("curtailment_ratio"), descending=True).select("uk_region", "total_pn", "total_generated", "curtailment_ratio")
     return (region_to_curtailment,)
 
 
