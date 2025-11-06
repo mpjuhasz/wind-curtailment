@@ -11,7 +11,7 @@ def _():
     import pandas as pd
     from pathlib import Path
     import plotly.express as px
-    return mo, pd, pl, px
+    return Path, mo, pd, pl, px
 
 
 @app.cell
@@ -155,6 +155,86 @@ def _(extra_generator_metadata):
     extra_generator_metadata.rename(columns={"itemLabel": "site_name"}, inplace=True)
 
     extra_generator_metadata[["bm_unit", "site_name", "long", "lat"]].to_csv("./data/interim/extra_generator_metadata.csv", index=False)
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    ## Timeline data for extra generation and curtailment by fuel type
+    """)
+    return
+
+
+@app.cell
+def _(extra_generator_metadata, pd):
+    _extra_generator_units = extra_generator_metadata["bm_unit"].tolist()
+    _df = pd.read_csv("data/processed/bm_unit_with_repd.csv")
+    _wind_units = _df[(_df["technology_type"].str.contains("Wind")) & (_df["development_status"] == "Operational")]["bm_unit"].tolist()
+
+    print(len(set(_wind_units)), "wind units, ", len(set(_extra_generator_units)), " extra generator units")
+
+    units_to_consider = set(_wind_units + _extra_generator_units)
+
+    print("Considering", len(units_to_consider), "units in total")
+    return (units_to_consider,)
+
+
+@app.cell
+def _(Path, pl, units_to_consider):
+    counter_all, counter_to_save = 0, 0
+
+    dfs = []
+    for file in Path("./data/processed/15m-october-all/").glob("*.csv"):
+        if file.stem in units_to_consider:
+            counter_all += 1
+            _df = pl.read_csv(file)
+            # upsample to 6 hourly:
+            _df = _df.with_columns(
+                pl.col("time").str.strptime(pl.Datetime, format="%Y-%m-%dT%H:%M:%S%.f")
+            ).sort("time").group_by_dynamic(
+                index_column="time", every="6h"
+            ).agg(
+                pl.col("curtailment").sum().alias("total_curtailment"),
+                pl.col("physical_level").sum().alias("total_pn"),
+                pl.col("extra").sum().alias("total_extra"),
+                pl.col("generated").sum().alias("total_generation"),
+            ).with_columns(
+                bm_unit=pl.lit(file.stem)
+            )
+            if _df.select(pl.col("total_extra").sum().add(pl.col("total_curtailment").sum())).item() != 0:
+                dfs.append(_df)
+                counter_to_save += 1
+
+    print("Found", counter_all, "units, saved", counter_to_save, "with non-zero extra or curtailment")
+
+    return (dfs,)
+
+
+@app.cell
+def _(dfs, pl, to_plot):
+    print(f"Covering {round(pl.concat(dfs).select("total_extra").sum().item() / to_plot["total_extra"].sum() * 100, 2)}% of total extra generation in October")
+    return
+
+
+@app.cell
+def _(bm_units, dfs, pl):
+    october_timeline = pl.concat(dfs).to_pandas()
+
+    october_timeline_with_fuel = october_timeline.merge(bm_units[["elexonBmUnit", "fuelType"]], left_on="bm_unit", right_on="elexonBmUnit", how="left")
+    return (october_timeline_with_fuel,)
+
+
+@app.cell
+def _(october_timeline_with_fuel):
+    october_timeline_with_fuel.rename(columns={"fuelType": "fuel_type"}, inplace=True)
+
+    october_timeline_with_fuel[["time", "bm_unit", "fuel_type", "total_extra", "total_curtailment", "total_pn", "total_generation"]].to_csv("./data/visual/october_timeline_extra_and_curtailment_by_fuel.csv", index=False)
+    return
+
+
+@app.cell
+def _():
     return
 
 
