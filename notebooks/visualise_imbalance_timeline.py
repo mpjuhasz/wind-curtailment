@@ -32,14 +32,26 @@ def _(pl):
 
 @app.cell
 def _(october_by_fuel_and_time, pl):
-    to_plot = october_by_fuel_and_time.group_by("time").agg(
-        pl.col("total_curtailment").sum().alias("total_curtailment"),
-        pl.col("total_pn").sum().alias("total_pn"),
-        pl.col("total_extra").sum().alias("total_extra")
-    ).with_columns(
+    to_plot = october_by_fuel_and_time.with_columns(
+            pl.col("time").str.strptime(pl.Datetime, format="%Y-%m-%d %H:%M:%S")
+        ).sort("time").group_by_dynamic(
+            index_column="time", every="1h"
+        ).agg(
+            pl.col("total_curtailment").sum().alias("total_curtailment"),
+            pl.col("total_pn").sum().alias("total_pn"),
+            pl.col("total_extra").sum().alias("total_extra")
+        ).group_by(
+            "time"
+        ).sum().with_columns(
         imbalance=pl.col("total_curtailment").add(pl.col("total_extra"))
     ).sort(by="time")
     return (to_plot,)
+
+
+@app.cell
+def _(to_plot):
+    to_plot
+    return
 
 
 @app.cell
