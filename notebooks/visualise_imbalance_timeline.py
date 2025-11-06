@@ -44,7 +44,7 @@ def _(october_by_fuel_and_time, pl):
 
 @app.cell
 def _(to_plot):
-    to_plot.write_csv("./data/processed/analysis/october_imbalance_over_time.csv")
+    to_plot.write_csv("./data/visual/october_imbalance_over_time.csv")
     return
 
 
