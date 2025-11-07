@@ -222,14 +222,76 @@ def _(bm_units, dfs, pl):
     october_timeline = pl.concat(dfs).to_pandas()
 
     october_timeline_with_fuel = october_timeline.merge(bm_units[["elexonBmUnit", "fuelType"]], left_on="bm_unit", right_on="elexonBmUnit", how="left")
-    return (october_timeline_with_fuel,)
+    return october_timeline, october_timeline_with_fuel
+
+
+@app.cell
+def _(october_timeline):
+    october_timeline
+    return
 
 
 @app.cell
 def _(october_timeline_with_fuel):
     october_timeline_with_fuel.rename(columns={"fuelType": "fuel_type"}, inplace=True)
+    return
 
-    october_timeline_with_fuel[["time", "bm_unit", "fuel_type", "total_extra", "total_curtailment", "total_pn", "total_generation"]].to_csv("./data/visual/october_timeline_extra_and_curtailment_by_fuel.csv", index=False)
+
+@app.cell
+def _(october_timeline_with_fuel):
+    october_timeline_with_fuel["fuel_type"].value_counts()
+    return
+
+
+@app.cell
+def _(pd):
+    manual_generator_metadata = pd.read_csv("./data/processed/extra_generators_metadata.csv")
+    bm_units_with_repd = pd.read_csv("./data/processed/bm_unit_with_repd.csv")
+    return bm_units_with_repd, manual_generator_metadata
+
+
+@app.cell
+def _(bm_units_with_repd):
+    bm_units_with_repd
+    return
+
+
+@app.cell
+def _(bm_units_with_repd, manual_generator_metadata, pd, units_to_consider):
+    units_with_location_and_name = pd.concat([
+        bm_units_with_repd[bm_units_with_repd["bm_unit"].isin(units_to_consider)][["bm_unit", "repd_site_name", "repd_lat", "repd_long"]].rename(
+            columns={"repd_lat": "lat", "repd_long": "long", "repd_site_name": "site_name"}
+        ).groupby("bm_unit").first().reset_index(),
+        manual_generator_metadata[manual_generator_metadata["bm_unit"].isin(units_to_consider)][["bm_unit", "site_name", "lat", "long"]]
+    ]).drop_duplicates()
+    
+    units_with_location_and_name.to_csv("./data/visual/bm_unit_to_lat_long.csv", index=False)
+    return (units_with_location_and_name,)
+
+
+@app.cell
+def _(october_by_fuel_and_time):
+    october_by_fuel_and_time
+    return
+
+
+@app.cell
+def _(october_timeline_with_fuel, units_with_location_and_name):
+    october_timeline_with_fuel.merge(units_with_location_and_name, on="bm_unit", how="left").groupby(["time", "site_name", "lat", "long"]).agg(
+        {
+            "total_extra": sum,
+            "total_curtailment": sum,
+            "total_pn": sum,
+            "total_generation": sum,
+            "bm_unit": list,
+            "fuel_type": "first",
+        }
+    ).reset_index()[["time", "site_name", "bm_unit", "fuel_type", "total_extra", "total_curtailment", "total_pn", "total_generation", "lat", "long"]].to_csv("./data/visual/october_timeline_extra_and_curtailment_by_fuel.csv", index=False)
+    return
+
+
+@app.cell
+def _():
     return
 
 
