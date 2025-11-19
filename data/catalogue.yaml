@@ -64,7 +64,7 @@ processed:
     source: manual
     description: list of coordinates of the B6 boundary line
   - name: analysis/
-    source: visualise_imbalance_timeline.py 
+    source: db_scripts/queries.sql
     description: aggregated data for 2025 October curtailment and generation per site
   - name: bm_unit_with_repd.csv
     source: bm_units.py 
