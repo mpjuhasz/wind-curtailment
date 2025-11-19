@@ -52,7 +52,7 @@ def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.D
     ).with_columns(
         pl.col("level"),
         pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
-    ).upsample(time_column="time", every="1m").fill_null(strategy="forward")
+    ).sort(by="time").upsample(time_column="time", every="1m").fill_null(strategy="forward")
     
     
     if accepted is not None:

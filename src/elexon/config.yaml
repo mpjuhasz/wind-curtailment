@@ -1,6 +1,6 @@
-from_time: "2025-01-01T00:00:00Z"
-to_time: "2025-11-01T00:00:00Z"
-downsample_frequency: "15m"
+from_time: "2025-10-01T00:00:00Z"
+to_time: "2025-10-12T00:00:00Z"
+downsample_frequency: "5m"
 units:
 - T_ACHRW-1
 - T_AFTOW-1
