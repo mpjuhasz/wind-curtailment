@@ -51,4 +51,21 @@ processed:
   - name: offshore_wind_locations.csv
     source: interim/offshore_wind_locations.csv
     description: hand-mapped offshore windfarms to onshore cable connection (for comparability with onshore data and regional grouping)
-  
+  - name: wikidata_to_repd.csv
+    source: wikidata_to_repd.py
+    description: merged final file mapping wikidata stations to the REPD datasets
+  - name: repd.csv
+    source: process_repd.csv
+    description: a cleaned version of the REPD dataset with lat-long
+  - name: extra_generators_metadata.csv
+    source: visualise_imbalance_timeline.py 
+    description: metadata (location and site-name) for 40 generation sites (non-REPD)
+  - name: boundary.json
+    source: manual
+    description: list of coordinates of the B6 boundary line
+  - name: analysis/
+    source: visualise_imbalance_timeline.py 
+    description: aggregated data for 2025 October curtailment and generation per site
+  - name: bm_unit_with_repd.csv
+    source: bm_units.py 
+    description: final matching of BM units to the REPD database
