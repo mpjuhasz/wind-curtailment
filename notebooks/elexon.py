@@ -81,7 +81,7 @@ def _(Callable, datetime, pl, requests):
         else:
             print(f"Error: {response.status_code}")
             return None
-    return date_range_wrapper, get_boal, get_physical
+    return date_range_wrapper, get_bid_offer, get_boal, get_physical
 
 
 @app.cell
@@ -253,6 +253,43 @@ def _(pl, smoothen_accepted):
 @app.cell
 def _(accepted, calculate_curtailment, physical):
     print(calculate_curtailment(accepted, physical))
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    ## Bid offer prices
+    """)
+    return
+
+
+@app.cell
+def _(bm_unit, date_range_wrapper, from_time, get_bid_offer, to_time):
+    bid_offer = date_range_wrapper(bm_unit, from_time, to_time, get_bid_offer)
+    return (bid_offer,)
+
+
+@app.cell
+def _(bid_offer):
+    bid_offer
+    return
+
+
+@app.cell
+def _(accepted, bid_offer):
+    bid_offer.join(
+        accepted,
+        left_on=["settlementDate", "settlementPeriod", "levelFrom"],
+        right_on=["settlementDate", "settlementPeriodFrom", "levelFrom"],
+        how="inner",
+    )
+    return
+
+
+@app.cell
+def _(accepted):
+    accepted
     return
 
 
