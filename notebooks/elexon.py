@@ -86,7 +86,8 @@ def _(Callable, datetime, pl, requests):
 
 @app.cell
 def _():
-    bm_unit = "SGRWO-2"
+    # bm_unit = "SGRWO-2"
+    bm_unit = "T_DINO-2"
     from_time = "2025-01-01T00:00Z"
     to_time = "2025-01-10T00:00Z"
     return bm_unit, from_time, to_time
@@ -205,7 +206,7 @@ def _(accepted, physical, pl, smoothen_accepted):
 
     chart.show()
     chart.interactive()
-    return
+    return alt, result_accepted
 
 
 @app.cell
@@ -271,8 +272,90 @@ def _(bm_unit, date_range_wrapper, from_time, get_bid_offer, to_time):
 
 
 @app.cell
+def _(mo):
+    mo.md(r"""
+    From [the docs](https://bscdocs.elexon.co.uk/bsc/bsc-section-x-2-technical-glossary?highlight=%5B%22Q4.1%22%2C%223%22%5D#block-69033c95ab14fcbafaec77c1):
+
+    | Defined Term|Acronym|Units|Definition/Explanatory Text|
+    |----|----|----|----|
+    |Accepted Bid-Offer Volume|qABOknij(t)|MW|The quantity established in accordance with Section T3.6 The Accepted Bid-Offer Volume is the quantity of Bid or Offer from Bid-Offer Pair n accepted as a result of Bid-Offer Acceptance k, that is not flagged as relating to an RR Instruction, in Settlement Period j from BM Unit i, for any spot time t within Settlement Period j|
+    |Accepted Offer Volume|qAOknij(t)|MW|The quantity established in accordance with . T3.7.1. The Accepted Offer Volume is the quantity of Offer n being the positive part of the Accepted Bid-Offer Volume accepted as a result of Bid-Offer Acceptance k from BM Unit i at spot times t within Settlement Period j.|
+    |Bid Price |PBnij|£/MWh|The amount in £/MWh associated with a Bid and comprising part of a Bid-Offer Pair.|
+    |Account Energy Imbalance Cashflow|CAEIaj|£|The amount determined in accordance with Section T4.7.1. The Account Energy Imbalance Cashflow is the total cashflow resulting from the Energy Imbalance of Energy Account a in Settlement Period j such that a negative quantity represents a payment to the Trading Party holding Energy Account a and a positive quantity represents a payment by the Trading Party holding Energy Account a.|
+    """)
+    return
+
+
+@app.cell
+def _(pl, requests):
+    def get_indicative_cashflow(time: str, bm_unit: str):
+        url = f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/indicative/cashflows/all/bid/{time}?bmUnit={bm_unit}&format=json"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return pl.DataFrame(response.json().get("data"))
+        else:
+            print(f"Error: {response.status_code}")
+            return None
+
+    return (get_indicative_cashflow,)
+
+
+@app.cell
+def _(from_time):
+    from_time_date = from_time.split("T")[0]
+    return (from_time_date,)
+
+
+@app.cell
+def _(bm_unit, from_time_date, get_indicative_cashflow):
+    indicative_cashflow = get_indicative_cashflow(from_time_date, bm_unit)
+    return (indicative_cashflow,)
+
+
+@app.cell
+def _(indicative_cashflow):
+    indicative_cashflow
+    return
+
+
+@app.cell
+def _(alt, indicative_cashflow, pl, result_accepted):
+    cashflows = indicative_cashflow.with_columns(
+        pl.col("startTime"),
+        pl.col("bidOfferPairCashflows").map_elements(lambda x: x.get("negative1")).alias("negative"),
+        pl.col("bidOfferPairCashflows").map_elements(lambda x: x.get("positive1")).alias("positive"),
+    )
+
+    chart_2 = alt.Chart(cashflows.to_pandas()).mark_line().encode(
+        x='startTime:T',
+        y='negative:Q',
+        color=alt.value('blue'),
+        tooltip=['startTime:T', 'negative:Q']
+    ).properties(
+        title='Negative cashflows over time'
+    ) + alt.Chart(cashflows.to_pandas() if result_accepted is not None else pl.DataFrame().to_pandas()).mark_line().encode(
+        x='startTime:T',
+        y='positive:Q',
+        color=alt.value('red'),
+        tooltip=['startTime:T', 'positive:Q']
+    ).properties(
+        title='Positive cashflows over time'
+    )
+
+    chart_2.show()
+    chart_2.interactive()
+    return
+
+
+@app.cell
 def _(bid_offer):
     bid_offer
+    return
+
+
+@app.cell
+def _(bid_offer):
+    bid_offer.select("*").limit(2).to_pandas().to_markdown()
     return
 
 
