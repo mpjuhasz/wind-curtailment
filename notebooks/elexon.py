@@ -86,8 +86,8 @@ def _(Callable, datetime, pl, requests):
 
 @app.cell
 def _():
-    # bm_unit = "SGRWO-2"
-    bm_unit = "T_DINO-2"
+    bm_unit = "T_MOWEO-1"
+    # bm_unit = "T_DINO-2"
     from_time = "2025-01-01T00:00Z"
     to_time = "2025-01-10T00:00Z"
     return bm_unit, from_time, to_time
@@ -301,8 +301,8 @@ def _(pl, requests):
 
 
 @app.cell
-def _(from_time):
-    from_time_date = from_time.split("T")[0]
+def _():
+    from_time_date = "2025-01-02"
     return (from_time_date,)
 
 
@@ -315,6 +315,30 @@ def _(bm_unit, from_time_date, get_indicative_cashflow):
 @app.cell
 def _(indicative_cashflow):
     indicative_cashflow
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    The cashflow calculation is:  if QAEIaj > 0 then CAEIaj = – QAEIaj * SSPj otherswise CAEIaj = – QAEIaj * SBPj
+
+    Where:  Account Energy Imbalance Volume = QAEIaj and
+
+    SSPj is the system sell price
+
+        (the System Sell Price will be determined as follows:
+        SSPj = {ΣiΣnΣk {QABknij * PBnij * TLMij} + Σm {QBSASmj * BSAPmj}} + ΣJ {VGBJ * QHRRAPJ} + {RRAUSSj * 0}}
+        / {ΣiΣn Σk {QABknij * TLMij} + Σm {QBSASmj } + {SPAj} + ΣJ {VGBjJ} + RRAUSSj})
+
+
+    TLMij = The Transmission Loss Multiplier is the factor applied to BM Unit i in Settlement Period j in order to adjust for Transmission Losses.
+
+    For T_SGRWO_2 it is "transmissionLossFactor": "-0.0301340",
+
+
+    SBPj is the system buy price.
+    """)
     return
 
 
@@ -354,25 +378,87 @@ def _(bid_offer):
 
 
 @app.cell
-def _(bid_offer):
-    bid_offer.select("*").limit(2).to_pandas().to_markdown()
+def _(mo):
+    mo.md(r"""
+    I think this is what's happening:
+    - levelFrom and levelTo must be equal as per the docs - they outline a constant level for thiem period between timeFrom and timeTo
+    - bid and offer has been perplexing me: I think what they mean is:
+        - bid: each MWh decrease in this band (between FPN and levelFrom) costs this much
+        - offer: each MWh increase in this band (between FPN and levelFrom) earns this much
+        - example: levelFrom = -500, levelTo = -500, bid = -2.59, offer = 0. It's going to cost you £2.59 to decrease my output by 1 MWh within this level.
+    - when multiple pairs exist for the same period, they offer different bands of pricing. E.g., the first 33 MWh extra will cost this much, then that much etc.
+    """)
     return
 
 
 @app.cell
-def _(accepted, bid_offer):
-    bid_offer.join(
-        accepted,
-        left_on=["settlementDate", "settlementPeriod", "levelFrom"],
-        right_on=["settlementDate", "settlementPeriodFrom", "levelFrom"],
-        how="inner",
-    )
+def _(mo):
+    mo.md(r"""
+    Okay, so below is the cashflow / diff calculation for the T_SGRWO-2 and T_SGRWO-2 sites respectively (for 2025-01-02 15:30). What we're seeing here is that the indicative cashflow is indicative, because it's calculated from the system price - which is constant within the period (i.e. unrelated to the bm-unit).
+    """)
     return
 
 
 @app.cell
-def _(accepted):
-    accepted
+def _():
+    71.453543413 / (75 - 16)
+    return
+
+
+@app.cell
+def _():
+    99.308314574 / 82
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    Indicative will still be useful though for sense-checking my calculation. The system price is pretty complex and calculates a bunch of things, but it might be a good pointer still.
+    """)
+    return
+
+
+@app.cell
+def _(accepted, physical, pl, smoothen_accepted):
+    accepted_smoothened = smoothen_accepted(accepted)
+
+    physical_smoothened = physical.select(
+        pl.col("timeFrom").alias("time"),
+        pl.col("levelFrom").alias("level"),
+    ).with_columns(
+        pl.col("level"),
+        pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
+    ).upsample(time_column="time", every="1m").fill_null(strategy="forward")
+
+    diffs = accepted_smoothened.join(
+        physical_smoothened,
+        left_on="time",
+        right_on="time",
+        how="right",
+    ).with_columns(
+        pl.col("level").alias("accepted_level"),
+        pl.col("level_right").alias("physical_level"),
+        pl.col("time"),
+        pl.when(pl.col("level").is_not_null()).then(pl.col("level_right").sub(pl.col("level"))).otherwise(0).alias("diff"),
+    ).select("time", "diff", "accepted_level", "physical_level")
+        # .filter(pl.col("time")
+    #     .is_between(
+    #     datetime.datetime.strptime("2025-01-02T14:00Z", "%Y-%m-%dT%H:%MZ"),
+    #     datetime.datetime.strptime("2025-01-02T19:00Z", "%Y-%m-%dT%H:%MZ"),
+    # ))
+    return (diffs,)
+
+
+@app.cell
+def _(diffs):
+    diffs
+    return
+
+
+@app.cell
+def _():
+    59 * 2.59 / 2
     return
 
 
