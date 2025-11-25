@@ -426,7 +426,7 @@ def _(physical):
 
 @app.cell
 def _():
-    from src.elexon.utils import aggregate_acceptance_and_pn
+    from src.elexon import utils
     return
 
 
