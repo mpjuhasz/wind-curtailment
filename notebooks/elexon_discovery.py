@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.17.5"
+__generated_with = "0.18.0"
 app = marimo.App(width="medium")
 
 
@@ -426,7 +426,7 @@ def _(physical):
 
 @app.cell
 def _():
-    from src.elexon import utils
+    from db_scripts import load_data
     return
 
 
