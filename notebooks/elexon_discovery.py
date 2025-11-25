@@ -473,6 +473,66 @@ def _(bid_offer, diffs):
 
 
 @app.cell
+def _(bid_offer, pl):
+    price = 11
+
+    toy_example = bid_offer.filter(
+        (pl.col("settlementPeriod") == 6) & (pl.col("settlementDate") == "2025-01-02")
+    ).select("levelFrom", "levelTo", "bid", "offer")
+
+    sorted_negatives = toy_example.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")
+
+    zero_row = pl.DataFrame(
+        {
+            "levelFrom": 0,
+            "levelTo": 0,
+            "bid": sorted_negatives.select(pl.col("bid")).limit(1).item(),
+            "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
+        }
+    )
+
+    bid_price_table = bid_offer.filter(
+        (pl.col("settlementPeriod") == 6) & (pl.col("settlementDate") == "2025-01-02")
+    ).select("levelFrom", "levelTo", "bid", "offer")\
+     .extend(zero_row)\
+     .sort(by="levelFrom")\
+     .with_columns(
+         pl.col("levelTo").shift(-1),
+         pl.col("bid").shift(-1),
+         pl.col("offer").shift(-1),
+         pl.lit(price).alias("diff")
+     )
+
+    # TODO swap for negative
+    bid_price_table.filter(
+        pl.col("levelFrom").add(pl.lit(0.5)).sign() == pl.col("diff").sign()
+    ).with_columns(
+        pl.when(
+            pl.col("diff") > pl.col("levelTo")
+        ).then(
+            pl.col("levelTo")
+        ).otherwise(
+            pl.when(
+                pl.col("diff") < pl.col("levelFrom")
+            ).then(
+                pl.lit(0)
+            ).otherwise(
+                pl.col("diff").sub(pl.col("levelFrom"))
+            )
+        ).alias("diff_in_range")
+    ).with_columns(
+        pl.col("diff_in_range").mul(
+            pl.when(pl.col("diff") < 0).then(
+                pl.col("bid")
+            ).otherwise(
+                pl.col("offer")
+            )
+        )
+    )
+    return
+
+
+@app.cell
 def _(bid_offer, consolidate_settlement_period, diffs):
     diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").to_pandas().groupby(
         ["settlementDate", "settlementPeriod"]
