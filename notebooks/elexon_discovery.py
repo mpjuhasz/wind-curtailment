@@ -345,8 +345,8 @@ def _(mo):
 def _(alt, indicative_cashflow, pl, result_accepted):
     cashflows = indicative_cashflow.with_columns(
         pl.col("startTime"),
-        pl.col("bidOfferPairCashflows").map_elements(lambda x: x.get("negative1")).alias("negative"),
-        pl.col("bidOfferPairCashflows").map_elements(lambda x: x.get("positive1")).alias("positive"),
+        pl.col("bidOfferPairCashflows").map_elements(lambda x: x.get("negative1", 0)).alias("negative"),
+        pl.col("bidOfferPairCashflows").map_elements(lambda x: x.get("positive1", 0)).alias("positive"),
     )
 
     chart_2 = alt.Chart(cashflows.to_pandas()).mark_line().encode(
@@ -426,73 +426,27 @@ def _(physical):
 
 @app.cell
 def _():
-    from db_scripts import load_data
-    return
+    from elexon.utils import aggregate_acceptance_and_pn
+    return (aggregate_acceptance_and_pn,)
 
 
 @app.cell
-def _(accepted, physical, pl, smoothen_accepted):
-    accepted_smoothened = smoothen_accepted(accepted)
-
-    physical_smoothened = physical.select(
-        pl.col("timeFrom").alias("time"),
-        pl.col("levelFrom").alias("level"),
-        pl.col("settlementPeriod"),
-        pl.col("settlementDate")
-    ).with_columns(
-        pl.col("level"),
-        pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
-    ).upsample(time_column="time", every="1m").fill_null(strategy="forward")
-
-    diffs = accepted_smoothened.join(
-        physical_smoothened,
-        left_on="time",
-        right_on="time",
-        how="right",
-    ).with_columns(
-        pl.col("level").alias("accepted_level"),
-        pl.col("level_right").alias("physical_level"),
-        pl.col("time"),
-        pl.when(pl.col("level").is_not_null()).then(pl.col("level_right").sub(pl.col("level"))).otherwise(0).alias("diff"),
-    ).group_by_dynamic(
-            index_column="time", every="30m"
-    ).agg(
-        # At this point we're aggregating power figures by the minute. 
-        # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
-        # Keeping physical level for validation: G = E + C + PL
-        # Keeping it as MWh
-        pl.col("diff").mul(1 / 60).sum(),
-        pl.col("accepted_level").mul(1 / 60).sum(),
-        pl.col("physical_level").mul(1 / 60).sum(),
-        pl.col("settlementPeriod").first(),
-        pl.col("settlementDate").first()
-    ).select("time", "diff", "accepted_level", "physical_level", "settlementPeriod", "settlementDate")
-    # .filter(pl.col("time")
-    #     .is_between(
-    #     datetime.datetime.strptime("2025-01-02T14:00Z", "%Y-%m-%dT%H:%MZ"),
-    #     datetime.datetime.strptime("2025-01-02T19:00Z", "%Y-%m-%dT%H:%MZ"),
-    # ))
-
+def _(accepted, aggregate_acceptance_and_pn, physical):
+    diffs = aggregate_acceptance_and_pn(accepted, physical, downsample_frequency="30m", energy_unit="MWh")
     diffs
     return (diffs,)
-
-
-@app.cell
-def _(diffs, pl):
-    diffs.filter(pl.col("diff") > 0)
-    return
 
 
 @app.cell
 def _(pd):
     def consolidate_settlement_period(df: pd.DataFrame) -> float:
         """Takes the bid-offer pairs for a settlement period, and the diff, to calculate the cashflow"""
-        diff = -df.iloc[0]["diff"]
+        diff = df.iloc[0]["curtailment"]
 
-        if diff < 0:
+        if diff:
             df = df[df["pairId"] < 0]
         else:
-            print("Not implemented...")
+            return 0
 
         df.sort_values(by="pairId", ascending=False, inplace=True)
 
@@ -513,34 +467,16 @@ def _(pd):
 
 
 @app.cell
-def _(bid_offer, diffs, pl):
-    diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").filter(pl.col("diff") > 0)
+def _(bid_offer, diffs):
+    diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left")
     return
 
 
 @app.cell
-def _(bid_offer, consolidate_settlement_period, diffs, pl):
-    diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").filter(pl.col("diff") > 0).to_pandas().groupby(
+def _(bid_offer, consolidate_settlement_period, diffs):
+    diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").to_pandas().groupby(
         ["settlementDate", "settlementPeriod"]
     ).apply(consolidate_settlement_period)
-    return
-
-
-@app.cell
-def _(bid_offer):
-    bid_offer
-    return
-
-
-@app.cell
-def _(diffs):
-    diffs
-    return
-
-
-@app.cell
-def _():
-    59 * 2.59 / 2
     return
 
 

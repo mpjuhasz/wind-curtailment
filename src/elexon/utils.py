@@ -1,19 +1,25 @@
-from typing import Optional
+from typing import Literal, Optional
 
 import polars as pl
+
+ENERGY_MULTIPLIERS = {"MWh": 1, "GWh": 1 / 1_000}
 
 
 def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     """
     Discarding overwritten accepted bids and offers
-    
+
     Acceptance data comes back as a list of acceptances that might or might not be overwritten by a later acceptance
     covering the same time period. To handle this, the acceptance levels are interpolated to 1 minute time intervals,
-    and for each time interval the level from the last acceptance is selected. 
+    and for each time interval the level from the last acceptance is selected.
     """
     result = df.with_columns(
-        pl.col("timeFrom").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime).alias("from"),
-        pl.col("timeTo").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime).alias("to"),
+        pl.col("timeFrom")
+        .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
+        .alias("from"),
+        pl.col("timeTo")
+        .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
+        .alias("to"),
     )
     dfs = []
     for d in result.group_by(pl.col("acceptanceNumber")):
@@ -27,34 +33,58 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
 
             level_series = pl.Series(
                 name="level",
-                values=[row["levelFrom"], *(None for _ in range(time_series.shape[0] - 2)), row["levelTo"]],
+                values=[
+                    row["levelFrom"],
+                    *(None for _ in range(time_series.shape[0] - 2)),
+                    row["levelTo"],
+                ],
             )
-            new_df = pl.DataFrame({
-                "time": time_series,
-                "level": level_series,
-                "acceptanceTime": pl.Series([row["acceptanceTime"]] * time_series.shape[0]),
-            }).interpolate()
+            new_df = pl.DataFrame(
+                {
+                    "time": time_series,
+                    "level": level_series,
+                    "acceptanceTime": pl.Series(
+                        [row["acceptanceTime"]] * time_series.shape[0]
+                    ),
+                }
+            ).interpolate()
 
             dfs.append(new_df)
-    return pl.concat(dfs).sort(by=["time", "acceptanceTime"]).unique(subset=["time"], keep="last")
+    return (
+        pl.concat(dfs)
+        .sort(by=["time", "acceptanceTime"])
+        .unique(subset=["time"], keep="last")
+    )
 
 
-def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.DataFrame, downsample_frequency: str = "1d") -> pl.DataFrame:
+def aggregate_acceptance_and_pn(
+    accepted: Optional[pl.DataFrame],
+    physical: pl.DataFrame,
+    downsample_frequency: str = "1d",
+    energy_unit: Literal["MWh", "GWh"] = "GWh",
+) -> pl.DataFrame:
     """
     Aggregates and upsamples the accepted-level and physical notification dataframes
-    
+
     It takes the difference as `accepted - physical`. This means, that curtailment will have negative sign, and extra generation
     will be positive. This makes more sense than the other way around (which is how I've initially set this up).
     """
-    physical_smoothened = physical.select(
-        pl.col("timeFrom").alias("time"),
-        pl.col("levelFrom").alias("level"),
-    ).with_columns(
-        pl.col("level"),
-        pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
-    ).sort(by="time").upsample(time_column="time", every="1m").fill_null(strategy="forward")
-    
-    
+    physical_smoothened = (
+        physical.select(
+            pl.col("timeFrom").alias("time"),
+            pl.col("levelFrom").alias("level"),
+            pl.col("settlementPeriod"),
+            pl.col("settlementDate"),
+        )
+        .with_columns(
+            pl.col("level"),
+            pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
+        )
+        .sort(by="time")
+        .upsample(time_column="time", every="1m")
+        .fill_null(strategy="forward")
+    )
+
     if accepted is not None:
         accepted_smoothened = resolve_acceptances(accepted)
 
@@ -68,43 +98,65 @@ def aggregate_acceptance_and_pn(accepted: Optional[pl.DataFrame], physical: pl.D
             pl.col("level_right").alias("physical_level"),
             pl.col("time"),
             # accepted - physical => curtailment (-), or extra (+)
-            pl.when(pl.col("level").is_not_null()).then(pl.col("level").sub(pl.col("level_right"))).otherwise(0).alias("diff"),
+            pl.when(pl.col("level").is_not_null())
+            .then(pl.col("level").sub(pl.col("level_right")))
+            .otherwise(0)
+            .alias("diff"),
         )
     else:
         diffs = physical_smoothened.with_columns(
             physical_level=pl.col("level"),
             time=pl.col("time"),
             accepted_level=pl.lit(0),
-            diff=pl.lit(0)
+            diff=pl.lit(0),
         )
 
-    output = diffs.with_columns(
-        # this roundabout way is required to account for no accepted level cases (where diff = 0)
-        pl.col("physical_level").add(pl.col("diff")).alias("generated"),
-        pl.col("diff").clip(lower_bound=0).alias("extra"),
-        pl.col("diff").clip(upper_bound=0).alias("curtailment"),
-    ).select(
-        "physical_level", "time", "diff", "generated", "curtailment", "extra"
-    ).group_by_dynamic(
-        index_column="time", every=downsample_frequency
-    ).agg(
-        # At this point we're aggregating power figures by the minute. 
-        # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
-        # Keeping physical level for validation: G = E + C + PL
-        pl.col("physical_level").mul(1 / 60).mul(1 / 1_000).sum(),
-        pl.col("extra").mul(1 / 60).mul(1 / 1_000).sum(),
-        pl.col("curtailment").mul(1 / 60).mul(1 / 1_000).sum(),
-        pl.col("generated").mul(1 / 60).mul(1 / 1_000).sum(),
+    multiplier = ENERGY_MULTIPLIERS[energy_unit]
+    output = (
+        diffs.with_columns(
+            # this roundabout way is required to account for no accepted level cases (where diff = 0)
+            pl.col("physical_level").add(pl.col("diff")).alias("generated"),
+            pl.col("diff").clip(lower_bound=0).alias("extra"),
+            pl.col("diff").clip(upper_bound=0).alias("curtailment"),
+        )
+        .select(
+            "physical_level",
+            "time",
+            "diff",
+            "generated",
+            "curtailment",
+            "extra",
+            "settlementPeriod",
+            "settlementDate",
+        )
+        .group_by_dynamic(index_column="time", every=downsample_frequency)
+        .agg(
+            # At this point we're aggregating power figures by the minute.
+            # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
+            # Keeping physical level for validation: G = E + C + PL
+            pl.col("physical_level").mul(1 / 60).mul(multiplier).sum(),
+            pl.col("extra").mul(1 / 60).mul(multiplier).sum(),
+            pl.col("curtailment").mul(1 / 60).mul(multiplier).sum(),
+            pl.col("generated").mul(1 / 60).mul(multiplier).sum(),
+            pl.col("settlementPeriod").first(),
+            pl.col("settlementDate").first(),
+        )
     )
     return output
 
 
-def aggregate_bm_unit_generation(accepted: pl.DataFrame, physical: pl.DataFrame) -> dict:
+def aggregate_bm_unit_generation(
+    accepted: pl.DataFrame, physical: pl.DataFrame
+) -> dict:
     """Calculating curtailmant, extra generation and total figures for the acceptance and PN datasets for a BM unit"""
     diffs = aggregate_acceptance_and_pn(accepted, physical)
-    
+
     return {
-        "curtailment": round(diffs.filter(pl.col("diff") > 0).select("diff").sum().item(), 2),
-        "extra_generation": - round(diffs.filter(pl.col("diff") < 0).select("diff").sum().item(), 2),
-        "total": round(diffs.select("generated").sum().item(), 2)
+        "curtailment": round(
+            diffs.filter(pl.col("diff") > 0).select("diff").sum().item(), 2
+        ),
+        "extra_generation": -round(
+            diffs.filter(pl.col("diff") < 0).select("diff").sum().item(), 2
+        ),
+        "total": round(diffs.select("generated").sum().item(), 2),
     }
