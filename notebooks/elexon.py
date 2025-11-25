@@ -296,7 +296,6 @@ def _(pl, requests):
         else:
             print(f"Error: {response.status_code}")
             return None
-
     return (get_indicative_cashflow,)
 
 
@@ -426,6 +425,12 @@ def _(physical):
 
 
 @app.cell
+def _():
+    from src.elexon.utils import aggregate_acceptance_and_pn
+    return
+
+
+@app.cell
 def _(accepted, physical, pl, smoothen_accepted):
     accepted_smoothened = smoothen_accepted(accepted)
 
@@ -502,7 +507,7 @@ def _(pd):
                 cashflow += diff * row["bid"]
                 diff = 0
                 break
-        
+
         return cashflow            
     return (consolidate_settlement_period,)
 
