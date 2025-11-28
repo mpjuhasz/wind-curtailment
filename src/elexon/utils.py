@@ -226,19 +226,24 @@ c_or_e_map = {
     "extra": ("offer", expr_extra),
 }
 
-def calculate_cashflow(df: pl.DataFrame) -> float:
-    """Calculates the cashflow for a single settlement period"""
-    bid_price_table = format_bid_price_table(df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra"))
 
+def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
+    """Aggregates the extra generation and curtailment prices for the bid-price table"""
     prices = dict()
     for col, (price_col, expr) in c_or_e_map.items():
-        if df.select(pl.col(col)).limit(1).item() == 0:
+        if bid_price_table.select(pl.col(col)).limit(1).item() == 0:
             prices[col] = 0.0
             continue
         prices[col] = bid_price_table.with_columns(expr).with_columns(
             pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
         ).select(pl.col(f"{col}_price").sum()).item()
-    
+    return prices
+
+def calculate_cashflow(df: pl.DataFrame) -> float:
+    """Calculates the cashflow for a single settlement period"""
+    bid_price_table = format_bid_price_table(df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra"))
+
+    prices = aggregate_prices(bid_price_table)
     return df.with_columns(
         pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
     )

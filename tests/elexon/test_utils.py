@@ -1,7 +1,7 @@
 import polars as pl
 import pytest
 
-from src.elexon.utils import format_bid_price_table
+from src.elexon.utils import aggregate_prices, format_bid_price_table
 
 
 @pytest.mark.parametrize(
@@ -35,3 +35,60 @@ def test_format_bid_price_table(
     input_table: pl.DataFrame, expected_output: pl.DataFrame
 ):
     assert format_bid_price_table(input_table).equals(expected_output)
+
+
+@pytest.mark.parametrize(
+    ("bid_price_table", "prices"),
+    [
+        (
+            pl.DataFrame(
+                {
+                    "levelFrom": [-300, 0, 33, 300],
+                    "levelTo": [0, 33, 300, None],
+                    "bid": [-32.89, 0.0, 0.0, None],
+                    "offer": [15.93, 77.67, 999.0, None],
+                    "curtailment": [-70] * 4,
+                    "extra": [0] * 4,
+                }
+            ),
+            {
+                "extra": 0,
+                "curtailment": -70 * -32.89
+            }
+        ),
+        (
+            pl.DataFrame(
+                {
+                    "levelFrom": [-300, 0, 33, 300],
+                    "levelTo": [0, 33, 300, None],
+                    "bid": [-32.89, 0.0, 0.0, None],
+                    "offer": [15.93, 77.67, 999.0, None],
+                    "curtailment": [0] * 4,
+                    "extra": [100] * 4,
+                }
+            ),
+            {
+                "extra": 33 * 77.67 + 67 * 999.0,
+                "curtailment": 0
+            }
+        ),
+        (
+            pl.DataFrame(
+                {
+                    "levelFrom": [-300, 0, 33, 300],
+                    "levelTo": [0, 33, 300, None],
+                    "bid": [-32.89, 0.0, 0.0, None],
+                    "offer": [15.93, 77.67, 999.0, None],
+                    "curtailment": [0] * 4,
+                    "extra": [0] * 4,
+                }
+            ),
+            {
+                "extra": 0,
+                "curtailment": 0
+            }
+        )
+    ]
+)
+def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float]):
+    assert aggregate_prices(bid_price_table) == prices
