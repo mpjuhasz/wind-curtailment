@@ -160,3 +160,85 @@ def aggregate_bm_unit_generation(
         ),
         "total": round(diffs.select("generated").sum().item(), 2),
     }
+
+
+
+def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
+    """Formats the bids and prices adding a row with zero so that the intervals are complete"""
+    sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")
+    
+    zero_row = pl.DataFrame(
+        {
+            "levelFrom": 0,
+            "levelTo": 0,
+            "bid": sorted_negatives.select(pl.col("bid")).limit(1).item(),
+            "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
+            "curtailment": df.select(pl.col("curtailment")).limit(1).item(),
+            "extra": df.select(pl.col("extra")).limit(1).item(),
+        }
+    )
+    
+    bid_price_table = df.extend(zero_row)\
+     .sort(by="levelFrom")\
+     .with_columns(
+         pl.col("levelTo").shift(-1),
+         pl.col("bid").shift(-1),
+         pl.col("offer").shift(-1),
+         pl.col("curtailment"),
+         pl.col("extra"),
+     )
+
+    return bid_price_table
+
+
+
+expr_curtailment = pl.when(
+    pl.col("curtailment") < pl.col("levelFrom")
+).then(
+    pl.col("levelFrom")  # outside of this range (in the negative direction)
+).otherwise(
+    pl.when(
+        pl.col("curtailment") > pl.col("levelTo")
+    ).then(
+        pl.lit(0)  # outside of this range (closer to 0)
+    ).otherwise(
+        pl.col("curtailment").sub(pl.col("levelTo"))  # in the range
+    )
+).alias("curtailment_in_range")
+
+expr_extra = pl.when(
+    pl.col("extra") > pl.col("levelTo")
+).then(
+    pl.col("levelTo")
+).otherwise(
+    pl.when(
+        pl.col("extra") < pl.col("levelFrom")
+    ).then(
+        pl.lit(0)
+    ).otherwise(
+        pl.col("extra").sub(pl.col("levelFrom"))
+    )
+).alias("extra_in_range")
+
+
+c_or_e_map = {
+    "curtailment": ("bid", expr_curtailment),
+    "extra": ("offer", expr_extra),
+}
+
+def calculate_cashflow(df: pl.DataFrame) -> float:
+    """Calculates the cashflow for a single settlement period"""
+    bid_price_table = format_bid_price_table(df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra"))
+
+    prices = dict()
+    for col, (price_col, expr) in c_or_e_map.items():
+        if df.select(pl.col(col)).limit(1).item() == 0:
+            prices[col] = 0.0
+            continue
+        prices[col] = bid_price_table.with_columns(expr).with_columns(
+            pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
+        ).select(pl.col(f"{col}_price").sum()).item()
+    
+    return df.with_columns(
+        pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
+    )

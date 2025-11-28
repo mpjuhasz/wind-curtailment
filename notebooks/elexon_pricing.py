@@ -295,7 +295,7 @@ def _(pd):
                 break
 
         return cashflow            
-    return (consolidate_settlement_period,)
+    return
 
 
 @app.cell
@@ -306,7 +306,7 @@ def _(bid_offer, diffs):
 
 @app.cell
 def _(bid_offer, pl):
-    price = 11
+    price = 20
 
     toy_example = bid_offer.filter(
         (pl.col("settlementPeriod") == 6) & (pl.col("settlementDate") == "2025-01-02")
@@ -323,10 +323,7 @@ def _(bid_offer, pl):
         }
     )
 
-    bid_price_table = bid_offer.filter(
-        (pl.col("settlementPeriod") == 6) & (pl.col("settlementDate") == "2025-01-02")
-    ).select("levelFrom", "levelTo", "bid", "offer")\
-     .extend(zero_row)\
+    bid_price_table = toy_example.extend(zero_row)\
      .sort(by="levelFrom")\
      .with_columns(
          pl.col("levelTo").shift(-1),
@@ -335,23 +332,42 @@ def _(bid_offer, pl):
          pl.lit(price).alias("diff")
      )
 
-    # TODO swap for negative
-    bid_price_table.filter(
-        pl.col("levelFrom").add(pl.lit(0.5)).sign() == pl.col("diff").sign()
-    ).with_columns(
+    expr_positive_diff = pl.when(
+        pl.col("diff") > pl.col("levelTo")
+    ).then(
+        pl.col("levelTo")
+    ).otherwise(
+        pl.when(
+            pl.col("diff") < pl.col("levelFrom")
+        ).then(
+            pl.lit(0)
+        ).otherwise(
+            pl.col("diff").sub(pl.col("levelFrom"))
+        )
+    ).alias("diff_in_range")
+
+
+    expr_negative_diff = pl.when(
+        pl.col("diff") < pl.col("levelFrom")
+    ).then(
+        pl.col("levelFrom")  # outside of this range (in the negative direction)
+    ).otherwise(
         pl.when(
             pl.col("diff") > pl.col("levelTo")
         ).then(
-            pl.col("levelTo")
+            pl.lit(0)  # outside of this range (closer to 0)
         ).otherwise(
-            pl.when(
-                pl.col("diff") < pl.col("levelFrom")
-            ).then(
-                pl.lit(0)
-            ).otherwise(
-                pl.col("diff").sub(pl.col("levelFrom"))
-            )
-        ).alias("diff_in_range")
+            pl.col("diff").sub(pl.col("levelTo"))  # in the range
+        )
+    ).alias("diff_in_range")
+
+
+    bid_price_table.with_columns(
+        pl.when(pl.col("diff") > 0).then(
+            expr_positive_diff
+        ).otherwise(
+            expr_negative_diff
+        )
     ).with_columns(
         pl.col("diff_in_range").mul(
             pl.when(pl.col("diff") < 0).then(
@@ -359,16 +375,119 @@ def _(bid_offer, pl):
             ).otherwise(
                 pl.col("offer")
             )
-        )
-    )
+        ).alias("diff_price")
+    ).to_dict(as_series=False)
+    return (toy_example,)
+
+
+@app.cell
+def _(toy_example):
+    toy_example.to_dict(as_series=False)
     return
 
 
 @app.cell
-def _(bid_offer, consolidate_settlement_period, diffs):
-    diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").to_pandas().groupby(
-        ["settlementDate", "settlementPeriod"]
-    ).apply(consolidate_settlement_period)
+def _(pl):
+    from typing import Literal
+
+    def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
+        """Formats the bids and prices adding a row with zero so that the intervals are complete"""
+        sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")
+    
+        zero_row = pl.DataFrame(
+            {
+                "levelFrom": 0,
+                "levelTo": 0,
+                "bid": sorted_negatives.select(pl.col("bid")).limit(1).item(),
+                "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
+                "curtailment": df.select(pl.col("curtailment")).limit(1).item(),
+                "extra": df.select(pl.col("extra")).limit(1).item(),
+            }
+        )
+    
+        bid_price_table = df.extend(zero_row)\
+         .sort(by="levelFrom")\
+         .with_columns(
+             pl.col("levelTo").shift(-1),
+             pl.col("bid").shift(-1),
+             pl.col("offer").shift(-1),
+             pl.col("curtailment"),
+             pl.col("extra"),
+         )
+
+        return bid_price_table
+
+
+
+    expr_curtailment = pl.when(
+        pl.col("curtailment") < pl.col("levelFrom")
+    ).then(
+        pl.col("levelFrom")  # outside of this range (in the negative direction)
+    ).otherwise(
+        pl.when(
+            pl.col("curtailment") > pl.col("levelTo")
+        ).then(
+            pl.lit(0)  # outside of this range (closer to 0)
+        ).otherwise(
+            pl.col("curtailment").sub(pl.col("levelTo"))  # in the range
+        )
+    ).alias("curtailment_in_range")
+
+    expr_extra = pl.when(
+        pl.col("extra") > pl.col("levelTo")
+    ).then(
+        pl.col("levelTo")
+    ).otherwise(
+        pl.when(
+            pl.col("extra") < pl.col("levelFrom")
+        ).then(
+            pl.lit(0)
+        ).otherwise(
+            pl.col("extra").sub(pl.col("levelFrom"))
+        )
+    ).alias("extra_in_range")
+
+
+    c_or_e_map = {
+        "curtailment": ("bid", expr_curtailment),
+        "extra": ("offer", expr_extra),
+    }
+
+    def calculate_cashflow(df: pl.DataFrame) -> float:
+        """Calculates the cashflow for a single settlement period"""
+        bid_price_table = format_bid_price_table(df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra"))
+
+        prices = dict()
+        for col, (price_col, expr) in c_or_e_map.items():
+            if df.select(pl.col(col)).limit(1).item() == 0:
+                prices[col] = 0.0
+                continue
+            prices[col] = bid_price_table.with_columns(expr).with_columns(
+                pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
+            ).select(pl.col(f"{col}_price").sum()).item()
+    
+        return df.with_columns(
+            pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
+        )
+
+    return (calculate_cashflow,)
+
+
+@app.cell
+def _(bid_offer, calculate_cashflow, diffs):
+    diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").group_by(
+        "settlementDate", "settlementPeriod"
+    ).map_groups(calculate_cashflow)
+    # .select(
+    #     "settlementDate", "settlementPeriod", "time", "calculated_cashflow_curtailment", "calculated_cashflow_extra",
+    #     "curtailment", "extra", "physical_level", "generated", "bmUnit"
+    # )
+    return
+
+
+@app.cell
+def _(diffs):
+    diffs
     return
 
 
