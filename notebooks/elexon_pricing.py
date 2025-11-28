@@ -82,8 +82,8 @@ def _(Callable, datetime, pl, requests):
 
 @app.cell
 def _():
-    bm_unit = "T_MOWEO-1"
-    # bm_unit = "T_DINO-2"
+    # bm_unit = "T_MOWEO-1"
+    bm_unit = "T_DINO-2"
     from_time = "2025-01-01T00:00Z"
     to_time = "2025-01-10T00:00Z"
     return bm_unit, from_time, to_time
@@ -309,7 +309,7 @@ def _(bid_offer, pl):
     price = 20
 
     toy_example = bid_offer.filter(
-        (pl.col("settlementPeriod") == 6) & (pl.col("settlementDate") == "2025-01-02")
+        (pl.col("settlementPeriod") == 29) & (pl.col("settlementDate") == "2025-01-02")
     ).select("levelFrom", "levelTo", "bid", "offer")
 
     sorted_negatives = toy_example.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")

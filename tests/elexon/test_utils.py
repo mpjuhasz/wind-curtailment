@@ -12,7 +12,11 @@ from src.elexon.utils import aggregate_prices, format_bid_price_table
                 {
                     "levelFrom": [-300, 33, 300],
                     "levelTo": [-300, 33, 300],
-                    "bid": [-32.89, 0.0, 0.0,],
+                    "bid": [
+                        -32.89,
+                        0.0,
+                        0.0,
+                    ],
                     "offer": [15.93, 77.67, 999.0],
                     "curtailment": [-70] * 3,
                     "extra": [0] * 3,
@@ -28,7 +32,29 @@ from src.elexon.utils import aggregate_prices, format_bid_price_table
                     "extra": [0] * 4,
                 }
             ),
-        )
+        ),
+        (
+            pl.DataFrame(
+                {
+                    "levelFrom": [-587, 587, 0],
+                    "levelTo": [-587, 587, 0],
+                    "bid": [-150.0, -150.0, -150.0],
+                    "offer": [2000.0, 2000.0, 2000.0],
+                    "curtailment": [0] * 3,
+                    "extra": [100] * 3
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "levelFrom": [-587, 0, 0],
+                    "levelTo": [0, 587, 587],
+                    "bid": [-150.0, -150.0, -150.0],
+                    "offer": [2000.0, 2000.0, 2000.0],
+                    "curtailment": [0] * 3,
+                    "extra": [100] * 3
+                }
+            )
+        ),
     ],
 )
 def test_format_bid_price_table(
@@ -51,10 +77,7 @@ def test_format_bid_price_table(
                     "extra": [0] * 4,
                 }
             ),
-            {
-                "extra": 0,
-                "curtailment": -70 * -32.89
-            }
+            {"extra": 0, "curtailment": -70 * -32.89},
         ),
         (
             pl.DataFrame(
@@ -67,10 +90,7 @@ def test_format_bid_price_table(
                     "extra": [100] * 4,
                 }
             ),
-            {
-                "extra": 33 * 77.67 + 67 * 999.0,
-                "curtailment": 0
-            }
+            {"extra": 33 * 77.67 + 67 * 999.0, "curtailment": 0},
         ),
         (
             pl.DataFrame(
@@ -83,12 +103,9 @@ def test_format_bid_price_table(
                     "extra": [0] * 4,
                 }
             ),
-            {
-                "extra": 0,
-                "curtailment": 0
-            }
-        )
-    ]
+            {"extra": 0, "curtailment": 0},
+        ),
+    ],
 )
 def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float]):
     assert aggregate_prices(bid_price_table) == prices
