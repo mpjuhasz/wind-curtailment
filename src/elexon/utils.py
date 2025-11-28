@@ -166,7 +166,14 @@ def aggregate_bm_unit_generation(
 def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
     """Formats the bids and prices adding a row with zero so that the intervals are complete"""
     sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")
-    
+
+    df = df.filter(
+        ~ (
+            pl.col("levelFrom").eq(pl.lit(0)) & \
+            pl.col("levelTo").eq(pl.lit(0))
+        )
+    )
+
     zero_row = pl.DataFrame(
         {
             "levelFrom": 0,
@@ -186,7 +193,7 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
          pl.col("offer").shift(-1),
          pl.col("curtailment"),
          pl.col("extra"),
-     )
+     ).select("*").limit(df.shape[0] - 1)
 
     return bid_price_table
 

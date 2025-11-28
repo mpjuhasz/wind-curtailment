@@ -83,7 +83,8 @@ def _(Callable, datetime, pl, requests):
 @app.cell
 def _():
     # bm_unit = "T_MOWEO-1"
-    bm_unit = "T_DINO-2"
+    # bm_unit = "T_DINO-2"
+    bm_unit = "T_VKNGW-2"
     from_time = "2025-01-01T00:00Z"
     to_time = "2025-01-10T00:00Z"
     return bm_unit, from_time, to_time
