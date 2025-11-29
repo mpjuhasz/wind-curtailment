@@ -679,7 +679,15 @@ def _(vik_vals):
 
 
 @app.cell
-def _():
+def _(get_indicative_cashflow, pd):
+    sea_vals = []
+
+    for _unit in ["T_SGRWO-1", "T_SGRWO-3", "T_SGRWO-6", "T_SGRWO-5", "T_SGRWO-4", "T_SGRWO-2"]:
+        for _d in pd.date_range("2024-01-01", "2025-01-01"):
+            if not get_indicative_cashflow(str(_d).split(" ")[0], "T_VKNGW-1").is_empty():
+                sea_vals.append(get_indicative_cashflow(str(_d).split(" ")[0], "T_VKNGW-1").select("totalCashflow").sum())
+
+    sum(sea_vals)
     return
 
 
