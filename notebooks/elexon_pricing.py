@@ -508,8 +508,8 @@ def _():
 
 @app.cell
 def _(Path):
-    generation_folder = Path("./data/processed/gen-seagreen-2024-mwh/")
-    bid_offer_folder = Path("./data/processed/bo-seagreen-2024/")
+    generation_folder = Path("./data/processed/gen-viking-2024-mwh/")
+    bid_offer_folder = Path("./data/processed/bo-viking-2024-mwh/")
     return bid_offer_folder, generation_folder
 
 
@@ -629,7 +629,13 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(mo):
+    mo.md(r"""
+    The same for viking:
+    - https://www.telegraph.co.uk/business/2025/02/21/wind-farm-was-paid-65m-cut-power-output-three-quarters/ :
+      SSE also owns the Viking wind farm in the Shetlands, which had 57pc of its output curtailed last year at a cost of £10m. It was only switched on in August.
+    The two sites have been paid another £1.5m so far this year for cutting output.
+    """)
     return
 
 
@@ -638,6 +644,37 @@ def _(mo):
     mo.md(r"""
     This isn't in line with: https://wastedwind.energy/2025-11-29.
     """)
+    return
+
+
+@app.cell
+def _():
+    from elexon.query import get_physical as gp
+    return (gp,)
+
+
+@app.cell
+def _(gp, pl):
+    gp("T_SGRWO-1", "2024-01-01T00:00:00Z", "2025-01-01T00:00:00Z").filter(
+        pl.col("settlementDate").eq("2024-01-01") & pl.col("settlementPeriod").eq(6)
+    )
+    return
+
+
+@app.cell
+def _(get_indicative_cashflow, pd):
+    vik_vals = []
+
+    for _unit in ["T_VKNGW-1", "T_VKNGW-2", "T_VKNGW-3", "T_VKNGW-4"]:
+        for d in pd.date_range("2024-01-01", "2025-01-01"):
+            if not get_indicative_cashflow(str(d).split(" ")[0], "T_VKNGW-1").is_empty():
+                vik_vals.append(get_indicative_cashflow(str(d).split(" ")[0], "T_VKNGW-1").select("totalCashflow").sum())
+    return (vik_vals,)
+
+
+@app.cell
+def _(vik_vals):
+    sum(vik_vals)
     return
 
 

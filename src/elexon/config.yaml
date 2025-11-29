@@ -181,12 +181,12 @@ units:
 # - 2__PENEC001
 # - T_SAKNW-1
 # - T_SANQW-1
-- T_SGRWO-1
-- T_SGRWO-3
-- T_SGRWO-6
-- T_SGRWO-5
-- T_SGRWO-4
-- T_SGRWO-2
+# - T_SGRWO-1
+# - T_SGRWO-3
+# - T_SGRWO-6
+# - T_SGRWO-5
+# - T_SGRWO-4
+# - T_SGRWO-2
 # - T_SHRSW-2
 # - T_SHRSW-1
 # - E_SOLUTIA
@@ -206,10 +206,10 @@ units:
 # - E_TULWW-1
 # - E_TLYMW-1
 # - T_TWSHW-1
-# - T_VKNGW-2
-# - T_VKNGW-4
-# - T_VKNGW-1
-# - T_VKNGW-3
+- T_VKNGW-2
+- T_VKNGW-4
+- T_VKNGW-1
+- T_VKNGW-3
 # - T_WLNYW-1
 # - T_WLNYO-2
 # - T_WLNYO-4
