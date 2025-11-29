@@ -666,9 +666,9 @@ def _(get_indicative_cashflow, pd):
     vik_vals = []
 
     for _unit in ["T_VKNGW-1", "T_VKNGW-2", "T_VKNGW-3", "T_VKNGW-4"]:
-        for d in pd.date_range("2024-01-01", "2025-01-01"):
-            if not get_indicative_cashflow(str(d).split(" ")[0], "T_VKNGW-1").is_empty():
-                vik_vals.append(get_indicative_cashflow(str(d).split(" ")[0], "T_VKNGW-1").select("totalCashflow").sum())
+        for _d in pd.date_range("2024-01-01", "2025-01-01"):
+            if not get_indicative_cashflow(str(_d).split(" ")[0], _unit).is_empty():
+                vik_vals.append(get_indicative_cashflow(str(_d).split(" ")[0], _unit).select("totalCashflow").sum())
     return (vik_vals,)
 
 
@@ -684,10 +684,15 @@ def _(get_indicative_cashflow, pd):
 
     for _unit in ["T_SGRWO-1", "T_SGRWO-3", "T_SGRWO-6", "T_SGRWO-5", "T_SGRWO-4", "T_SGRWO-2"]:
         for _d in pd.date_range("2024-01-01", "2025-01-01"):
-            if not get_indicative_cashflow(str(_d).split(" ")[0], "T_VKNGW-1").is_empty():
-                sea_vals.append(get_indicative_cashflow(str(_d).split(" ")[0], "T_VKNGW-1").select("totalCashflow").sum())
+            if not get_indicative_cashflow(str(_d).split(" ")[0], _unit).is_empty():
+                sea_vals.append(get_indicative_cashflow(str(_d).split(" ")[0], _unit).select("totalCashflow").sum())
 
     sum(sea_vals)
+    return
+
+
+@app.cell
+def _():
     return
 
 
