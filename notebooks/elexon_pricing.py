@@ -23,6 +23,7 @@ def _():
     from elexon.utils import aggregate_acceptance_and_pn
     return (
         Callable,
+        Path,
         aggregate_acceptance_and_pn,
         alt,
         datetime,
@@ -394,7 +395,7 @@ def _(pl):
     def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
         """Formats the bids and prices adding a row with zero so that the intervals are complete"""
         sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")
-    
+
         zero_row = pl.DataFrame(
             {
                 "levelFrom": 0,
@@ -405,7 +406,7 @@ def _(pl):
                 "extra": df.select(pl.col("extra")).limit(1).item(),
             }
         )
-    
+
         bid_price_table = df.extend(zero_row)\
          .sort(by="levelFrom")\
          .with_columns(
@@ -454,7 +455,7 @@ def _(pl):
         "extra": ("offer", expr_extra),
     }
 
-    def calculate_cashflow(df: pl.DataFrame) -> float:
+    def calculate_cashflow_nb(df: pl.DataFrame) -> float:
         """Calculates the cashflow for a single settlement period"""
         bid_price_table = format_bid_price_table(df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra"))
 
@@ -466,19 +467,18 @@ def _(pl):
             prices[col] = bid_price_table.with_columns(expr).with_columns(
                 pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
             ).select(pl.col(f"{col}_price").sum()).item()
-    
+
         return df.with_columns(
             pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
         )
-
-    return (calculate_cashflow,)
+    return (calculate_cashflow_nb,)
 
 
 @app.cell
-def _(bid_offer, calculate_cashflow, diffs):
+def _(bid_offer, calculate_cashflow_nb, diffs):
     diffs.join(bid_offer, on=["settlementDate", "settlementPeriod"], how="left").group_by(
         "settlementDate", "settlementPeriod"
-    ).map_groups(calculate_cashflow)
+    ).map_groups(calculate_cashflow_nb)
     # .select(
     #     "settlementDate", "settlementPeriod", "time", "calculated_cashflow_curtailment", "calculated_cashflow_extra",
     #     "curtailment", "extra", "physical_level", "generated", "bmUnit"
@@ -489,6 +489,112 @@ def _(bid_offer, calculate_cashflow, diffs):
 @app.cell
 def _(diffs):
     diffs
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    ## On live data
+    """)
+    return
+
+
+@app.cell
+def _():
+    from elexon.utils import cashflow
+    return (cashflow,)
+
+
+@app.cell
+def _(Path):
+    generation_folder = Path("./data/processed/30m-seagreen-2024/")
+    bid_offer_folder = Path("./data/processed/bo-seagreen-2024/")
+    return bid_offer_folder, generation_folder
+
+
+@app.cell
+def _():
+    # _g = pl.read_csv(generation_folder / f"{bm_unit}.csv")
+    # _g = _g.with_columns(
+    #     pl.col("time").str.strptime(pl.Datetime, format="%Y-%m-%dT%H:%M:%S%.f").alias("time"),
+    # )
+    # # _g.group_by_dynamic("time", every="30m").agg(
+    # #     pl.col("generated").sum().alias("generated"),
+    # #     pl.col("physical_level").sum().alias("physical_level"),
+    # #     pl.col("curtailment").sum().alias("curtailment"),
+    # #     pl.col("extra").sum().alias("extra"),
+    # # ).sort(by="time")
+
+    # # MWh
+    # _g = _g.with_columns(
+    #     pl.col("generated").mul(1_000).alias("generated"),
+    #     pl.col("physical_level").mul(1_000).alias("physical_level"),
+    #     pl.col("curtailment").mul(1_000).alias("curtailment"),
+    #     pl.col("extra").mul(1_000).alias("extra"),
+    # )
+
+    # _bo = pl.read_csv(bid_offer_folder / f"{bm_unit}.csv")
+
+    # cashflow(_bo, _g).select("calculated_cashflow_curtailment", "calculated_cashflow_extra").sum()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    This number is pretty shocking, I'll have to double check if this is correct.
+    """)
+    return
+
+
+@app.cell
+def _(bid_offer_folder, cashflow, generation_folder, pl):
+    total_cashflows = []
+
+    for i in generation_folder.glob("*.csv"):
+        unit = i.stem
+
+        _g = pl.read_csv(generation_folder / f"{unit}.csv")
+        _g = _g.with_columns(
+            pl.col("time").str.strptime(pl.Datetime, format="%Y-%m-%dT%H:%M:%S%.f").alias("time"),
+        )
+
+        # MWh
+        _g = _g.with_columns(
+            pl.col("generated").mul(1_000).alias("generated"),
+            pl.col("physical_level").mul(1_000).alias("physical_level"),
+            pl.col("curtailment").mul(1_000).alias("curtailment"),
+            pl.col("extra").mul(1_000).alias("extra"),
+        )
+
+        try:
+            _bo = pl.read_csv(bid_offer_folder / f"{unit}.csv")
+        except:
+            print(f"Not found: {unit}")
+            continue
+    
+        total_cashflows.append(
+            cashflow(_bo, _g).select(
+                pl.col("bmUnit").first(),
+                pl.col("calculated_cashflow_curtailment").sum(),
+                pl.col("calculated_cashflow_extra").sum()
+            )
+        )
+    return (total_cashflows,)
+
+
+@app.cell
+def _(pl, total_cashflows):
+    pl.concat(total_cashflows)
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    This isn't in line with: https://wastedwind.energy/2025-11-29
+    """)
     return
 
 

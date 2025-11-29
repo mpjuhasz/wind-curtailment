@@ -254,3 +254,11 @@ def calculate_cashflow(df: pl.DataFrame) -> float:
     return df.with_columns(
         pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
     )
+
+def cashflow(bo_df: pl.DataFrame, gen_df: pl.DataFrame) -> pl.DataFrame:
+    """Creates cashflow columns form the bid-offer and generation dataframe""" 
+    merged = bo_df.join(gen_df, on=["settlementDate", "settlementPeriod"]).group_by(
+        "settlementDate", "settlementPeriod"
+    ).map_groups(calculate_cashflow)
+    
+    return merged
