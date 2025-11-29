@@ -296,7 +296,7 @@ def _(pd):
                 diff = 0
                 break
 
-        return cashflow            
+        return cashflow
     return
 
 
@@ -573,7 +573,7 @@ def _(bid_offer_folder, cashflow, generation_folder, pl):
         except:
             print(f"Not found: {unit}")
             continue
-    
+
         total_cashflows.append(
             cashflow(_bo, _g).select(
                 pl.col("bmUnit").first(),

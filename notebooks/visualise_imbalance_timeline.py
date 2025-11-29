@@ -264,7 +264,7 @@ def _(bm_units_with_repd, manual_generator_metadata, pd, units_to_consider):
         ).groupby("bm_unit").first().reset_index(),
         manual_generator_metadata[manual_generator_metadata["bm_unit"].isin(units_to_consider)][["bm_unit", "site_name", "lat", "long"]]
     ]).drop_duplicates()
-    
+
     units_with_location_and_name.to_csv("./data/visual/bm_unit_to_lat_long.csv", index=False)
     return (units_with_location_and_name,)
 

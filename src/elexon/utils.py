@@ -9,8 +9,9 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     """
     Discarding overwritten accepted bids and offers
 
-    Acceptance data comes back as a list of acceptances that might or might not be overwritten by a later acceptance
-    covering the same time period. To handle this, the acceptance levels are interpolated to 1 minute time intervals,
+    Acceptance data comes back as a list of acceptances that might or might not
+    be overwritten by a later acceptance covering the same time period. To handle
+    this, the acceptance levels are interpolated to 1 minute time intervals,
     and for each time interval the level from the last acceptance is selected.
     """
     result = df.with_columns(
@@ -66,8 +67,9 @@ def aggregate_acceptance_and_pn(
     """
     Aggregates and upsamples the accepted-level and physical notification dataframes
 
-    It takes the difference as `accepted - physical`. This means, that curtailment will have negative sign, and extra generation
-    will be positive. This makes more sense than the other way around (which is how I've initially set this up).
+    It takes the difference as `accepted - physical`. This means, that curtailment will
+    have negative sign, and extra generation will be positive. This makes more sense
+    than the other way around (which is how I've initially set this up).
     """
     physical_smoothened = (
         physical.select(
@@ -114,7 +116,8 @@ def aggregate_acceptance_and_pn(
     multiplier = ENERGY_MULTIPLIERS[energy_unit]
     output = (
         diffs.with_columns(
-            # this roundabout way is required to account for no accepted level cases (where diff = 0)
+            # this roundabout way is required to account for no accepted level
+            # cases (where diff = 0)
             pl.col("physical_level").add(pl.col("diff")).alias("generated"),
             pl.col("diff").clip(lower_bound=0).alias("extra"),
             pl.col("diff").clip(upper_bound=0).alias("curtailment"),
@@ -132,7 +135,8 @@ def aggregate_acceptance_and_pn(
         .group_by_dynamic(index_column="time", every=downsample_frequency)
         .agg(
             # At this point we're aggregating power figures by the minute.
-            # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
+            # I'm turning this into energy here, assuming constant generation within the
+            # minute, i.e. using: E = P x t
             # Keeping physical level for validation: G = E + C + PL
             pl.col("physical_level").mul(1 / 60).mul(multiplier).sum(),
             pl.col("extra").mul(1 / 60).mul(multiplier).sum(),
@@ -148,7 +152,7 @@ def aggregate_acceptance_and_pn(
 def aggregate_bm_unit_generation(
     accepted: pl.DataFrame, physical: pl.DataFrame
 ) -> dict:
-    """Calculating curtailmant, extra generation and total figures for the acceptance and PN datasets for a BM unit"""
+    """Calculating curtailment, extra generation and total for acceptance and PN for a BM unit"""
     diffs = aggregate_acceptance_and_pn(accepted, physical)
 
     return {

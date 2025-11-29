@@ -107,7 +107,7 @@ def _(pd):
             "repd_long": -3.92033,
             "repd_lat": 55.55537,
             "bm_unit": "T_HAHAW-1"
-        }  
+        }
     ]
 
     pd.DataFrame(manual_mapping).to_csv("./data/interim/manual_wind_mappings.csv", index=False)

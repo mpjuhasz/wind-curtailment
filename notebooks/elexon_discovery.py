@@ -180,7 +180,7 @@ def _(accepted, physical, pl, smoothen_accepted):
         physical.select(
             pl.col("timeFrom").alias("time"),
             pl.col("levelFrom").alias("level"),
-        ), 
+        ),
     ])
 
     if accepted is not None:

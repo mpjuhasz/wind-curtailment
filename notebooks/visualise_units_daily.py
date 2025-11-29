@@ -170,7 +170,7 @@ def _(boundaries, go, pd, uk, units_with_boundary):
 
 
     fig.update_geos(
-        fitbounds="geojson", 
+        fitbounds="geojson",
         visible=False,
         projection_type="mercator"
     )
@@ -446,9 +446,9 @@ def _(np, pl, quarter_hour_aggregates):
             pl.col("physical_level").mul(4).alias("pn_gw"),
             pl.col("generated").mul(4).alias("generated_gw")
         )
-    
+
         quantiles = np.arange(0, to_bin.select(pl.col("pn_gw").max()).item() + 1, 0.5)
-    
+
         bin_results[_key] = to_bin.with_columns(
             pl.col("pn_gw").cut(
             quantiles,
@@ -924,7 +924,7 @@ def _(go, regions):
 
 
     fig7.update_geos(
-        fitbounds="locations", 
+        fitbounds="locations",
         visible=False,
         projection_type="mercator"
     )

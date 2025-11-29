@@ -138,8 +138,8 @@ def test_format_bid_price_table(
                     "extra": [100] * 2,
                 }
             ),
-            {"extra": 50_000, "curtailment": 0}
-        )
+            {"extra": 50_000, "curtailment": 0},
+        ),
     ],
 )
 def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float]):

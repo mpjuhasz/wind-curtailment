@@ -12,7 +12,9 @@ from src.elexon.query import get_acceptances, get_physical
 from src.elexon.utils import aggregate_acceptance_and_pn, aggregate_bm_unit_generation
 
 
-def downsample_aggregate_for_bm_unit(bm_unit: str, from_time: str, to_time: str, downsample_frequency: str) -> Optional[pl.DataFrame]:
+def downsample_aggregate_for_bm_unit(
+    bm_unit: str, from_time: str, to_time: str, downsample_frequency: str
+) -> Optional[pl.DataFrame]:
     """Daily aggregates for the bm unit generation and curtailment"""
     start_time = datetime.now()
     physical = get_physical(bm_unit, from_time, to_time)
@@ -23,7 +25,7 @@ def downsample_aggregate_for_bm_unit(bm_unit: str, from_time: str, to_time: str,
         print(f"No data for {bm_unit}")
         return None
     agg = aggregate_acceptance_and_pn(acceptances, physical, downsample_frequency)
-    
+
     return agg
 
 
@@ -38,10 +40,11 @@ def downsample_for_config(config_path: str, output_folder: str):
         output_path = Path(f"{output_folder}/{unit}.csv")
         if output_path.exists():
             continue
-        agg = downsample_aggregate_for_bm_unit(unit, from_time, to_time, downsample_frequency)
+        agg = downsample_aggregate_for_bm_unit(
+            unit, from_time, to_time, downsample_frequency
+        )
         if agg is not None:
             agg.write_csv(f"{output_folder}/{unit}.csv")
-        
 
 
 def totals_for_bm_unit(bm_unit: str, from_time: str, to_time: str) -> dict:
@@ -62,10 +65,8 @@ def totals_for_config(config_path: str, output_path: str):
 
     output = {"from_time": from_time, "to_time": to_time, "units": []}
     for unit in config["units"]:
-        output["units"].append(
-            {unit: totals_for_bm_unit(unit, from_time, to_time)}
-        )
-        
+        output["units"].append({unit: totals_for_bm_unit(unit, from_time, to_time)})
+
     with open(output_path, "w") as f:
         json.dump(output, f)
 

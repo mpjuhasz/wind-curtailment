@@ -93,7 +93,7 @@ def _(wikidata_to_repd, wikidata_with_bm_unit):
 
     for _col in ["repd_lat", "repd_long"]:
         manual_data[_col] = manual_data[_col].round(5)
-    # NOTE: these units are national grid units, that need to be mapped into Elexon units. 
+    # NOTE: these units are national grid units, that need to be mapped into Elexon units.
     return (manual_data,)
 
 
