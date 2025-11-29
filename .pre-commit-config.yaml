@@ -13,15 +13,19 @@ repos:
   hooks:
   - id: isort
     args: ['--profile', 'black']
+    exclude: ^notebooks/
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.9.5
   hooks:
   - id: ruff
+    exclude: ^notebooks/
   - id: ruff-format
+    exclude: ^notebooks/
 
 - repo: https://github.com/pycqa/flake8
   rev: 7.0.0
   hooks:
   - id: flake8
     args: ['--max-line-length=100', '--ignore=E203,W503']
+    exclude: ^notebooks/
