@@ -61,8 +61,8 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
 def aggregate_acceptance_and_pn(
     accepted: Optional[pl.DataFrame],
     physical: pl.DataFrame,
-    downsample_frequency: str = "1d",
-    energy_unit: Literal["MWh", "GWh"] = "GWh",
+    downsample_frequency: str,
+    energy_unit: Literal["MWh", "GWh"],
 ) -> pl.DataFrame:
     """
     Aggregates and upsamples the accepted-level and physical notification dataframes

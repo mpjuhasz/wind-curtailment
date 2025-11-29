@@ -296,7 +296,7 @@ def _(pd):
                 diff = 0
                 break
 
-        return cashflow
+        return cashflow            
     return
 
 
@@ -508,7 +508,7 @@ def _():
 
 @app.cell
 def _(Path):
-    generation_folder = Path("./data/processed/30m-seagreen-2024/")
+    generation_folder = Path("./data/processed/gen-seagreen-2024-mwh/")
     bid_offer_folder = Path("./data/processed/bo-seagreen-2024/")
     return bid_offer_folder, generation_folder
 
@@ -551,6 +551,7 @@ def _(mo):
 @app.cell
 def _(bid_offer_folder, cashflow, generation_folder, pl):
     total_cashflows = []
+    total_gens = []
 
     for i in generation_folder.glob("*.csv"):
         unit = i.stem
@@ -562,18 +563,19 @@ def _(bid_offer_folder, cashflow, generation_folder, pl):
 
         # MWh
         _g = _g.with_columns(
-            pl.col("generated").mul(1_000).alias("generated"),
-            pl.col("physical_level").mul(1_000).alias("physical_level"),
-            pl.col("curtailment").mul(1_000).alias("curtailment"),
-            pl.col("extra").mul(1_000).alias("extra"),
+            pl.col("generated").alias("generated"),
+            pl.col("physical_level").alias("physical_level"),
+            pl.col("curtailment").alias("curtailment"),
+            pl.col("extra").alias("extra"),
         )
+        total_gens.append(_g)
 
         try:
             _bo = pl.read_csv(bid_offer_folder / f"{unit}.csv")
         except:
             print(f"Not found: {unit}")
             continue
-
+    
         total_cashflows.append(
             cashflow(_bo, _g).select(
                 pl.col("bmUnit").first(),
@@ -581,19 +583,60 @@ def _(bid_offer_folder, cashflow, generation_folder, pl):
                 pl.col("calculated_cashflow_extra").sum()
             )
         )
-    return (total_cashflows,)
+    return total_cashflows, total_gens
+
+
+@app.cell
+def _(pl, total_gens):
+    vals = pl.concat(
+        total_gens
+    ).group_by("settlementPeriod", "settlementDate", "time").agg(
+        pl.col("generated").sum(),
+        pl.col("curtailment").sum(),
+        pl.col("extra").sum(),
+        pl.col("physical_level").sum()
+    ).sort(by=["settlementDate", "settlementPeriod"]).sum()
+
+    abs(vals.select("curtailment").item() / vals.select("physical_level").item()), vals.select("generated").item() / 1_000_000
+    return (vals,)
+
+
+@app.cell
+def _(vals):
+    vals
+    return
 
 
 @app.cell
 def _(pl, total_cashflows):
-    pl.concat(total_cashflows)
+    pl.concat(total_cashflows).sum()
     return
 
 
 @app.cell
 def _(mo):
     mo.md(r"""
-    This isn't in line with: https://wastedwind.energy/2025-11-29
+    There already are conflicting figures for Seagreen 2024:
+    - https://www.ref.org.uk/ref-blog/384-discarded-wind-energy-increases-by-91-in-2024 says:
+      "in 2024 the consumer paid Seagreen £104 million for actually generating electricity, plus £198 million for the constrained volumes, and £64 million for the premium charged to reduce output"
+    - https://www.bbc.co.uk/news/articles/cdedjnw8e85o refers to Octopus, £65 million figure with 71% curtailment
+    - octopus figure with the 71%: https://octopus.energy/press/as-wasted-wind-is-set-to-hit-650m-so-far-this-year-octopus-introduces-wasted-wind-ticker-on-homepage-to-highlight-colossal-costs-of-broken-energy-system/
+    - https://www.telegraph.co.uk/business/2025/02/21/wind-farm-was-paid-65m-cut-power-output-three-quarters/ :
+      The Seagreen offshore wind farm in the North Sea – the largest of its kind in Scotland – had its output curtailed for 71pc of the      time it was due to operate in 2024, grid data show.
+      This meant that of 4.7 terawatt hours of power its turbines generated, 3.3 terawatt hours were effectively discarded – with owner SSE paid by grid operators each time this happened.
+    """)
+    return
+
+
+@app.cell
+def _():
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    This isn't in line with: https://wastedwind.energy/2025-11-29.
     """)
     return
 

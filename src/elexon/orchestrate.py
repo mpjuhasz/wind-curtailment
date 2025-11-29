@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Literal, Optional
 
 import polars as pl
 import typer
@@ -13,7 +13,11 @@ from src.elexon.utils import aggregate_acceptance_and_pn, aggregate_bm_unit_gene
 
 
 def downsample_aggregate_for_bm_unit(
-    bm_unit: str, from_time: str, to_time: str, downsample_frequency: str
+    bm_unit: str,
+    from_time: str,
+    to_time: str,
+    downsample_frequency: str,
+    energy_unit: Literal["MWh", "GWh"],
 ) -> Optional[pl.DataFrame]:
     """Daily aggregates for the bm unit generation and curtailment"""
     start_time = datetime.now()
@@ -24,7 +28,7 @@ def downsample_aggregate_for_bm_unit(
     if physical is None and acceptances is None:
         print(f"No data for {bm_unit}")
         return None
-    agg = aggregate_acceptance_and_pn(acceptances, physical, downsample_frequency)
+    agg = aggregate_acceptance_and_pn(acceptances, physical, downsample_frequency, energy_unit)
 
     return agg
 
@@ -35,13 +39,14 @@ def downsample_for_config(config_path: str, output_folder: str):
     from_time = config["from_time"]
     to_time = config["to_time"]
     downsample_frequency = config["downsample_frequency"]
+    energy_unit = config["energy_unit"]
 
     for unit in track(config["units"]):
         output_path = Path(f"{output_folder}/{unit}.csv")
         if output_path.exists():
             continue
         agg = downsample_aggregate_for_bm_unit(
-            unit, from_time, to_time, downsample_frequency
+            unit, from_time, to_time, downsample_frequency, energy_unit
         )
         if agg is not None:
             agg.write_csv(f"{output_folder}/{unit}.csv")
