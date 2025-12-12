@@ -39,10 +39,11 @@ def run_from_config(config_path: str, output_folder: str):
                 if result is not None and not result.is_empty():
                     dfs.append(result)
 
-        agg = pl.concat(dfs)
-        if agg is not None:
-            # NOTE: if more granular data is needed, then we need to unnest the `bidOfferPairCashflows`
-            agg.select("settlementDate", "settlementPeriod", "bmUnit", "totalCashflow").write_csv(f"{output_folder}/{unit}.csv")
+        if dfs:
+            agg = pl.concat(dfs)
+            if agg is not None:
+                # NOTE: if more granular data is needed, then we need to unnest the `bidOfferPairCashflows`
+                agg.select("settlementDate", "settlementPeriod", "bmUnit", "totalCashflow").write_csv(f"{output_folder}/{unit}.csv")
 
 
 if __name__ == "__main__":

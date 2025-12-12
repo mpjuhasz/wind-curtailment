@@ -710,18 +710,25 @@ def _(Path):
 
 @app.cell
 def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
+    reference_unit_name = "T_BEATO"
+
     ccs = []
     ics = []
     for _i in calculated_cashflow_folder.glob("*.csv"):
         _unit = _i.stem
-
-        print(_unit)
-
-        cf = pl.read_csv(calculated_cashflow_folder / f"{_unit}.csv")
-        ic = pl.read_csv(indicative_cashflow_folder / f"{_unit}.csv")
+        if _unit.startswith(reference_unit_name):
     
-        ccs.append(cf)
-        ics.append(ic)
+            cf = pl.read_csv(calculated_cashflow_folder / f"{_unit}.csv")
+            ic = pl.read_csv(indicative_cashflow_folder / f"{_unit}.csv")
+        
+            ccs.append(cf)
+            ics.append(ic)
+
+
+    print(
+        f"{reference_unit_name} calculated cashflow: {pl.concat(ccs).select("calculated_cashflow_curtailment").sum().item():,.2f},"\
+        f" indicative: {pl.concat(ics).select("totalCashflow").sum().item():,.2f}"
+    )
     return ccs, ics
 
 
