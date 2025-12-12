@@ -575,7 +575,7 @@ def _(bid_offer_folder, cashflow, generation_folder, pl):
         except:
             print(f"Not found: {unit}")
             continue
-    
+
         total_cashflows.append(
             cashflow(_bo, _g).select(
                 pl.col("bmUnit").first(),
@@ -667,8 +667,9 @@ def _(get_indicative_cashflow, pd):
 
     for _unit in ["T_VKNGW-1", "T_VKNGW-2", "T_VKNGW-3", "T_VKNGW-4"]:
         for _d in pd.date_range("2024-01-01", "2025-01-01"):
-            if not get_indicative_cashflow(str(_d).split(" ")[0], _unit).is_empty():
-                vik_vals.append(get_indicative_cashflow(str(_d).split(" ")[0], _unit).select("totalCashflow").sum())
+            _df = get_indicative_cashflow(str(_d).split(" ")[0], _unit)
+            if not _df.is_empty():
+                vik_vals.append(_df.select("totalCashflow").sum())
     return (vik_vals,)
 
 
@@ -684,8 +685,9 @@ def _(get_indicative_cashflow, pd):
 
     for _unit in ["T_SGRWO-1", "T_SGRWO-3", "T_SGRWO-6", "T_SGRWO-5", "T_SGRWO-4", "T_SGRWO-2"]:
         for _d in pd.date_range("2024-01-01", "2025-01-01"):
-            if not get_indicative_cashflow(str(_d).split(" ")[0], _unit).is_empty():
-                sea_vals.append(get_indicative_cashflow(str(_d).split(" ")[0], _unit).select("totalCashflow").sum())
+            _df = get_indicative_cashflow(str(_d).split(" ")[0], _unit)
+            if not _df.is_empty():
+                sea_vals.append(_df.select("totalCashflow").sum())
 
     sum(sea_vals)
     return

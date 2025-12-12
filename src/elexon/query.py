@@ -81,3 +81,12 @@ def get_bid_offer(bm_unit: str, from_time: str, to_time: str):
         f"bmUnit={bm_unit}&from={from_time}&to={to_time}"
     )
     return _elexon_get_request(url)
+
+
+@lru_cache(maxsize=1024)
+def get_indicative_cashflow(time: str, bm_unit: str):
+    url = (
+        f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/indicative/cashflows/all"
+        f"/bid/{time}?bmUnit={bm_unit}&format=json"
+    )
+    return _elexon_get_request(url)
