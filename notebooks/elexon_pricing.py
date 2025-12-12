@@ -694,6 +694,50 @@ def _(get_indicative_cashflow, pd):
 
 
 @app.cell
+def _(mo):
+    mo.md(r"""
+    Processed results are now formatted nicely after processing with scripts, taking a look at the results here:
+    """)
+    return
+
+
+@app.cell
+def _(Path):
+    calculated_cashflow_folder = Path("./data/processed/all/calculated_cashflow/")
+    indicative_cashflow_folder = Path("./data/processed/all/indicative_cashflow/")
+    return calculated_cashflow_folder, indicative_cashflow_folder
+
+
+@app.cell
+def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
+    ccs = []
+    ics = []
+    for _i in calculated_cashflow_folder.glob("*.csv"):
+        _unit = _i.stem
+
+        print(_unit)
+
+        cf = pl.read_csv(calculated_cashflow_folder / f"{_unit}.csv")
+        ic = pl.read_csv(indicative_cashflow_folder / f"{_unit}.csv")
+    
+        ccs.append(cf)
+        ics.append(ic)
+    return ccs, ics
+
+
+@app.cell
+def _(ccs, pl):
+    pl.concat(ccs).sum()
+    return
+
+
+@app.cell
+def _(ics, pl):
+    pl.concat(ics).sum()
+    return
+
+
+@app.cell
 def _():
     return
 

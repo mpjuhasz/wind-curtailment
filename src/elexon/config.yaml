@@ -17,10 +17,10 @@ units:
 # - T_BDCHW-1
 # - E_BABAW-1
 # - T_BOWLW-1
-# - T_BEATO-4
-# - T_BEATO-1
-# - T_BEATO-2
-# - T_BEATO-3
+- T_BEATO-4
+- T_BEATO-1
+- T_BEATO-2
+- T_BEATO-3
 # - E_BETHW-1
 # - E_BTUIW-3
 # - E_BTUIW-2
@@ -66,11 +66,11 @@ units:
 # - T_DALQW-1
 # - E_DALSW-1
 # - T_DRSLW-1
-# - T_DBAWO-1
-# - T_DBAWO-4
-# - T_DBAWO-3
-# - T_DBAWO-5
-# - T_DBAWO-2
+- T_DBAWO-1
+- T_DBAWO-4
+- T_DBAWO-3
+- T_DBAWO-5
+- T_DBAWO-2
 # - T_DOREW-1
 # - T_DOREW-2
 # - T_DOUGW-1
@@ -181,12 +181,12 @@ units:
 # - 2__PENEC001
 # - T_SAKNW-1
 # - T_SANQW-1
-# - T_SGRWO-1
-# - T_SGRWO-3
-# - T_SGRWO-6
-# - T_SGRWO-5
-# - T_SGRWO-4
-# - T_SGRWO-2
+- T_SGRWO-1
+- T_SGRWO-3
+- T_SGRWO-6
+- T_SGRWO-5
+- T_SGRWO-4
+- T_SGRWO-2
 # - T_SHRSW-2
 # - T_SHRSW-1
 # - E_SOLUTIA
