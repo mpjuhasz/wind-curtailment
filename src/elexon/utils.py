@@ -262,9 +262,10 @@ def calculate_cashflow(df: pl.DataFrame) -> float:
     )
 
     prices = aggregate_prices(bid_price_table)
-    return df.with_columns(
+    return df.select("settlementDate", "settlementPeriod").unique().with_columns(
         pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
     )
+
 
 
 def cashflow(bo_df: pl.DataFrame, gen_df: pl.DataFrame) -> pl.DataFrame:

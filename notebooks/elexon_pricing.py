@@ -662,34 +662,34 @@ def _(gp, pl):
 
 
 @app.cell
-def _(get_indicative_cashflow, pd):
-    vik_vals = []
+def _():
+    # vik_vals = []
 
-    for _unit in ["T_VKNGW-1", "T_VKNGW-2", "T_VKNGW-3", "T_VKNGW-4"]:
-        for _d in pd.date_range("2024-01-01", "2025-01-01"):
-            _df = get_indicative_cashflow(str(_d).split(" ")[0], _unit)
-            if not _df.is_empty():
-                vik_vals.append(_df.select("totalCashflow").sum())
-    return (vik_vals,)
-
-
-@app.cell
-def _(vik_vals):
-    sum(vik_vals)
+    # for _unit in ["T_VKNGW-1", "T_VKNGW-2", "T_VKNGW-3", "T_VKNGW-4"]:
+    #     for _d in pd.date_range("2024-01-01", "2025-01-01"):
+    #         _df = get_indicative_cashflow(str(_d).split(" ")[0], _unit)
+    #         if not _df.is_empty():
+    #             vik_vals.append(_df.select("totalCashflow").sum())
     return
 
 
 @app.cell
-def _(get_indicative_cashflow, pd):
-    sea_vals = []
+def _():
+    # sum(vik_vals)
+    return
 
-    for _unit in ["T_SGRWO-1", "T_SGRWO-3", "T_SGRWO-6", "T_SGRWO-5", "T_SGRWO-4", "T_SGRWO-2"]:
-        for _d in pd.date_range("2024-01-01", "2025-01-01"):
-            _df = get_indicative_cashflow(str(_d).split(" ")[0], _unit)
-            if not _df.is_empty():
-                sea_vals.append(_df.select("totalCashflow").sum())
 
-    sum(sea_vals)
+@app.cell
+def _():
+    # sea_vals = []
+
+    # for _unit in ["T_SGRWO-1", "T_SGRWO-3", "T_SGRWO-6", "T_SGRWO-5", "T_SGRWO-4", "T_SGRWO-2"]:
+    #     for _d in pd.date_range("2024-01-01", "2025-01-01"):
+    #         _df = get_indicative_cashflow(str(_d).split(" ")[0], _unit)
+    #         if not _df.is_empty():
+    #             sea_vals.append(_df.select("totalCashflow").sum())
+
+    # sum(sea_vals)
     return
 
 
@@ -717,10 +717,10 @@ def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
     for _i in calculated_cashflow_folder.glob("*.csv"):
         _unit = _i.stem
         if _unit.startswith(reference_unit_name):
-    
+
             cf = pl.read_csv(calculated_cashflow_folder / f"{_unit}.csv")
             ic = pl.read_csv(indicative_cashflow_folder / f"{_unit}.csv")
-        
+
             ccs.append(cf)
             ics.append(ic)
 

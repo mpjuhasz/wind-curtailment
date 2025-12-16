@@ -40,6 +40,7 @@ def run_from_config(config_path: str, output_folder: str):
                     dfs.append(result)
 
         if dfs:
+            print(dfs)
             agg = pl.concat(dfs)
             if agg is not None:
                 # NOTE: if more granular data is needed, then we need to unnest the `bidOfferPairCashflows`

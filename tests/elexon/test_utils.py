@@ -1,7 +1,8 @@
 import polars as pl
 import pytest
+from polars.testing import assert_frame_equal
 
-from src.elexon.utils import aggregate_prices, format_bid_price_table
+from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
 
 
 @pytest.mark.parametrize(
@@ -144,3 +145,51 @@ def test_format_bid_price_table(
 )
 def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float]):
     assert aggregate_prices(bid_price_table) == prices
+
+
+@pytest.mark.parametrize(
+    ("bo_df", "gen_df", "expected_result"),
+    [
+        (
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-12-03", "2024-12-03"],
+                    "settlementPeriod": [43, 43],
+                    "nationalGridBmUnit": ["VKNGW-3", "VKNGW-3"],
+                    "bmUnit": ["T_VKNGW-3", "T_VKNGW-3"],
+                    "timeFrom": ["2024-12-05T21:00:00Z", "2024-12-05T21:00:00Z"],
+                    "timeTo": ["2024-12-05T21:30:00Z", "2024-12-05T21:30:00Z"],
+                    "levelFrom": [-500, 500],
+                    "levelTo": [-500, 500],
+                    "bid": [-6.44, 100.0],
+                    "offer": [500.0, 0.0],
+                    "pairId": [-1, 1],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": ["2024-12-05T21:00:00.000000"],
+                    "physical_level": [19.5],
+                    "extra": [0.0],
+                    "curtailment": [-19.5],
+                    "generated": [0.0],
+                    "settlementDate": ["2024-12-03"],
+                    "settlementPeriod": [43],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-12-03"],
+                    "settlementPeriod": [43],
+                    "calculated_cashflow_curtailment": [125.58],
+                    "calculated_cashflow_extra": [0.0],
+                }
+            ),
+        )
+    ],
+)
+def test_calculate_cashflow(
+    bo_df: pl.DataFrame, gen_df: pl.DataFrame, expected_result: pl.DataFrame
+):
+    cf = cashflow(bo_df, gen_df)
+    assert_frame_equal(expected_result, cf)
