@@ -41,7 +41,7 @@ def downsample_for_config(config_path: str, output_folder: str):
     downsample_frequency = config["downsample_frequency"]
     energy_unit = config["energy_unit"]
 
-    for unit in track(config["units"]):
+    for unit in track(config["units"], description="Getting generation data"):
         output_path = Path(f"{output_folder}/{unit}.csv")
         if output_path.exists():
             continue

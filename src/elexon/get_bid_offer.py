@@ -14,7 +14,7 @@ def run_from_config(config_path: str, output_folder: str):
     from_time = config["from_time"]
     to_time = config["to_time"]
 
-    for unit in track(config["units"]):
+    for unit in track(config["units"], description="Getting bid-offer data"):
         output_path = Path(f"{output_folder}/{unit}.csv")
         if output_path.exists():
             continue

@@ -20,6 +20,7 @@ def _():
     from pathlib import Path
     import datetime
     import altair as alt
+    import numpy as np
     from elexon.utils import aggregate_acceptance_and_pn
     return (
         Callable,
@@ -27,6 +28,7 @@ def _():
         aggregate_acceptance_and_pn,
         alt,
         datetime,
+        np,
         pd,
         pl,
         requests,
@@ -733,7 +735,7 @@ def _(mo):
 
 @app.cell
 def _(pl):
-    test_bo_df = pl.read_csv("data/processed/all/bid_offer/T_MOWEO-1.csv")
+    test_bo_df = pl.read_csv("data/processed/all/bid_offer/T_SGRWO-1.csv")
     return (test_bo_df,)
 
 
@@ -761,35 +763,48 @@ def _(bp_tables, pl):
     minVal = bp_tables.select(pl.col("levelFrom")).min().item()
     maxVal = bp_tables.select(pl.col("levelTo")).max().item()
 
-    bids = {}
-    offers = {}
+    bids = dict()
+    offers = dict()
 
     for level in range(minVal, maxVal + 1):
-        # get the mean bid and offer for each level
         _bid_offer = bp_tables.filter(
             (pl.col("levelFrom") <= level) & (pl.col("levelTo") > level)
         ).select(pl.col("bid"), pl.col("offer"))
 
-        bids[level] = _bid_offer.select(pl.col("bid")).mean().item()
-        offers[level] = _bid_offer.select(pl.col("offer")).mean().item()
+        bids[level] = _bid_offer.select(pl.col("bid")).to_dict(as_series=False)["bid"]
+        offers[level] = _bid_offer.select(pl.col("offer")).to_dict(as_series=False)["offer"]
 
     return bids, maxVal, minVal, offers
 
 
 @app.cell
-def _(alt, bids, maxVal, minVal, offers, pd):
-    # plot the bids and offers with the x axis being the range between minval and maxval
+def _():
+    return
+
+
+@app.cell
+def _(alt, bids, maxVal, minVal, np, offers, pd):
     bid_offer_chart = alt.Chart(pd.DataFrame({
-        "level": list(range(minVal, maxVal + 1)),
-        "bid": [bids[level] for level in range(minVal, maxVal + 1)],
-        "offer": [offers[level] for level in range(minVal, maxVal + 1)],
+        "level": list(range(minVal, maxVal)),
+        "bid_q2": [np.mean(bids[level]) for level in range(minVal, maxVal)],
+        "bid_q1": [np.quantile(bids[level], 0.25).item() for level in range(minVal, maxVal)],
+        "bid_q3": [np.quantile(bids[level], 0.75).item() for level in range(minVal, maxVal)],
+        "bid_min": [np.min(bids[level]) for level in range(minVal, maxVal)],
+        "bid_max": [np.max(bids[level]) for level in range(minVal, maxVal)],
+        "offer": [np.mean(offers[level]) for level in range(minVal, maxVal)],
     })).transform_fold(
-        ['bid', 'offer'],
+        ['bid_q2', 'bid_q1', 'bid_q3', 'bid_min', 'bid_max'],
         as_=['type', 'price']
     ).mark_line().encode(
         x='level:Q',
         y='price:Q',
-        color='type:N',
+        color=alt.Color(
+            'type:N', 
+            scale=alt.Scale(
+                domain=['bid_min', 'bid_q1', 'bid_q2', 'bid_q3', 'bid_max'],
+                range=['lightblue', 'blue', 'darkblue', 'blue', 'lightblue']
+            )
+        ),
         tooltip=['level:Q', 'type:N', alt.Tooltip('price:Q', format=',.2f')]
     ).properties(
         title='Bid and Offer Prices by Level',
@@ -834,7 +849,7 @@ def _(Path):
 @app.cell
 def _(all_bo_folder, all_generation_folder, alt, pd, pl):
     spot_dates_periods = [
-        (f"2024-{month:02}-{day:02}", period) for day in range(1, 28, 3) for period in range(1, 10) for month in range(1, 6, 2)
+        (f"2024-{month:02}-{day:02}", period) for day in range(1, 28, 3) for period in range(1, 10) for month in range(1, 12, 2)
     ]
 
     curtailment_prices = []
@@ -868,6 +883,8 @@ def _(all_bo_folder, all_generation_folder, alt, pd, pl):
                 )
 
         for curtailment_value, _bo_df in spot_curtailment_and_bo:
+            if curtailment_value == 0:
+                continue
             bid_price = _bo_df.filter(pl.col("pairId") == -1).select(pl.col("bid")).limit(1).item()
 
             if bid_price < -1_000:
