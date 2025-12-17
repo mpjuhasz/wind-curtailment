@@ -258,6 +258,7 @@ def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
 def calculate_cashflow(df: pl.DataFrame) -> float:
     """Calculates the cashflow for a single settlement period"""
     bid_price_table = format_bid_price_table(
+        # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
         df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra").unique()
     )
     
