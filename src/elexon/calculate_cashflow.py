@@ -11,7 +11,7 @@ def run_from_config(bid_offer_folder: str, generation_folder: str, output_folder
     for p in track(
         Path(bid_offer_folder).glob("*.csv"),
         total=len(list(Path(bid_offer_folder).glob("*.csv"))),
-        description="Calculating cashflow"
+        description="Calculating cashflow:"
     ):
         unit = p.stem
         bo = pl.read_csv(p)

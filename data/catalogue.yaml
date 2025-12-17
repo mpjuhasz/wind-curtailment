@@ -23,6 +23,9 @@ raw:
   - name: uk_counties_buc.geojson
     source: https://geoportal.statistics.gov.uk/datasets/d3bcd109c2c6468b893549bde805a47b_0/explore
     description: county boundaries in the UK
+  - name: AGV_2024/
+    source: https://www.elexon.co.uk/bsc/data/open-settlement-data/
+    description: GSP group level demand data per settlement period for 2024
 
 
 interim:

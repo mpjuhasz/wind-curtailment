@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal, Optional
 
+import pandas as pd
 import polars as pl
 import typer
 import yaml
@@ -41,7 +42,7 @@ def downsample_for_config(config_path: str, output_folder: str):
     downsample_frequency = config["downsample_frequency"]
     energy_unit = config["energy_unit"]
 
-    for unit in track(config["units"], description="Getting generation data"):
+    for unit in track(config["units"], description="Getting generation data:"):
         output_path = Path(f"{output_folder}/{unit}.csv")
         if output_path.exists():
             continue
@@ -50,6 +51,9 @@ def downsample_for_config(config_path: str, output_folder: str):
         )
         if agg is not None:
             agg.write_csv(f"{output_folder}/{unit}.csv")
+        else:
+            # creating a file so that it's not re-queried next time
+            pd.DataFrame().to_csv(f"{output_folder}/{unit}.csv")
 
 
 def totals_for_bm_unit(bm_unit: str, from_time: str, to_time: str) -> dict:
