@@ -471,7 +471,7 @@ def _(pl):
         return df.with_columns(
             pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
         )
-    return (calculate_cashflow_nb,)
+    return calculate_cashflow_nb, format_bid_price_table
 
 
 @app.cell
@@ -503,113 +503,6 @@ def _(mo):
 @app.cell
 def _():
     from elexon.utils import cashflow
-    return (cashflow,)
-
-
-@app.cell
-def _(Path):
-    generation_folder = Path("./data/processed/gen-viking-2024-mwh/")
-    bid_offer_folder = Path("./data/processed/bo-viking-2024-mwh/")
-    return bid_offer_folder, generation_folder
-
-
-@app.cell
-def _():
-    # _g = pl.read_csv(generation_folder / f"{bm_unit}.csv")
-    # _g = _g.with_columns(
-    #     pl.col("time").str.strptime(pl.Datetime, format="%Y-%m-%dT%H:%M:%S%.f").alias("time"),
-    # )
-    # # _g.group_by_dynamic("time", every="30m").agg(
-    # #     pl.col("generated").sum().alias("generated"),
-    # #     pl.col("physical_level").sum().alias("physical_level"),
-    # #     pl.col("curtailment").sum().alias("curtailment"),
-    # #     pl.col("extra").sum().alias("extra"),
-    # # ).sort(by="time")
-
-    # # MWh
-    # _g = _g.with_columns(
-    #     pl.col("generated").mul(1_000).alias("generated"),
-    #     pl.col("physical_level").mul(1_000).alias("physical_level"),
-    #     pl.col("curtailment").mul(1_000).alias("curtailment"),
-    #     pl.col("extra").mul(1_000).alias("extra"),
-    # )
-
-    # _bo = pl.read_csv(bid_offer_folder / f"{bm_unit}.csv")
-
-    # cashflow(_bo, _g).select("calculated_cashflow_curtailment", "calculated_cashflow_extra").sum()
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(r"""
-    This number is pretty shocking, I'll have to double check if this is correct.
-    """)
-    return
-
-
-@app.cell
-def _(bid_offer_folder, cashflow, generation_folder, pl):
-    total_cashflows = []
-    total_gens = []
-
-    for i in generation_folder.glob("*.csv"):
-        unit = i.stem
-
-        _g = pl.read_csv(generation_folder / f"{unit}.csv")
-        _g = _g.with_columns(
-            pl.col("time").str.strptime(pl.Datetime, format="%Y-%m-%dT%H:%M:%S%.f").alias("time"),
-        )
-
-        # MWh
-        _g = _g.with_columns(
-            pl.col("generated").alias("generated"),
-            pl.col("physical_level").alias("physical_level"),
-            pl.col("curtailment").alias("curtailment"),
-            pl.col("extra").alias("extra"),
-        )
-        total_gens.append(_g)
-
-        try:
-            _bo = pl.read_csv(bid_offer_folder / f"{unit}.csv")
-        except:
-            print(f"Not found: {unit}")
-            continue
-
-        total_cashflows.append(
-            cashflow(_bo, _g).select(
-                pl.col("bmUnit").first(),
-                pl.col("calculated_cashflow_curtailment").sum(),
-                pl.col("calculated_cashflow_extra").sum()
-            )
-        )
-    return total_cashflows, total_gens
-
-
-@app.cell
-def _(pl, total_gens):
-    vals = pl.concat(
-        total_gens
-    ).group_by("settlementPeriod", "settlementDate", "time").agg(
-        pl.col("generated").sum(),
-        pl.col("curtailment").sum(),
-        pl.col("extra").sum(),
-        pl.col("physical_level").sum()
-    ).sort(by=["settlementDate", "settlementPeriod"]).sum()
-
-    abs(vals.select("curtailment").item() / vals.select("physical_level").item()), vals.select("generated").item() / 1_000_000
-    return (vals,)
-
-
-@app.cell
-def _(vals):
-    vals
-    return
-
-
-@app.cell
-def _(pl, total_cashflows):
-    pl.concat(total_cashflows).sum()
     return
 
 
@@ -710,7 +603,7 @@ def _(Path):
 
 @app.cell
 def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
-    reference_unit_name = "T_SGRWO"
+    reference_unit_name = "T_MOWEO"
 
     ccs = []
     ics = []
@@ -727,6 +620,7 @@ def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
 
     print(
         f"{reference_unit_name} calculated cashflow: {pl.concat(ccs).select("calculated_cashflow_curtailment").sum().item():,.2f},"\
+        f" positive cashflow (extra): {pl.concat(ccs).select("calculated_cashflow_extra").sum().item():,.2f}"
         f" indicative: {pl.concat(ics).select("totalCashflow").sum().item():,.2f}"
     )
     return ccs, ics, reference_unit_name
@@ -825,14 +719,190 @@ def _(mo):
 
 
 @app.cell
-def _(ccs):
-    ccs
+def _(mo):
+    mo.md(r"""
+    ## Pricing
+    There are a number of interesting things to look at in the bid-offer data:
+    - how do bm units price each unit of energy in a given settlement period?
+    - which units of energy are actually bought? How do those differ from the ones that aren't bought?
+    - can we see skip rates in the data?
+    - how does Beatrice compare with Moray West in pricing? (A quasi-experiment)
+    """)
     return
 
 
 @app.cell
-def _(ics):
-    ics
+def _(pl):
+    test_bo_df = pl.read_csv("data/processed/all/bid_offer/T_MOWEO-1.csv")
+    return (test_bo_df,)
+
+
+@app.cell
+def _(format_bid_price_table, pl, test_bo_df):
+    def _map_groups(df: pl.DataFrame):
+        bid_price_table = format_bid_price_table(
+            df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra").unique().cast(pl.Int64)
+        )
+
+        return bid_price_table.with_columns(
+            pl.lit(df.select(pl.col("settlementDate")).limit(1).item()).alias("settlementDate"),
+            pl.lit(df.select(pl.col("settlementPeriod")).limit(1).item()).alias("settlementPeriod"),
+        )
+
+    bp_tables = test_bo_df.select("*").with_columns(
+        pl.lit(0).alias("curtailment"),
+        pl.lit(0).alias("extra")
+    ).group_by("settlementDate", "settlementPeriod").map_groups(_map_groups)
+    return (bp_tables,)
+
+
+@app.cell
+def _(bp_tables, pl):
+    minVal = bp_tables.select(pl.col("levelFrom")).min().item()
+    maxVal = bp_tables.select(pl.col("levelTo")).max().item()
+
+    bids = {}
+    offers = {}
+
+    for level in range(minVal, maxVal + 1):
+        # get the mean bid and offer for each level
+        _bid_offer = bp_tables.filter(
+            (pl.col("levelFrom") <= level) & (pl.col("levelTo") > level)
+        ).select(pl.col("bid"), pl.col("offer"))
+
+        bids[level] = _bid_offer.select(pl.col("bid")).mean().item()
+        offers[level] = _bid_offer.select(pl.col("offer")).mean().item()
+
+    return bids, maxVal, minVal, offers
+
+
+@app.cell
+def _(alt, bids, maxVal, minVal, offers, pd):
+    # plot the bids and offers with the x axis being the range between minval and maxval
+    bid_offer_chart = alt.Chart(pd.DataFrame({
+        "level": list(range(minVal, maxVal + 1)),
+        "bid": [bids[level] for level in range(minVal, maxVal + 1)],
+        "offer": [offers[level] for level in range(minVal, maxVal + 1)],
+    })).transform_fold(
+        ['bid', 'offer'],
+        as_=['type', 'price']
+    ).mark_line().encode(
+        x='level:Q',
+        y='price:Q',
+        color='type:N',
+        tooltip=['level:Q', 'type:N', alt.Tooltip('price:Q', format=',.2f')]
+    ).properties(
+        title='Bid and Offer Prices by Level',
+        width=800,
+        height=400
+    )
+
+    bid_offer_chart.interactive()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    The above is surprisingly boring for the units I looked at. There's less tiering than I expected.
+    """)
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    Now I'll just select a random settlement period, and look at which units of energy have been bought for that (or curtailed)
+    """)
+    return
+
+
+@app.cell
+def _():
+    # spot_date = "2024-04-19"
+    # spot_period = 2
+    return
+
+
+@app.cell
+def _(Path):
+    all_generation_folder = Path("./data/processed/all/generation")
+    all_bo_folder = Path("./data/processed/all/bid_offer")
+    return all_bo_folder, all_generation_folder
+
+
+@app.cell
+def _(all_bo_folder, all_generation_folder, alt, pd, pl):
+    spot_dates_periods = [
+        (f"2024-{month:02}-{day:02}", period) for day in range(1, 28, 3) for period in range(1, 10) for month in range(1, 6, 2)
+    ]
+
+    curtailment_prices = []
+
+    for spot_date, spot_period in spot_dates_periods:
+        spot_curtailment_and_bo = []
+
+        for unit_gen in all_generation_folder.glob("*.csv"):
+            unit = unit_gen.stem
+
+            gen_df = pl.read_csv(unit_gen)
+
+            if gen_df.is_empty() or (all_bo_folder / f"{unit}.csv").exists() is False:
+                continue
+            bo_df = pl.read_csv(all_bo_folder / f"{unit}.csv")
+
+            spot_gen = gen_df.filter(
+                (pl.col("settlementDate") == spot_date) & (pl.col("settlementPeriod") == spot_period)
+            )
+
+            spot_bo = bo_df.filter(
+                (pl.col("settlementDate") == spot_date) & (pl.col("settlementPeriod") == spot_period)
+            )
+
+            if not spot_gen.is_empty() and not spot_bo.is_empty():
+                spot_curtailment_and_bo.append(
+                    (
+                        spot_gen.select("curtailment").item(),
+                        spot_bo
+                    )
+                )
+
+        for curtailment_value, _bo_df in spot_curtailment_and_bo:
+            bid_price = _bo_df.filter(pl.col("pairId") == -1).select(pl.col("bid")).limit(1).item()
+
+            if bid_price < -1_000:
+                continue
+            bmUnit = _bo_df.select(pl.col("bmUnit")).limit(1).item()
+            unitGroup = bmUnit.split("_")[1].split("-")[0]
+            curtailment_prices.append((curtailment_value, bid_price, bmUnit, unitGroup, spot_date, spot_period))
+
+    curtailment_price_chart = alt.Chart(pd.DataFrame({
+            "curtailment": [cp[0] for cp in curtailment_prices],
+            "bid_price": [cp[1] for cp in curtailment_prices],
+            "bmUnit": [cp[2] for cp in curtailment_prices],
+            "unitGroup": [cp[3] for cp in curtailment_prices],
+            "date": [cp[4] for cp in curtailment_prices],
+            "period": [cp[5] for cp in curtailment_prices],
+        })).mark_circle(size=60).encode(
+            x=alt.X('curtailment:Q', title='Curtailment (MWh)'),
+            y=alt.Y('bid_price:Q', title='Bid Price (£/MWh)', axis=alt.Axis(tickCount=10)),
+            color=alt.Color('unitGroup:N', title='BM Unit'),
+            tooltip=['curtailment:Q', alt.Tooltip('bid_price:Q', format=',.2f'), 'bmUnit:N', 'date:N', 'period:Q']
+        ).properties(
+            title=f'Curtailment vs Bid Price for Multiple Settlement Periods',
+            width=800,
+            height=400
+        )
+
+    curtailment_price_chart.interactive()
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""
+    This is more interesting, shows what each of these units priced at and how much curtailment they had for a variety of settlement periods.
+    """)
     return
 
 

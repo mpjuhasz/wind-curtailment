@@ -261,8 +261,6 @@ def calculate_cashflow(df: pl.DataFrame) -> float:
         # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
         df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra").unique()
     )
-    
-
 
     prices = aggregate_prices(bid_price_table)
     return df.select("settlementDate", "settlementPeriod").unique().with_columns(
