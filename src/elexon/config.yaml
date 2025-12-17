@@ -123,12 +123,12 @@ units:
 # - T_HRSTW-1
 # - E_HLGLW-1
 # - E_HLTWW-1
-# - T_HOWAO-1
-# - T_HOWAO-3
-# - T_HOWAO-2
-# - T_HOWBO-2
-# - T_HOWBO-3
-# - T_HOWBO-1
+- T_HOWAO-1
+- T_HOWAO-3
+- T_HOWAO-2
+- T_HOWBO-2
+- T_HOWBO-3
+- T_HOWBO-1
 # - T_HMGTO-2
 # - T_HMGTO-1
 # - E_HYWDW-1
@@ -154,13 +154,13 @@ units:
 # - T_MILWW-1
 # - T_MYGPW-1
 # - E_MINSW-1
-# - T_MOWEO-2
-# - T_MOWEO-1
-# - T_MOWEO-3
-# - T_MOWWO-3
-# - T_MOWWO-2
-# - T_MOWWO-1
-# - T_MOWWO-4
+- T_MOWEO-2
+- T_MOWEO-1
+- T_MOWEO-3
+- T_MOWWO-3
+- T_MOWWO-2
+- T_MOWWO-1
+- T_MOWWO-4
 # - E_MOYEW-1
 # - T_NNGAO-2
 # - T_NNGAO-1

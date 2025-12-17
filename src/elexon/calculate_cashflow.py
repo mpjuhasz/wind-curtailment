@@ -8,8 +8,11 @@ from src.elexon.utils import cashflow
 
 
 def run_from_config(bid_offer_folder: str, generation_folder: str, output_folder: str):
-    for p in track(Path(bid_offer_folder).glob("*.csv")):
-        unit = p.stem    
+    for p in track(
+        Path(bid_offer_folder).glob("*.csv"),
+        total=len(Path(bid_offer_folder).glob("*.csv")),
+    ):
+        unit = p.stem
         bo = pl.read_csv(p)
         gen = pl.read_csv(Path(generation_folder) / f"{unit}.csv")
         out = cashflow(bo, gen)
