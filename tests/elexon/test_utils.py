@@ -147,6 +147,14 @@ def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float
     assert aggregate_prices(bid_price_table) == prices
 
 
+"""
+time	physical_level	extra	curtailment	generated	settlementPeriod	settlementDate
+2024-04-14T23:30:00.000000	145.18333333333300	0.0	-145.18333333333300	0.0	2	2024-04-15
+2024-04-15T00:00:00.000000	145.70000000000000	0.0	-145.70000000000000	0.0	3	2024-04-15
+"""
+
+
+
 @pytest.mark.parametrize(
     ("bo_df", "gen_df", "expected_result"),
     [
@@ -185,6 +193,42 @@ def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float
                     "calculated_cashflow_extra": [0.0],
                 }
             ),
+        ),
+        (
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15"],
+                    "settlementPeriod": [2, 2, 2, 2, 3, 3, 3, 3],
+                    "nationalGridBmUnit": ["SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1"],
+                    "bmUnit": ["T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1"],
+                    "timeFrom": ["2024-04-14T23:30:00Z", "2024-04-14T23:30:00Z", "2024-04-14T23:30:00Z", "2024-04-14T23:30:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z"],
+                    "timeTo": ["2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:30:00Z", "2024-04-15T00:30:00Z", "2024-04-15T00:30:00Z", "2024-04-15T00:30:00Z"],
+                    "levelFrom": [-500, 500, -500, 500, -500, 500, -500, 500],
+                    "levelTo": [-500, 500, -500, 500, -500, 500, -500, 500],
+                    "bid": [-18.75, 100.0, -18.75, 100.0, -18.75, 100.0, -18.75, 100.0],
+                    "offer": [0.0, 1500.0, 0.0, 1500.0, 0.0, 1500.0, 0.0, 1500.0],
+                    "pairId": [-1, 1, -1, 1, -1, 1, -1, 1],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": ["2024-04-14T23:30:00.000000", "2024-04-15T00:00:00.000000"],
+                    "physical_level": [145.18333333333300, 145.70000000000000],
+                    "extra": [0.0, 0.0],
+                    "curtailment": [-145.18333333333300, -145.70000000000000],
+                    "generated": [0.0, 0.0],
+                    "settlementPeriod": [2, 3],
+                    "settlementDate": ["2024-04-15", "2024-04-15"],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-04-15", "2024-04-15"],
+                    "settlementPeriod": [3, 2],
+                    "calculated_cashflow_curtailment": [2731.875, 2722.1875],
+                    "calculated_cashflow_extra": [0.0, 0.0],
+                }
+            ),
         )
     ],
 )
@@ -192,4 +236,4 @@ def test_calculate_cashflow(
     bo_df: pl.DataFrame, gen_df: pl.DataFrame, expected_result: pl.DataFrame
 ):
     cf = cashflow(bo_df, gen_df)
-    assert_frame_equal(expected_result, cf)
+    assert_frame_equal(expected_result, cf, check_row_order=False)

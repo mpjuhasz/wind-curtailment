@@ -710,7 +710,7 @@ def _(Path):
 
 @app.cell
 def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
-    reference_unit_name = "T_VKNGW"
+    reference_unit_name = "T_SGRWO"
 
     ccs = []
     ics = []
@@ -729,18 +729,110 @@ def _(calculated_cashflow_folder, indicative_cashflow_folder, pl):
         f"{reference_unit_name} calculated cashflow: {pl.concat(ccs).select("calculated_cashflow_curtailment").sum().item():,.2f},"\
         f" indicative: {pl.concat(ics).select("totalCashflow").sum().item():,.2f}"
     )
-    return ccs, ics
+    return ccs, ics, reference_unit_name
 
 
 @app.cell
-def _(ccs, pl):
-    pl.concat(ccs).sum()
+def _(alt, ccs, datetime, ics, pl, reference_unit_name):
+    def _create_timestamp(df: pl.DataFrame) -> pl.DataFrame:
+        """Add timestamp column from settlementDate and settlementPeriod"""
+        return df.with_columns(
+            pl.concat_str([
+                pl.col("settlementDate"),
+                pl.lit("T"),
+                ((pl.col("settlementPeriod") - 1) * 30 // 60).cast(pl.String).str.pad_start(2, "0"),
+                pl.lit(":"),
+                ((pl.col("settlementPeriod") - 1) * 30 % 60).cast(pl.String).str.pad_start(2, "0"),
+                pl.lit(":00Z")
+            ]).alias("timestamp")
+        )
+
+    # Concatenate the dataframes
+    # _ccs_combined = pl.concat(ccs)
+    # _ics_combined = pl.concat(ics)
+    _ccs_combined = ccs[1]
+    _ics_combined = ics[1]
+
+    # Create a complete date range with all settlement periods
+    _date_range = pl.date_range(
+        start=datetime.datetime(2024, 1, 1),
+        end=datetime.datetime(2024, 12, 31),
+        interval="1d",
+        eager=True
+    ).alias("settlementDate")
+
+    _periods = pl.DataFrame({
+        "settlementPeriod": list(range(1, 49))
+    })
+
+    _complete_grid = pl.DataFrame({"settlementDate": _date_range}).join(
+        _periods, how="cross"
+    ).with_columns(
+        pl.col("settlementDate").cast(pl.String)
+    )
+
+    # Fill missing values for calculated cashflow
+    _ccs_filled = _complete_grid.join(
+        _ccs_combined.group_by(["settlementDate", "settlementPeriod"]).agg(
+            pl.col("calculated_cashflow_curtailment").sum()
+        ),
+        on=["settlementDate", "settlementPeriod"],
+        how="left"
+    ).with_columns(
+        pl.col("calculated_cashflow_curtailment").fill_null(0)
+    )
+    _ccs_filled = _create_timestamp(_ccs_filled)
+
+    # Fill missing values for indicative cashflow
+    _ics_filled = _complete_grid.join(
+        _ics_combined.group_by(["settlementDate", "settlementPeriod"]).agg(
+            pl.col("totalCashflow").sum()
+        ),
+        on=["settlementDate", "settlementPeriod"],
+        how="left"
+    ).with_columns(
+        pl.col("totalCashflow").fill_null(0)
+    )
+    _ics_filled = _create_timestamp(_ics_filled)
+
+    # Create combined chart
+    _chart_calculated = alt.Chart(_ccs_filled.to_pandas()).mark_line(color='blue').encode(
+        x=alt.X('timestamp:T', title='Date'),
+        y=alt.Y('calculated_cashflow_curtailment:Q', title='Cashflow (£)'),
+        tooltip=['timestamp:T', alt.Tooltip('calculated_cashflow_curtailment:Q', title='Calculated Cashflow', format=',.2f'), 'settlementPeriod:Q']
+    )
+
+    _chart_indicative = alt.Chart(_ics_filled.to_pandas()).mark_line(color='red').encode(
+        x=alt.X('timestamp:T', title='Date'),
+        y=alt.Y('totalCashflow:Q', title='Cashflow (£)'),
+        tooltip=['timestamp:T', alt.Tooltip('totalCashflow:Q', title='Indicative Cashflow', format=',.2f'), 'settlementPeriod:Q']
+    )
+
+    (_chart_calculated + _chart_indicative).properties(
+        title=f'{reference_unit_name} - Calculated vs Indicative Cashflow',
+        width=800,
+        height=400
+    ).interactive()
     return
 
 
 @app.cell
-def _(ics, pl):
-    pl.concat(ics).sum()
+def _(mo):
+    mo.md(r"""
+    2024-04-15 2, 3 for SGRWO is an example of a peak
+    """)
+    return
+
+
+@app.cell
+def _(ccs):
+    ccs
+    return
+
+
+@app.cell
+def _(ics):
+    ics
     return
 
 
