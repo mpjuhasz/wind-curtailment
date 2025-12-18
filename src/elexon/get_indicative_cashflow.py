@@ -1,4 +1,4 @@
-import concurrent.futures
+import asyncio
 from pathlib import Path
 
 import pandas as pd
@@ -7,7 +7,7 @@ import typer
 import yaml
 from rich.progress import track
 
-from src.elexon.query import get_indicative_cashflow
+from src.elexon.query import fetch_indicative_cashflows_batch
 
 
 def run_from_config(config_path: str, output_folder: str):
@@ -20,24 +20,26 @@ def run_from_config(config_path: str, output_folder: str):
     from_time = config["from_time"]
     to_time = config["to_time"]
 
+    async def fetch_unit_cashflows(unit: str, from_time: str, to_time: str) -> list[pl.DataFrame]:
+        """Fetch all cashflow data for a single unit using async requests."""
+        tasks = [(str(_d).split(" ")[0], unit) for _d in pd.date_range(from_time, to_time)]
+        results = await fetch_indicative_cashflows_batch(tasks, max_concurrent=20)
+
+        dfs = []
+        for result in results:
+            if isinstance(result, Exception):
+                print(f"Request failed: {result}")
+                continue
+            if result is not None and not result.is_empty():
+                dfs.append(result.select("settlementDate", "settlementPeriod", "bmUnit", "totalCashflow"))
+        return dfs
+
     for unit in track(config["units"], description="Getting indicative cashflow data:"):
         output_path = Path(f"{output_folder}/{unit}.csv")
         if output_path.exists():
             continue
 
-        tasks = []
-        for _d in pd.date_range(from_time, to_time):
-            tasks.append((str(_d).split(" ")[0], unit))
-
-        dfs = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:
-            future_to_task = {
-                executor.submit(get_indicative_cashflow, *task): task for task in tasks
-            }
-            for future in concurrent.futures.as_completed(future_to_task):
-                result = future.result()
-                if result is not None and not result.is_empty():
-                    dfs.append(result.select("settlementDate", "settlementPeriod", "bmUnit", "totalCashflow"))
+        dfs = asyncio.run(fetch_unit_cashflows(unit, from_time, to_time))
 
         if dfs:
             agg = pl.concat(dfs)

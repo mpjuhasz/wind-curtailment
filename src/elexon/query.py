@@ -1,8 +1,10 @@
+import asyncio
 import concurrent.futures
 import datetime
 from functools import lru_cache
 from typing import Callable, Optional
 
+import aiohttp
 import polars as pl
 import requests
 
@@ -50,6 +52,32 @@ def _elexon_get_request(url: str) -> Optional[pl.DataFrame]:
         return None
 
 
+async def _elexon_get_request_async(
+    session: aiohttp.ClientSession,
+    url: str,
+    max_retries: int = 5,
+    base_delay: float = 1.0,
+) -> Optional[pl.DataFrame]:
+    """Async version of _elexon_get_request for use with aiohttp.
+    
+    Includes retry logic with exponential backoff for rate limiting (429).
+    """
+    for attempt in range(max_retries):
+        async with session.get(url) as response:
+            if response.status == 200:
+                data = await response.json()
+                return pl.DataFrame(data.get("data"))
+            elif response.status == 429:
+                delay = base_delay * (4 ** (attempt + 1))
+                print(f"Rate limited (429), retrying in {delay:.1f}s (attempt {attempt + 1}/{max_retries})")
+                await asyncio.sleep(delay)
+            else:
+                print(f"Error: {response.status}")
+                return None
+    print(f"Max retries exceeded for {url}")
+    return None
+
+
 @lru_cache(maxsize=1024)
 @long_date_range_handler
 def get_physical(bm_unit: str, from_time: str, to_time: str):
@@ -90,3 +118,47 @@ def get_indicative_cashflow(time: str, bm_unit: str):
         f"/bid/{time}?bmUnit={bm_unit}&format=json"
     )
     return _elexon_get_request(url)
+
+
+async def get_indicative_cashflow_async(
+    session: aiohttp.ClientSession, time: str, bm_unit: str
+) -> Optional[pl.DataFrame]:
+    """Async version of get_indicative_cashflow for use with aiohttp."""
+    url = (
+        f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/indicative/cashflows/all"
+        f"/bid/{time}?bmUnit={bm_unit}&format=json"
+    )
+    return await _elexon_get_request_async(session, url)
+
+
+async def fetch_indicative_cashflows_batch(
+    tasks: list[tuple[str, str]],
+    max_concurrent: int = 20,
+    timeout_seconds: int = 30,
+) -> list[pl.DataFrame | Exception]:
+    """Fetch multiple indicative cashflows concurrently with rate limiting.
+
+    Args:
+        tasks: List of (time, bm_unit) tuples to fetch.
+        max_concurrent: Maximum number of concurrent requests.
+        timeout_seconds: Timeout for each request in seconds.
+
+    Returns:
+        List of DataFrames or Exceptions for failed requests.
+    """
+    semaphore = asyncio.Semaphore(max_concurrent)
+    timeout = aiohttp.ClientTimeout(total=timeout_seconds)
+
+    async def bounded_fetch(
+        session: aiohttp.ClientSession, time: str, bm_unit: str
+    ) -> Optional[pl.DataFrame]:
+        async with semaphore:
+            return await get_indicative_cashflow_async(session, time, bm_unit)
+
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        results = await asyncio.gather(
+            *[bounded_fetch(session, time, bm_unit) for time, bm_unit in tasks],
+            return_exceptions=True,
+        )
+
+    return results
