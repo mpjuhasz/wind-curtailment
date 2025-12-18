@@ -849,7 +849,7 @@ def _(Path):
 @app.cell
 def _(all_bo_folder, all_generation_folder, alt, pd, pl):
     spot_dates_periods = [
-        (f"2024-{month:02}-{day:02}", period) for day in range(1, 28, 3) for period in range(1, 10) for month in range(1, 12, 2)
+        (f"2024-{month:02}-{day:02}", period) for day in range(1, 28, 3) for period in range(1, 31) for month in range(1, 2)
     ]
 
     curtailment_prices = []
@@ -866,6 +866,8 @@ def _(all_bo_folder, all_generation_folder, alt, pd, pl):
                 continue
             bo_df = pl.read_csv(all_bo_folder / f"{unit}.csv")
 
+            if bo_df.is_empty():
+                continue
             spot_gen = gen_df.filter(
                 (pl.col("settlementDate") == spot_date) & (pl.col("settlementPeriod") == spot_period)
             )

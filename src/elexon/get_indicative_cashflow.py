@@ -30,7 +30,7 @@ def run_from_config(config_path: str, output_folder: str):
             tasks.append((str(_d).split(" ")[0], unit))
 
         dfs = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:
             future_to_task = {
                 executor.submit(get_indicative_cashflow, *task): task for task in tasks
             }
@@ -44,10 +44,13 @@ def run_from_config(config_path: str, output_folder: str):
             if agg is not None:
                 # NOTE: if more granular data is needed, then we need to unnest the `bidOfferPairCashflows`
                 agg.write_csv(f"{output_folder}/{unit}.csv")
+                continue
             else:
                 print(f"Aggregate is None for {unit}")
         else:
             print(f"No valid days found for {unit}")
+
+        pd.DataFrame().to_csv(f"{output_folder}/{unit}.csv")
 
 
 if __name__ == "__main__":
