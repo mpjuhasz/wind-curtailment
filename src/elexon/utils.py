@@ -173,6 +173,9 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
     df = df.filter(
         ~(pl.col("levelFrom").eq(pl.lit(0)) & pl.col("levelTo").eq(pl.lit(0)))
     )
+    
+    if sorted_negatives.is_empty():
+        sorted_negatives = df.sort(by="levelTo")
 
     zero_row = pl.DataFrame(
         {
@@ -257,15 +260,20 @@ def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
 
 def calculate_cashflow(df: pl.DataFrame) -> float:
     """Calculates the cashflow for a single settlement period"""
-    bid_price_table = format_bid_price_table(
-        # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
-        df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra").unique()
-    )
-
-    prices = aggregate_prices(bid_price_table)
-    return df.select("settlementDate", "settlementPeriod").unique().with_columns(
-        pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
-    )
+    # for debugging: https://github.com/pola-rs/polars/issues/7704
+    try: 
+        bid_price_table = format_bid_price_table(
+            # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
+            df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra").unique()
+        )
+        prices = aggregate_prices(bid_price_table)
+        return df.select("settlementDate", "settlementPeriod").unique().with_columns(
+            pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
+        )
+    except Exception as e:
+        from traceback import print_exc
+        print_exc()
+        print(e)
 
 
 

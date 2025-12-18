@@ -16,8 +16,12 @@ def run_from_config(bid_offer_folder: str, generation_folder: str, output_folder
         unit = p.stem
         bo = pl.read_csv(p)
         gen = pl.read_csv(Path(generation_folder) / f"{unit}.csv")
-        out = cashflow(bo, gen)
-        out.write_csv(f"{output_folder}/{unit}.csv")
+        if Path(f"{output_folder}/{unit}.csv").exists():
+            continue
+        if not bo.is_empty() and not gen.is_empty():
+            print(unit)
+            out = cashflow(bo, gen)
+            out.write_csv(f"{output_folder}/{unit}.csv")
 
 
 if __name__ == "__main__":

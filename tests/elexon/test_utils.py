@@ -78,6 +78,28 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                 }
             ),
         ),
+        (
+            pl.DataFrame(
+                {
+                    "levelFrom": [37],
+                    "levelTo": [37],
+                    "bid": [125.0],
+                    "offer": [130.0],
+                    "curtailment": [0],
+                    "extra": [10],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "levelFrom": [0],
+                    "levelTo": [37],
+                    "bid": [125.0],
+                    "offer": [130.0],
+                    "curtailment": [0],
+                    "extra": [10],
+                }
+            )
+        ),
     ],
 )
 def test_format_bid_price_table(
