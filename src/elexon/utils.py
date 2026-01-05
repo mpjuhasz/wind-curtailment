@@ -258,6 +258,8 @@ def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
             prices[col] = 0.0
             continue
         prices[col] = (
+            # because of how the expressions are set up, we filter the price table to 
+            # levels below zero for curtailment, and above for extra generation
             bid_price_table.filter(_filter)\
                 .with_columns(expr)
                 .with_columns(
