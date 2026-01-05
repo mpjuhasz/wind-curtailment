@@ -1,6 +1,6 @@
 from_time: "2024-01-01T00:00:00Z"
 to_time: "2025-01-01T00:00:00Z"
-downsample_frequency: "1m"
+downsample_frequency: "30m"
 energy_unit: "MWh"
 units:
 # - E_ABERDARE

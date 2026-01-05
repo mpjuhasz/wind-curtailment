@@ -21,7 +21,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [15.93, 77.67, 999.0],
                     "curtailment": [-70] * 3,
                     "extra": [0] * 3,
-                    "pairId": [-1, 1, 2]
+                    "pairId": [-1, 1, 2],
                 }
             ),
             pl.DataFrame(
@@ -44,7 +44,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [2000.0, 2000.0, 2000.0],
                     "curtailment": [0] * 3,
                     "extra": [100] * 3,
-                    "pairId": [-1, 2, 1]
+                    "pairId": [-1, 2, 1],
                 }
             ),
             pl.DataFrame(
@@ -67,7 +67,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [0.0, 500.0, 0.0],
                     "curtailment": [0] * 3,
                     "extra": [100] * 3,
-                    "pairId": [-1, 1, 1]
+                    "pairId": [-1, 1, 1],
                 }
             ),
             pl.DataFrame(
@@ -90,7 +90,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [130.0],
                     "curtailment": [0],
                     "extra": [10],
-                    "pairId": [1]
+                    "pairId": [1],
                 }
             ),
             pl.DataFrame(
@@ -102,7 +102,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "curtailment": [0],
                     "extra": [10],
                 }
-            )
+            ),
         ),
         (
             pl.DataFrame(
@@ -125,9 +125,8 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "curtailment": [0, 0],
                     "extra": [0, 0],
                 }
-            )
-            
-        )
+            ),
+        ),
     ],
 )
 def test_format_bid_price_table(
@@ -145,7 +144,7 @@ def test_format_bid_price_table(
                 {
                     "levelFrom": [-300, 0, 33],
                     "levelTo": [0, 33, 300],
-                    "bid": [-32.89, 0.0, 0.0],
+                    "bid": [-32.89, 1.0, 1.0],
                     "offer": [15.93, 77.67, 999.0],
                     "curtailment": [-70] * 3,
                     "extra": [0] * 3,
@@ -198,6 +197,28 @@ def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float
     assert aggregate_prices(bid_price_table) == prices
 
 
+"""
+bo_df:
+
+|    | settlementDate      |   settlementPeriod | nationalGridBmUnit   | bmUnit    | timeFrom                  | timeTo                    |   levelFrom |   levelTo |    bid |   offer |   pairId |
+|---:|:--------------------|-------------------:|:---------------------|:----------|:--------------------------|:--------------------------|------------:|----------:|-------:|--------:|---------:|
+|  0 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |        -100 |      -100 | -99999 |  -99999 |       -2 |
+|  1 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |        -100 |      -100 |    116 |     174 |       -1 |
+|  2 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |          55 |        55 |    116 |     174 |        1 |
+|  3 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |         145 |       145 |  99999 |   99999 |        2 |
+
+
+gen_df: 
+
+|    | time                |   physical_level |   extra |   curtailment |   generated |   settlementPeriod | settlementDate      |
+|---:|:--------------------|-----------------:|--------:|--------------:|------------:|-------------------:|:--------------------|
+|  0 | 2024-12-10 18:00:00 |            21.75 |       0 |        -18.75 |           3 |                 37 | 2024-12-10 00:00:00 |
+
+
+expected output:
+-18.75 * 116
+"""
+
 
 @pytest.mark.parametrize(
     ("bo_df", "gen_df", "expected_result"),
@@ -241,12 +262,57 @@ def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float
         (
             pl.DataFrame(
                 {
-                    "settlementDate": ["2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15", "2024-04-15"],
+                    "settlementDate": [
+                        "2024-04-15",
+                        "2024-04-15",
+                        "2024-04-15",
+                        "2024-04-15",
+                        "2024-04-15",
+                        "2024-04-15",
+                        "2024-04-15",
+                        "2024-04-15",
+                    ],
                     "settlementPeriod": [2, 2, 2, 2, 3, 3, 3, 3],
-                    "nationalGridBmUnit": ["SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1", "SGRWO-1"],
-                    "bmUnit": ["T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1", "T_SGRWO-1"],
-                    "timeFrom": ["2024-04-14T23:30:00Z", "2024-04-14T23:30:00Z", "2024-04-14T23:30:00Z", "2024-04-14T23:30:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z"],
-                    "timeTo": ["2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:00:00Z", "2024-04-15T00:30:00Z", "2024-04-15T00:30:00Z", "2024-04-15T00:30:00Z", "2024-04-15T00:30:00Z"],
+                    "nationalGridBmUnit": [
+                        "SGRWO-1",
+                        "SGRWO-1",
+                        "SGRWO-1",
+                        "SGRWO-1",
+                        "SGRWO-1",
+                        "SGRWO-1",
+                        "SGRWO-1",
+                        "SGRWO-1",
+                    ],
+                    "bmUnit": [
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                        "T_SGRWO-1",
+                    ],
+                    "timeFrom": [
+                        "2024-04-14T23:30:00Z",
+                        "2024-04-14T23:30:00Z",
+                        "2024-04-14T23:30:00Z",
+                        "2024-04-14T23:30:00Z",
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:00:00Z",
+                    ],
+                    "timeTo": [
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:00:00Z",
+                        "2024-04-15T00:30:00Z",
+                        "2024-04-15T00:30:00Z",
+                        "2024-04-15T00:30:00Z",
+                        "2024-04-15T00:30:00Z",
+                    ],
                     "levelFrom": [-500, 500, -500, 500, -500, 500, -500, 500],
                     "levelTo": [-500, 500, -500, 500, -500, 500, -500, 500],
                     "bid": [-18.75, 100.0, -18.75, 100.0, -18.75, 100.0, -18.75, 100.0],
@@ -256,7 +322,10 @@ def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float
             ),
             pl.DataFrame(
                 {
-                    "time": ["2024-04-14T23:30:00.000000", "2024-04-15T00:00:00.000000"],
+                    "time": [
+                        "2024-04-14T23:30:00.000000",
+                        "2024-04-15T00:00:00.000000",
+                    ],
                     "physical_level": [145.18333333333300, 145.70000000000000],
                     "extra": [0.0, 0.0],
                     "curtailment": [-145.18333333333300, -145.70000000000000],
@@ -369,9 +438,44 @@ def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float
                     "calculated_cashflow_curtailment": [-351.75],
                     "calculated_cashflow_extra": [0.0],
                 }
-            )
-        )
-
+            ),
+        ),
+        (
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-12-10"] * 4,
+                    "settlementPeriod": [37] * 4,
+                    "nationalGridBmUnit": ["LKSDB-1"] * 4,
+                    "bmUnit": ["T_LKSDB-1"] * 4,
+                    "timeFrom": ["2024-12-10T18:00:00Z"] * 4,
+                    "timeTo": ["2024-12-10T18:30:00Z"] * 4,
+                    "levelFrom": [-100, -100, 55, 145],
+                    "levelTo": [-100, -100, 55, 145],
+                    "bid": [-99999, 116, 116, 99999],
+                    "offer": [-99999, 174, 174, 99999],
+                    "pairId": [-2, -1, 1, 2],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": ["2024-12-10T18:00:00.000000"],
+                    "physical_level": [21.75],
+                    "extra": [0],
+                    "curtailment": [-18.75],
+                    "generated": [3],
+                    "settlementPeriod": [37],
+                    "settlementDate": ["2024-12-10"],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-12-10"],
+                    "settlementPeriod": [37],
+                    "calculated_cashflow_curtailment": [-18.75 * 116],
+                    "calculated_cashflow_extra": [0.0],
+                }
+            ),
+        ),
     ],
 )
 def test_calculate_cashflow(

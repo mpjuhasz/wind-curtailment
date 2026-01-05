@@ -245,26 +245,28 @@ expr_extra = (
 
 
 c_or_e_map = {
-    "curtailment": ("bid", expr_curtailment),
-    "extra": ("offer", expr_extra),
+    "curtailment": ("bid", expr_curtailment, pl.col("levelFrom").le(pl.lit(0))),
+    "extra": ("offer", expr_extra, pl.col("levelFrom").ge(pl.lit(0))),
 }
 
 
 def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
     """Aggregates the extra generation and curtailment prices for the bid-price table"""
     prices = dict()
-    for col, (price_col, expr) in c_or_e_map.items():
+    for col, (price_col, expr, _filter) in c_or_e_map.items():
         if bid_price_table.select(pl.col(col)).limit(1).item() == 0:
             prices[col] = 0.0
             continue
         prices[col] = (
-            bid_price_table.with_columns(expr)
-            .with_columns(
-                pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
-            )
-            .select(pl.col(f"{col}_price").sum())
-            .item()
+            bid_price_table.filter(_filter)\
+                .with_columns(expr)
+                .with_columns(
+                    pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
+                )
+                .select(pl.col(f"{col}_price").sum())
+                .item()
         )
+
     return prices
 
 
@@ -278,7 +280,6 @@ def calculate_cashflow(df: pl.DataFrame) -> float:
                 "levelFrom", "levelTo", "bid", "offer", "curtailment", "extra", "pairId"
             ).unique()
         )
-
         prices = aggregate_prices(bid_price_table)
         return (
             df.select("settlementDate", "settlementPeriod")
