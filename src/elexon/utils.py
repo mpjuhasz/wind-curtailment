@@ -168,14 +168,16 @@ def aggregate_bm_unit_generation(
 
 def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
     """Formats the bids and prices adding a row with zero so that the intervals are complete"""
-    sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(by="levelTo")
+    sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(
+        by="pairId", descending=True
+    )
 
     df = df.filter(
         ~(pl.col("levelFrom").eq(pl.lit(0)) & pl.col("levelTo").eq(pl.lit(0)))
     )
-    
+
     if sorted_negatives.is_empty():
-        sorted_negatives = df.sort(by="levelTo")
+        sorted_negatives = df.sort(by="pairId", descending=True)
 
     zero_row = pl.DataFrame(
         {
@@ -185,12 +187,13 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
             "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
             "curtailment": df.select(pl.col("curtailment")).limit(1).item(),
             "extra": df.select(pl.col("extra")).limit(1).item(),
+            "pairId": 0,
         }
     )
 
     bid_price_table = (
         df.extend(zero_row)
-        .sort(by="levelFrom")
+        .sort(by="pairId")
         .with_columns(
             pl.col("levelTo").shift(-1),
             pl.col("bid").shift(-1),
@@ -198,9 +201,14 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
             pl.col("curtailment"),
             pl.col("extra"),
         )
+        .filter(
+            ~(pl.col("levelTo").eq(pl.col("levelFrom")))
+        )
         .select("*")
         .limit(df.shape[0] - 1)
     )
+
+    bid_price_table.drop_in_place("pairId")
 
     return bid_price_table
 
@@ -261,20 +269,27 @@ def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
 def calculate_cashflow(df: pl.DataFrame) -> float:
     """Calculates the cashflow for a single settlement period"""
     # for debugging: https://github.com/pola-rs/polars/issues/7704
-    try: 
+    try:
         bid_price_table = format_bid_price_table(
             # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
-            df.select("levelFrom", "levelTo", "bid", "offer", "curtailment", "extra").unique()
+            df.select(
+                "levelFrom", "levelTo", "bid", "offer", "curtailment", "extra", "pairId"
+            ).unique()
         )
+
         prices = aggregate_prices(bid_price_table)
-        return df.select("settlementDate", "settlementPeriod").unique().with_columns(
-            pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
+        return (
+            df.select("settlementDate", "settlementPeriod")
+            .unique()
+            .with_columns(
+                pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
+            )
         )
     except Exception as e:
         from traceback import print_exc
+
         print_exc()
         print(e)
-
 
 
 def cashflow(bo_df: pl.DataFrame, gen_df: pl.DataFrame) -> pl.DataFrame:

@@ -21,6 +21,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [15.93, 77.67, 999.0],
                     "curtailment": [-70] * 3,
                     "extra": [0] * 3,
+                    "pairId": [-1, 1, 2]
                 }
             ),
             pl.DataFrame(
@@ -43,6 +44,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [2000.0, 2000.0, 2000.0],
                     "curtailment": [0] * 3,
                     "extra": [100] * 3,
+                    "pairId": [-1, 2, 1]
                 }
             ),
             pl.DataFrame(
@@ -65,6 +67,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [0.0, 500.0, 0.0],
                     "curtailment": [0] * 3,
                     "extra": [100] * 3,
+                    "pairId": [-1, 1, 1]
                 }
             ),
             pl.DataFrame(
@@ -87,6 +90,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "offer": [130.0],
                     "curtailment": [0],
                     "extra": [10],
+                    "pairId": [1]
                 }
             ),
             pl.DataFrame(
@@ -100,12 +104,37 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                 }
             )
         ),
+        (
+            pl.DataFrame(
+                {
+                    "levelFrom": [-100, -100, 100, 100],
+                    "levelTo": [-100, -100, 100, 100],
+                    "bid": [-99999.0, 105.0, 105.0, 99999.0],
+                    "offer": [-99999.0, 174.0, 174.0, 99999.0],
+                    "curtailment": [0, 0, 0, 0],
+                    "extra": [0, 0, 0, 0],
+                    "pairId": [-2, -1, 1, 2],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "levelFrom": [-100, 0],
+                    "levelTo": [0, 100],
+                    "bid": [105.0, 105.0],
+                    "offer": [174.0, 174.0],
+                    "curtailment": [0, 0],
+                    "extra": [0, 0],
+                }
+            )
+            
+        )
     ],
 )
 def test_format_bid_price_table(
     input_table: pl.DataFrame, expected_output: pl.DataFrame
 ):
-    assert format_bid_price_table(input_table).equals(expected_output)
+    output = format_bid_price_table(input_table)
+    assert_frame_equal(output, expected_output)
 
 
 @pytest.mark.parametrize(
@@ -167,13 +196,6 @@ def test_format_bid_price_table(
 )
 def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float]):
     assert aggregate_prices(bid_price_table) == prices
-
-
-"""
-time	physical_level	extra	curtailment	generated	settlementPeriod	settlementDate
-2024-04-14T23:30:00.000000	145.18333333333300	0.0	-145.18333333333300	0.0	2	2024-04-15
-2024-04-15T00:00:00.000000	145.70000000000000	0.0	-145.70000000000000	0.0	3	2024-04-15
-"""
 
 
 
@@ -251,7 +273,105 @@ time	physical_level	extra	curtailment	generated	settlementPeriod	settlementDate
                     "calculated_cashflow_extra": [0.0, 0.0],
                 }
             ),
+        ),
+        # (
+        #     pl.DataFrame(
+        #         {
+        #             "settlementDate": ["2024-12-10"] * 4,
+        #             "settlementPeriod": [34] * 4,
+        #             "nationalGridBmUnit": ["LKSDB-1"] * 4,
+        #             "bmUnit": ["T_LKSDB-1"] * 4,
+        #             "timeFrom": ["2024-12-10T16:30:00Z"] * 4,
+        #             "timeTo": ["2024-12-10T17:00:00Z"] * 4,
+        #             "levelFrom": [-100, -100, 100, 100],
+        #             "levelTo": [-100, -100, 100, 100],
+        #             "bid": [-99999.0, 105.0, 105.0, 99999.0],
+        #             "offer": [-99999.0, 174.0, 174.0, 99999.0],
+        #             "pairId": [-2, -1, 1, 2],
+        #         }
+        #     ),
+        #     pl.DataFrame(
+        #         {
+        #             "time": [
+        #                 "2024-12-10T16:30:00.000000", "2024-12-10T16:31:00.000000", "2024-12-10T16:32:00.000000",
+        #                 "2024-12-10T16:33:00.000000", "2024-12-10T16:34:00.000000", "2024-12-10T16:35:00.000000",
+        #                 "2024-12-10T16:36:00.000000", "2024-12-10T16:37:00.000000", "2024-12-10T16:38:00.000000",
+        #                 "2024-12-10T16:39:00.000000", "2024-12-10T16:40:00.000000", "2024-12-10T16:41:00.000000",
+        #                 "2024-12-10T16:42:00.000000", "2024-12-10T16:43:00.000000", "2024-12-10T16:44:00.000000",
+        #                 "2024-12-10T16:45:00.000000", "2024-12-10T16:46:00.000000", "2024-12-10T16:47:00.000000",
+        #                 "2024-12-10T16:48:00.000000", "2024-12-10T16:49:00.000000", "2024-12-10T16:50:00.000000",
+        #                 "2024-12-10T16:51:00.000000", "2024-12-10T16:52:00.000000", "2024-12-10T16:53:00.000000",
+        #                 "2024-12-10T16:54:00.000000", "2024-12-10T16:55:00.000000", "2024-12-10T16:56:00.000000",
+        #                 "2024-12-10T16:57:00.000000", "2024-12-10T16:58:00.000000", "2024-12-10T16:59:00.000000"
+        #             ],
+        #             "physical_level": [0.0] * 30,
+        #             "extra": [0.0] * 30,
+        #             "curtailment": [
+        #                 -0.13333333333333300, -0.18333333333333300, -0.18333333333333300,
+        #                 -0.18333333333333300, -0.1, -0.08333333333333330,
+        #                 -0.08333333333333330, -0.11666666666666700, -0.11666666666666700,
+        #                 -0.2833333333333330, -0.2833333333333330, -0.4, -0.4, -0.4,
+        #                 -0.26666666666666700, -0.13333333333333300, 0.0, 0.0, 0.0, 0.0,
+        #                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        #             ],
+        #             "generated": [
+        #                 -0.13333333333333300, -0.18333333333333300, -0.18333333333333300,
+        #                 -0.18333333333333300, -0.1, -0.08333333333333330,
+        #                 -0.08333333333333330, -0.11666666666666700, -0.11666666666666700,
+        #                 -0.2833333333333330, -0.2833333333333330, -0.4, -0.4, -0.4,
+        #                 -0.26666666666666700, -0.13333333333333300, 0.0, 0.0, 0.0, 0.0,
+        #                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        #             ],
+        #             "settlementPeriod": [34] * 30,
+        #             "settlementDate": ["2024-12-10"] * 30,
+        #         }
+        #     ),
+        #     pl.DataFrame(
+        #         {
+        #             "settlementDate": ["2024-12-10"],
+        #             "settlementPeriod": [34],
+        #             "calculated_cashflow_curtailment": [-351.75],
+        #             "calculated_cashflow_extra": [0.0],
+        #         }
+        #     )
+        # ),
+        (
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-12-10"] * 4,
+                    "settlementPeriod": [34] * 4,
+                    "nationalGridBmUnit": ["LKSDB-1"] * 4,
+                    "bmUnit": ["T_LKSDB-1"] * 4,
+                    "timeFrom": ["2024-12-10T16:30:00Z"] * 4,
+                    "timeTo": ["2024-12-10T17:00:00Z"] * 4,
+                    "levelFrom": [-100, -100, 100, 100],
+                    "levelTo": [-100, -100, 100, 100],
+                    "bid": [-99999.0, 105.0, 105.0, 99999.0],
+                    "offer": [-99999.0, 174.0, 174.0, 99999.0],
+                    "pairId": [-2, -1, 1, 2],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": ["2024-12-10T16:30:00.000000"],
+                    "physical_level": [0.0],
+                    "extra": [0.0],
+                    "curtailment": [-3.35],
+                    "generated": [-3.35],
+                    "settlementPeriod": [34],
+                    "settlementDate": ["2024-12-10"],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "settlementDate": ["2024-12-10"],
+                    "settlementPeriod": [34],
+                    "calculated_cashflow_curtailment": [-351.75],
+                    "calculated_cashflow_extra": [0.0],
+                }
+            )
         )
+
     ],
 )
 def test_calculate_cashflow(
