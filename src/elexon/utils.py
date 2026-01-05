@@ -201,6 +201,8 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
             pl.col("curtailment"),
             pl.col("extra"),
         )
+        # there are cases where the limit is designated by e.g. levelFrom = -100, levelTo = -100, bid = 9999.9
+        # we don't need these, so filtering these out + the zero row that's created with levelFrom = levelTo = 0
         .filter(
             ~(pl.col("levelTo").eq(pl.col("levelFrom")))
         )
