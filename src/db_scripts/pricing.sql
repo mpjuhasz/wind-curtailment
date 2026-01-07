@@ -15,4 +15,6 @@ UPDATE gen SET bm_unit = SUBSTRING(filename, 23, LENGTH(filename) - 26);
 
 CREATE TABLE all_bm_units AS SELECT * FROM read_json("./../../raw/bm_units.json");
 
-create table merged as select * from bo join gen on bo.settlementDate = gen.settlementDate AND bo.settlementPeriod = gen.settlementPeriod AND bo.bm_unit = gen.bm_unit;
+CREATE TABLE merged AS SELECT * FROM bo JOIN gen ON bo.settlementDate = gen.settlementDate AND bo.settlementPeriod = gen.settlementPeriod AND bo.bm_unit = gen.bm_unit;
+DROP TABLE bo;
+DROP TABLE gen;
