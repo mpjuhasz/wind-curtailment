@@ -24,6 +24,7 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     )
     dfs = []
     for d in result.group_by(pl.col("acceptanceNumber")):
+        # TODO: get the flags from the acceptance
         for row in d[1].iter_rows(named=True):
             time_series = pl.datetime_range(
                 start=row["from"],
