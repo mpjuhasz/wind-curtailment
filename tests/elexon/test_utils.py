@@ -11,6 +11,34 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
         (
             pl.DataFrame(
                 {
+                    "levelFrom": [-300, -100, 33, 300],
+                    "levelTo": [-300, -100, 33, 300],
+                    "bid": [
+                        -32.89,
+                        -15.5,
+                        0.0,
+                        0.0,
+                    ],
+                    "offer": [15.93, 10.2, 77.67, 999.0],
+                    "curtailment": [-70] * 4,
+                    "extra": [0] * 4,
+                    "pairId": [-2, -1, 1, 2],
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "levelFrom": [-300, -100, 0, 33],
+                    "levelTo": [-100, 0, 33, 300],
+                    "bid": [-32.89, -15.5, 0.0, 0.0],
+                    "offer": [15.93, 10.2, 77.67, 999.0],
+                    "curtailment": [-70] * 4,
+                    "extra": [0] * 4,
+                }
+            ),
+        ),
+        (
+            pl.DataFrame(
+                {
                     "levelFrom": [-300, 33, 300],
                     "levelTo": [-300, 33, 300],
                     "bid": [
@@ -24,7 +52,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
                     "pairId": [-1, 1, 2],
                 }
             ),
-            pl.DataFrame(
+                pl.DataFrame(
                 {
                     "levelFrom": [-300, 0, 33],
                     "levelTo": [0, 33, 300],

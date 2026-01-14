@@ -24,7 +24,7 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     )
     dfs = []
     for d in result.group_by(pl.col("acceptanceNumber")):
-        # TODO: get the flags from the acceptance
+        # TODO: get the flags from the acceptance
         for row in d[1].iter_rows(named=True):
             time_series = pl.datetime_range(
                 start=row["from"],
@@ -169,10 +169,18 @@ def aggregate_bm_unit_generation(
 
 def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
     """Formats the bids and prices adding a row with zero so that the intervals are complete"""
+    curtailment_val = df.select(pl.col("curtailment")).limit(1).item()
+    extra_val = df.select(pl.col("extra")).limit(1).item()
+    
     sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(
         by="pairId", descending=True
     )
 
+    sorted_positives = df.filter(pl.col("levelTo").gt(pl.lit(0))).sort(
+        by="pairId", descending=False
+    )
+
+    # sometimes there's a 0-0 row, with pairId 1
     df = df.filter(
         ~(pl.col("levelFrom").eq(pl.lit(0)) & pl.col("levelTo").eq(pl.lit(0)))
     )
@@ -180,36 +188,51 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
     if sorted_negatives.is_empty():
         sorted_negatives = df.sort(by="pairId", descending=True)
 
-    zero_row = pl.DataFrame(
-        {
-            "levelFrom": 0,
-            "levelTo": 0,
-            "bid": sorted_negatives.select(pl.col("bid")).limit(1).item(),
-            "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
-            "curtailment": df.select(pl.col("curtailment")).limit(1).item(),
-            "extra": df.select(pl.col("extra")).limit(1).item(),
-            "pairId": 0,
-        }
+    if sorted_positives.is_empty():
+        sorted_positives = df.sort(by="pairId", descending=False)
+
+    zero_rows = pl.DataFrame(
+        [
+            {
+                "levelFrom": 0,
+                "levelTo": 0,
+                "bid": sorted_negatives.select(pl.col("bid")).limit(1).item(),
+                "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
+                "curtailment": curtailment_val,
+                "extra": extra_val,
+                "pairId": -0.1,
+            },
+            {
+                "levelFrom": 0,
+                "levelTo": 0,
+                "bid": sorted_positives.select(pl.col("bid")).limit(1).item(),
+                "offer": sorted_positives.select(pl.col("offer")).limit(1).item(),
+                "curtailment": curtailment_val,
+                "extra": extra_val,
+                "pairId": 0.1,
+            },
+        ]
     )
 
-    bid_price_table = (
-        df.extend(zero_row)
-        .sort(by="pairId")
-        .with_columns(
-            pl.col("levelTo").shift(-1),
-            pl.col("bid").shift(-1),
-            pl.col("offer").shift(-1),
-            pl.col("curtailment"),
-            pl.col("extra"),
-        )
-        # there are cases where the limit is designated by e.g. levelFrom = -100, levelTo = -100, bid = 9999.9
-        # we don't need these, so filtering these out + the zero row that's created with levelFrom = levelTo = 0
-        .filter(
-            ~(pl.col("levelTo").eq(pl.col("levelFrom")))
-        )
-        .select("*")
-        .limit(df.shape[0] - 1)
+    with_zeros = (
+        df.with_columns(pl.col("pairId").cast(pl.Float64))
+        .extend(zero_rows)
+        .sort(by="pairId", descending=False)
     )
+
+    negative_pairs = with_zeros.filter(pl.col("pairId").lt(pl.lit(0)))
+    positive_pairs = with_zeros.filter(pl.col("pairId").gt(pl.lit(0)))
+
+    bid_price_table = pl.concat(
+        [
+            negative_pairs.with_columns(pl.col("levelTo").shift(-1)).filter(
+                pl.col("pairId").lt(pl.lit(-0.5))
+            ),
+            positive_pairs.with_columns(pl.col("levelFrom").shift(1)).filter(
+                pl.col("pairId").gt(pl.lit(0.5))
+            ),
+        ]
+    ).filter(~(pl.col("levelTo").eq(pl.col("levelFrom"))))
 
     bid_price_table.drop_in_place("pairId")
 
@@ -259,15 +282,15 @@ def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
             prices[col] = 0.0
             continue
         prices[col] = (
-            # because of how the expressions are set up, we filter the price table to 
+            # because of how the expressions are set up, we filter the price table to
             # levels below zero for curtailment, and above for extra generation
-            bid_price_table.filter(_filter)\
-                .with_columns(expr)
-                .with_columns(
-                    pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
-                )
-                .select(pl.col(f"{col}_price").sum())
-                .item()
+            bid_price_table.filter(_filter)
+            .with_columns(expr)
+            .with_columns(
+                pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
+            )
+            .select(pl.col(f"{col}_price").sum())
+            .item()
         )
 
     return prices
