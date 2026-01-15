@@ -30,7 +30,7 @@ def run_from_config(config_path: str, output_folder: str):
     run_bo(config_path, bo_folder)
     run_gen(config_path, gen_folder)
     run_ic(config_path, ic_folder)
-    calc_cf(bo_folder, gen_folder, cashflow_folder)
+    calc_cf(bo_folder, gen_folder + "/generation", cashflow_folder)
 
 
 if __name__ == "__main__":

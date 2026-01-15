@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 
 import pandas as pd
@@ -20,7 +21,7 @@ def run_from_config(config_path: str, output_folder: str):
         if output_path.exists():
             continue
 
-        agg = get_bid_offer(unit, from_time, to_time)
+        agg = asyncio.run(get_bid_offer(unit, from_time, to_time))
 
         if agg is not None:
             agg.write_csv(f"{output_folder}/{unit}.csv")

@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 from datetime import datetime
@@ -23,8 +24,8 @@ def downsample_aggregate_for_bm_unit(
 ) -> tuple[Optional[pl.DataFrame], Optional[pl.DataFrame]]:
     """Daily aggregates for the bm unit generation and curtailment"""
     start_time = datetime.now()
-    physical = get_physical(bm_unit, from_time, to_time)
-    acceptances = get_acceptances(bm_unit, from_time, to_time)
+    physical = asyncio.run(get_physical(bm_unit, from_time, to_time))
+    acceptances = asyncio.run(get_acceptances(bm_unit, from_time, to_time))
     print(f"Queried data in {datetime.now() - start_time} for {bm_unit}")
 
     if physical is None and acceptances is None:
