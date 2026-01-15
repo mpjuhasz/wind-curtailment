@@ -18,7 +18,7 @@ def run_from_config(config_path: str, output_folder: str):
         yaml.safe_dump(config, f)
 
     bo_folder = output_folder + "/bid_offer"
-    gen_folder = output_folder + "/generation"
+    gen_folder = output_folder  # run_gen creates its own folders for generation and acceptances
     ic_folder = output_folder + "/indicative_cashflow"
     cashflow_folder = output_folder + "/calculated_cashflow"
     

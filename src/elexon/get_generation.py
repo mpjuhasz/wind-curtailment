@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Literal, Optional
@@ -19,7 +20,7 @@ def downsample_aggregate_for_bm_unit(
     to_time: str,
     downsample_frequency: str,
     energy_unit: Literal["MWh", "GWh"],
-) -> Optional[pl.DataFrame]:
+) -> tuple[Optional[pl.DataFrame], Optional[pl.DataFrame]]:
     """Daily aggregates for the bm unit generation and curtailment"""
     start_time = datetime.now()
     physical = get_physical(bm_unit, from_time, to_time)
@@ -31,8 +32,21 @@ def downsample_aggregate_for_bm_unit(
         return None
     agg = aggregate_acceptance_and_pn(acceptances, physical, downsample_frequency, energy_unit)
 
-    return agg
+    return agg, acceptances
 
+
+def save_with_empty_default(df: Optional[pl.DataFrame], path: str) -> None:
+    """Saves the dataframe if exists, otherwise an empty csv"""
+    if df is not None:
+        df.write_csv(path)
+    else:
+        # creating a file so that it's not re-queried next time
+        pd.DataFrame().to_csv(path)
+
+def safe_create_dir(path: Path) -> None:
+    """Creates a dir if it doesn't already exist"""
+    if not path.exists():
+        os.mkdir(path)
 
 def downsample_for_config(config_path: str, output_folder: str):
     with open(config_path, "r") as f:
@@ -42,18 +56,22 @@ def downsample_for_config(config_path: str, output_folder: str):
     downsample_frequency = config["downsample_frequency"]
     energy_unit = config["energy_unit"]
 
+    output_folder = Path(output_folder)
+
+    safe_create_dir(output_folder / "generation")
+    safe_create_dir(output_folder / "acceptance")
+
     for unit in track(config["units"], description="Getting generation data:"):
-        output_path = Path(f"{output_folder}/{unit}.csv")
+        output_path = Path(f"{output_folder}/generation/{unit}.csv")
         if output_path.exists():
             continue
-        agg = downsample_aggregate_for_bm_unit(
+        agg, acceptances = downsample_aggregate_for_bm_unit(
             unit, from_time, to_time, downsample_frequency, energy_unit
         )
-        if agg is not None:
-            agg.write_csv(f"{output_folder}/{unit}.csv")
-        else:
-            # creating a file so that it's not re-queried next time
-            pd.DataFrame().to_csv(f"{output_folder}/{unit}.csv")
+        
+        save_with_empty_default(agg, f"{output_folder}/generation/{unit}.csv")
+        save_with_empty_default(acceptances, f"{output_folder}/acceptance/{unit}.csv")
+
 
 
 def totals_for_bm_unit(bm_unit: str, from_time: str, to_time: str) -> dict:
