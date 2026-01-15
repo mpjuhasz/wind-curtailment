@@ -167,7 +167,7 @@ def aggregate_bm_unit_generation(
     }
 
 
-def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
+def format_bid_offer_table(df: pl.DataFrame) -> pl.DataFrame:
     """Formats the bids and prices adding a row with zero so that the intervals are complete"""
     curtailment_val = df.select(pl.col("curtailment")).limit(1).item()
     extra_val = df.select(pl.col("extra")).limit(1).item()
@@ -223,7 +223,7 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
     negative_pairs = with_zeros.filter(pl.col("pairId").lt(pl.lit(0)))
     positive_pairs = with_zeros.filter(pl.col("pairId").gt(pl.lit(0)))
 
-    bid_price_table = pl.concat(
+    bid_offer_table = pl.concat(
         [
             negative_pairs.with_columns(pl.col("levelTo").shift(-1)).filter(
                 pl.col("pairId").lt(pl.lit(-0.5))
@@ -234,9 +234,9 @@ def format_bid_price_table(df: pl.DataFrame) -> pl.DataFrame:
         ]
     ).filter(~(pl.col("levelTo").eq(pl.col("levelFrom"))))
 
-    bid_price_table.drop_in_place("pairId")
+    bid_offer_table.drop_in_place("pairId")
 
-    return bid_price_table
+    return bid_offer_table
 
 
 expr_curtailment = (
@@ -300,7 +300,7 @@ def calculate_cashflow(df: pl.DataFrame) -> float:
     """Calculates the cashflow for a single settlement period"""
     # for debugging: https://github.com/pola-rs/polars/issues/7704
     try:
-        bid_price_table = format_bid_price_table(
+        bid_price_table = format_bid_offer_table(
             # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
             df.select(
                 "levelFrom", "levelTo", "bid", "offer", "curtailment", "extra", "pairId"

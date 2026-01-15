@@ -21,3 +21,5 @@ DROP TABLE gen;
 
 
 COPY (select distinct settlementDate, settlementPeriod, bmUnit, bid, offer, pairId, levelFrom, levelTo from merged where settlementDate = '2024-09-29' and settlementPeriod = 30 and bmUnit = 'E_SKELB-1' order by pairId) TO './bid_offer_example.csv';
+
+

@@ -2,7 +2,7 @@ import polars as pl
 import pytest
 from polars.testing import assert_frame_equal
 
-from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
+from src.elexon.utils import aggregate_prices, cashflow, format_bid_offer_table
 
 
 @pytest.mark.parametrize(
@@ -160,7 +160,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_price_table
 def test_format_bid_price_table(
     input_table: pl.DataFrame, expected_output: pl.DataFrame
 ):
-    output = format_bid_price_table(input_table)
+    output = format_bid_offer_table(input_table)
     assert_frame_equal(output, expected_output)
 
 

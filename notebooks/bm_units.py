@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.17.5"
+__generated_with = "0.18.0"
 app = marimo.App(width="medium")
 
 
@@ -233,6 +233,12 @@ def _(bm_units_to_query):
 
 
 @app.cell
+def _(bm_units_to_query, pl):
+    pl.DataFrame(data=bm_units_to_query, schema={"bm_unit": pl.String}).write_csv("data/processed/wind_bm_units.csv")
+    return
+
+
+@app.cell
 def _(bm_units):
     bm_units
     return
@@ -242,6 +248,11 @@ def _(bm_units):
 def _(bm_units):
     for _unit in [i for i in bm_units[bm_units["generationCapacity"] != 0]["elexonBmUnit"].unique().tolist() if i is not None]:
         print(f'- {_unit}')
+    return
+
+
+@app.cell
+def _():
     return
 
 
