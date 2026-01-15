@@ -8,7 +8,7 @@ import polars as pl
 
 def long_date_range_handler(
     func: Callable,
-    max_concurrent: int = 20,
+    max_concurrent: int = 10,
     timeout_seconds: int = 30,
 ):
     """Wraps request functions and ensures that the max date-range error is worked around"""
@@ -23,7 +23,7 @@ def long_date_range_handler(
             current_start = start_dt
 
             while current_start < end_dt:
-                current_end = min(current_start + datetime.timedelta(days=5), end_dt)
+                current_end = min(current_start + datetime.timedelta(days=7), end_dt)
                 current_start_str = current_start.strftime("%Y-%m-%dT%H:%M:%SZ")
                 current_end_str = current_end.strftime("%Y-%m-%dT%H:%M:%SZ")
                 tasks.append((bm_unit, current_start_str, current_end_str))
@@ -66,13 +66,14 @@ async def _elexon_get_request_async(
 
     Includes retry logic with exponential backoff for rate limiting (429).
     """
+    delays = [50, 10, 20, 30, 30]  # https://bmrs.elexon.co.uk/api-documentation/guidance
     for attempt in range(max_retries):
         async with session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
                 return pl.DataFrame(data.get("data"))
             elif response.status == 429:
-                delay = base_delay * (4 ** (attempt + 1))
+                delay = delays[attempt]
                 print(
                     f"Rate limited (429), retrying in {delay:.1f}s (attempt {attempt + 1}/{max_retries})"
                 )
@@ -126,7 +127,7 @@ async def get_bid_offer(session: aiohttp.ClientSession, bm_unit: str, from_time:
 
 async def fetch_indicative_cashflows_batch(
     tasks: list[tuple[str, str]],
-    max_concurrent: int = 20,
+    max_concurrent: int = 10,
     timeout_seconds: int = 30,
 ) -> list[pl.DataFrame | Exception]:
     """Fetch multiple indicative cashflows concurrently with rate limiting.
