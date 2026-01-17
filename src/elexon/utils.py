@@ -1,9 +1,16 @@
 from typing import Literal, Optional
 
 import polars as pl
+from pathlib import Path
+import os
 
 ENERGY_MULTIPLIERS = {"MWh": 1, "GWh": 1 / 1_000}
 
+
+def safe_create_dir(path: Path) -> None:
+    """Creates a dir if it doesn't already exist"""
+    if not path.exists():
+        os.mkdir(path)
 
 def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     """
@@ -24,7 +31,6 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     )
     dfs = []
     for d in result.group_by(pl.col("acceptanceNumber")):
-        # TODO: get the flags from the acceptance
         for row in d[1].iter_rows(named=True):
             time_series = pl.datetime_range(
                 start=row["from"],
@@ -55,6 +61,7 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     return (
         pl.concat(dfs)
         .sort(by=["time", "acceptanceTime"])
+        # this ensures, that the latest acceptance is taken into account for each
         .unique(subset=["time"], keep="last")
     )
 
@@ -91,6 +98,8 @@ def aggregate_acceptance_and_pn(
     It takes the difference as `accepted - physical`. This means, that curtailment will
     have negative sign, and extra generation will be positive. This makes more sense
     than the other way around (which is how I've initially set this up).
+    
+    TODO: this currently doesn't take into account cancelling acceptances 
     """
     if accepted is not None:
         accepted_smoothened = resolve_acceptances(accepted)

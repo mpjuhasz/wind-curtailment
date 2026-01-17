@@ -27,8 +27,8 @@ def run_from_config(config_path: str, output_folder: str):
         if not p.exists():
             os.mkdir(p)
     
-    run_bo(config_path, bo_folder)
-    run_gen(config_path, gen_folder)
+    # run_bo(config_path, bo_folder)
+    # run_gen(config_path, gen_folder)
     run_ic(config_path, ic_folder)
     
     

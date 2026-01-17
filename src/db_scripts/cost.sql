@@ -17,14 +17,7 @@ ALTER TABLE gen ADD COLUMN bm_unit VARCHAR;
 UPDATE gen SET bm_unit = SUBSTRING(filename, 25, LENGTH(filename) - 28);
 
 CREATE TABLE avg_price AS (
-    SELECT gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod,  -1 * SUM(totalCashflow) / SUM(curtailment) AS price FROM (
-        ic JOIN gen ON gen.bm_unit = ic.bm_unit AND gen.settlementDate = ic.settlementDate AND gen.settlementPeriod = ic.settlementPeriod
-    ) WHERE gen.curtailment < 0
-    GROUP BY gen.settlementDate, gen.settlementPeriod
-);
-
-CREATE TABLE avg_price_2 AS (
-    SELECT gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod,  SUM(totalCashflow) / SUM(extra) AS price, count(*) AS count FROM (
+    SELECT gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod, SUM(totalCashflow) / SUM(extra) AS price FROM (
         ic JOIN gen ON gen.bm_unit = ic.bm_unit AND gen.settlementDate = ic.settlementDate AND gen.settlementPeriod = ic.settlementPeriod
     ) WHERE gen.extra > 0
     GROUP BY gen.settlementDate, gen.settlementPeriod

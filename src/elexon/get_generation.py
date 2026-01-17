@@ -17,7 +17,7 @@ from src.elexon.utils import (
     aggregate_bm_unit_generation,
     smoothen_physical,
 )
-
+from src.elexon.utils import safe_create_dir
 
 def downsample_aggregate_for_bm_unit(
     bm_unit: str,
@@ -59,12 +59,6 @@ def save_with_empty_default(df: Optional[pl.DataFrame], path: str) -> None:
     else:
         # creating a file so that it's not re-queried next time
         pd.DataFrame().to_csv(path)
-
-
-def safe_create_dir(path: Path) -> None:
-    """Creates a dir if it doesn't already exist"""
-    if not path.exists():
-        os.mkdir(path)
 
 
 def downsample_for_config(config_path: str, output_folder: str):
