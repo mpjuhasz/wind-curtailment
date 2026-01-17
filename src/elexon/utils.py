@@ -59,19 +59,8 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def aggregate_acceptance_and_pn(
-    accepted: Optional[pl.DataFrame],
-    physical: pl.DataFrame,
-    downsample_frequency: str,
-    energy_unit: Literal["MWh", "GWh"],
-) -> pl.DataFrame:
-    """
-    Aggregates and upsamples the accepted-level and physical notification dataframes
-
-    It takes the difference as `accepted - physical`. This means, that curtailment will
-    have negative sign, and extra generation will be positive. This makes more sense
-    than the other way around (which is how I've initially set this up).
-    """
+def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
+    """Smoothens the physical dataframe"""
     physical_smoothened = (
         physical.select(
             pl.col("timeFrom").alias("time"),
@@ -87,7 +76,22 @@ def aggregate_acceptance_and_pn(
         .upsample(time_column="time", every="1m")
         .fill_null(strategy="forward")
     )
+    return physical_smoothened
 
+
+def aggregate_acceptance_and_pn(
+    accepted: Optional[pl.DataFrame],
+    physical_smoothened: pl.DataFrame,
+    downsample_frequency: str,
+    energy_unit: Literal["MWh", "GWh"],
+) -> pl.DataFrame:
+    """
+    Aggregates and upsamples the accepted-level and physical notification dataframes
+
+    It takes the difference as `accepted - physical`. This means, that curtailment will
+    have negative sign, and extra generation will be positive. This makes more sense
+    than the other way around (which is how I've initially set this up).
+    """
     if accepted is not None:
         accepted_smoothened = resolve_acceptances(accepted)
 
