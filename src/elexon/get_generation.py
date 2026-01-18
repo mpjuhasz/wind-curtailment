@@ -1,6 +1,6 @@
 import asyncio
 import json
-import os
+
 from datetime import datetime
 from pathlib import Path
 from typing import Literal, Optional

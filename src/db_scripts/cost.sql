@@ -1,7 +1,10 @@
-CREATE TABLE ic AS SELECT * FROM read_csv('./*/indicative_cashflow/*.csv', filename=True, union_by_name=True);
+CREATE TABLE ic AS SELECT * FROM read_csv('./*/indicative_cashflow/*/*.csv', filename=True, union_by_name=True);
 ALTER TABLE ic DROP COLUMN column0;
 ALTER TABLE ic ADD COLUMN bm_unit VARCHAR;
-UPDATE ic SET bm_unit = SUBSTRING(filename, 28, LENGTH(filename) - 31);
+UPDATE ic SET bm_unit = SUBSTRING(filename, 32, LENGTH(filename) - 35);
+UPDATE ic SET bm_unit = SUBSTRING(filename, 34, LENGTH(filename) - 37) WHERE filename LIKE '%/offer/%';
+ALTER TABLE ic ADD COLUMN flow_type VARCHAR;
+UPDATE ic SET flow_type =  split(SUBSTRING(filename, 28, LENGTH(filename)), '/')[1];
 
 CREATE TABLE bo AS SELECT * FROM read_csv(
     './*/bid_offer/*.csv',
@@ -19,7 +22,7 @@ UPDATE gen SET bm_unit = SUBSTRING(filename, 25, LENGTH(filename) - 28);
 CREATE TABLE avg_price AS (
     SELECT gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod, SUM(totalCashflow) / SUM(extra) AS price FROM (
         ic JOIN gen ON gen.bm_unit = ic.bm_unit AND gen.settlementDate = ic.settlementDate AND gen.settlementPeriod = ic.settlementPeriod
-    ) WHERE gen.extra > 0
+    ) WHERE gen.extra > 0 AND ic.flow_type = 'offer'
     GROUP BY gen.settlementDate, gen.settlementPeriod
 );
 
@@ -48,16 +51,21 @@ CREATE TABLE merged AS (
     ON gen.bm_unit = other.bm_unit AND gen.settlementDate = other.settlementDate AND gen.settlementPeriod = other.settlementPeriod
 );
 
-
-
+CREATE TABLE replacement_cost AS (
+    SELECT avg_price.settlementDate AS settlementDate, avg_price.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, avg_price.price AS price, missing_after_so.extra_for_so * avg_price.price AS total FROM (
+        (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
+        JOIN avg_price ON avg_price.settlementDate = missing_after_so.settlementDate AND avg_price.settlementPeriod = missing_after_so.settlementPeriod
+    )
+);        
 
 -- These three are given very distinct unit names, so merging them by hand
 UPDATE merged SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
 
-
+-- Getting the yearly aggregates
 COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2021 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2021.csv';
 COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2022 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2022.csv';
 COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2023 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2023.csv';
 COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2024 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2024.csv';
 COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2025 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2025.csv';
 
+-- 
