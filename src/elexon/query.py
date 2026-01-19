@@ -66,7 +66,15 @@ async def _elexon_get_request_async(
 
     Includes retry logic with exponential backoff for rate limiting (429).
     """
-    delays = [50, 10, 20, 30, 30, 30, 30]  # https://bmrs.elexon.co.uk/api-documentation/guidance
+    delays = [
+        50,
+        10,
+        20,
+        30,
+        30,
+        30,
+        30,
+    ]  # https://bmrs.elexon.co.uk/api-documentation/guidance
     for attempt in range(max_retries):
         async with session.get(url) as response:
             if response.status == 200:
@@ -85,8 +93,19 @@ async def _elexon_get_request_async(
     return None
 
 
+async def get_indicative_imbalance_settlement(
+    session: aiohttp.ClientSession, settlementDate: str, settlementPeriod: int
+):
+    """Gets the indicative imbalance settlement for a particular settlementPeriod."""
+    url = f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/system-prices/{settlementDate}/{settlementPeriod}"
+    return await _elexon_get_request_async(session, url)
+
+
 async def get_indicative_cashflow(
-    session: aiohttp.ClientSession, time: str, bm_unit: str, cashflow_type: Literal["bid", "offer"]
+    session: aiohttp.ClientSession,
+    time: str,
+    bm_unit: str,
+    cashflow_type: Literal["bid", "offer"],
 ) -> Optional[pl.DataFrame]:
     """Async version of get_indicative_cashflow for use with aiohttp."""
     url = (
@@ -95,8 +114,11 @@ async def get_indicative_cashflow(
     )
     return await _elexon_get_request_async(session, url)
 
+
 @long_date_range_handler
-async def get_physical(session: aiohttp.ClientSession, bm_unit: str, from_time: str, to_time: str):
+async def get_physical(
+    session: aiohttp.ClientSession, bm_unit: str, from_time: str, to_time: str
+):
     """Gets the physical notification data per BM unit"""
     url = (
         f"https://data.elexon.co.uk/bmrs/api/v1/balancing/physical?"
@@ -106,7 +128,9 @@ async def get_physical(session: aiohttp.ClientSession, bm_unit: str, from_time: 
 
 
 @long_date_range_handler
-async def get_acceptances(session: aiohttp.ClientSession, bm_unit: str, from_time: str, to_time: str):
+async def get_acceptances(
+    session: aiohttp.ClientSession, bm_unit: str, from_time: str, to_time: str
+):
     """Gets the bid-offer acceptances per BM unit"""
     url = (
         f"https://data.elexon.co.uk/bmrs/api/v1/balancing/acceptances?"
@@ -116,7 +140,9 @@ async def get_acceptances(session: aiohttp.ClientSession, bm_unit: str, from_tim
 
 
 @long_date_range_handler
-async def get_bid_offer(session: aiohttp.ClientSession, bm_unit: str, from_time: str, to_time: str):
+async def get_bid_offer(
+    session: aiohttp.ClientSession, bm_unit: str, from_time: str, to_time: str
+):
     """Gets the bid-offer pairs per BM unit"""
     url = (
         f"https://data.elexon.co.uk/bmrs/api/v1/balancing/bid-offer?"
@@ -144,23 +170,34 @@ async def fetch_indicative_cashflows_batch(
     timeout = aiohttp.ClientTimeout(total=timeout_seconds)
 
     async def bounded_fetch(
-        session: aiohttp.ClientSession, time: str, bm_unit: str, cashflow_type: Literal["bid", "offer"]
+        session: aiohttp.ClientSession,
+        time: str,
+        bm_unit: str,
+        cashflow_type: Literal["bid", "offer"],
     ) -> Optional[pl.DataFrame]:
         async with semaphore:
             return await get_indicative_cashflow(session, time, bm_unit, cashflow_type)
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
         results = await asyncio.gather(
-            *[bounded_fetch(session, time, bm_unit, cashflow_type) for time, bm_unit, cashflow_type in tasks],
+            *[
+                bounded_fetch(session, time, bm_unit, cashflow_type)
+                for time, bm_unit, cashflow_type in tasks
+            ],
             return_exceptions=True,
         )
 
     return results
 
 
-async def fetch_unit_cashflows(unit: str, from_time: str, to_time: str, cashflow_type: Literal["bid", "offer"]) -> list[pl.DataFrame]:
+async def fetch_unit_cashflows(
+    unit: str, from_time: str, to_time: str, cashflow_type: Literal["bid", "offer"]
+) -> list[pl.DataFrame]:
     """Fetch all cashflow data for a single unit using async requests."""
-    tasks = [(str(_d).split(" ")[0], unit, cashflow_type) for _d in pd.date_range(from_time, to_time)]
+    tasks = [
+        (str(_d).split(" ")[0], unit, cashflow_type)
+        for _d in pd.date_range(from_time, to_time)
+    ]
     results = await fetch_indicative_cashflows_batch(tasks, max_concurrent=20)
 
     dfs = []
@@ -169,5 +206,70 @@ async def fetch_unit_cashflows(unit: str, from_time: str, to_time: str, cashflow
             print(f"Request failed: {result}")
             continue
         if result is not None and not result.is_empty():
-            dfs.append(result.select("settlementDate", "settlementPeriod", "bmUnit", "totalCashflow"))
+            dfs.append(
+                result.select(
+                    "settlementDate", "settlementPeriod", "bmUnit", "totalCashflow"
+                )
+            )
     return dfs
+
+
+async def _fetch_imbalance_settlement_batch(
+    tasks: list[tuple[str, str]],
+    max_concurrent: int = 10,
+    timeout_seconds: int = 30,
+) -> list[pl.DataFrame | Exception]:
+    semaphore = asyncio.Semaphore(max_concurrent)
+    timeout = aiohttp.ClientTimeout(total=timeout_seconds)
+
+    async def bounded_fetch(
+        session: aiohttp.ClientSession, settlementDate: str, settlementPeriod: str
+    ) -> Optional[pl.DataFrame]:
+        async with semaphore:
+            return await get_indicative_imbalance_settlement(
+                session, settlementDate, settlementPeriod
+            )
+
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        results = await asyncio.gather(
+            *[
+                bounded_fetch(session, settlementDate, settlementPeriod)
+                for settlementDate, settlementPeriod in tasks
+            ],
+            return_exceptions=True,
+        )
+
+    return results
+
+
+async def fetch_imbalance_settlement(
+    from_time: str, to_time: str
+) -> list[pl.DataFrame]:
+    """Fetch all cashflow data for a single unit using async requests."""
+    tasks = [
+        (str(_d).split(" ")[0], i)
+        for _d in pd.date_range(from_time, to_time)
+        for i in range(1, 49)
+    ]
+    results = await _fetch_imbalance_settlement_batch(tasks, max_concurrent=20)
+
+    dfs = []
+    for result in results:
+        if isinstance(result, Exception):
+            print(f"Request failed: {result}")
+            continue
+        if result is not None and not result.is_empty():
+            dfs.append(
+                result.select(
+                    "settlementDate",
+                    "settlementPeriod",
+                    "systemSellPrice",
+                    "systemBuyPrice",
+                    "netImbalanceVolume",
+                    "totalAcceptedOfferVolume",
+                    "totalAcceptedBidVolume",
+                    "totalAdjustmentSellVolume",
+                    "totalAdjustmentBuyVolume",
+                )
+            )
+    return pl.concat(dfs)
