@@ -20,6 +20,7 @@ def run_from_config(config_path: str, output_folder: str):
 
     from_time = config["from_time"]
     to_time = config["to_time"]
+    retry_empty = config["retry_empty"]
 
     for cashflow_type in ["bid", "offer"]:
         type_folder = Path(output_folder) / cashflow_type
@@ -28,7 +29,14 @@ def run_from_config(config_path: str, output_folder: str):
         for unit in track(config["units"], description=f"Getting indicative cashflow data ({cashflow_type}):"):
             output_path = Path(type_folder / f"{unit}.csv")
             if output_path.exists():
-                continue
+                if not retry_empty:
+                    continue
+                else:
+                    _df = pl.read_csv(output_path)
+                    if not _df.is_empty():
+                        continue
+                    else:
+                        print(f"No data found for {unit}, retrying...")
 
             dfs = asyncio.run(fetch_unit_cashflows(unit, from_time, to_time, cashflow_type))
 

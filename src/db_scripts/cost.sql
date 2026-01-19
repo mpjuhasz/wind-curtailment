@@ -14,11 +14,13 @@ CREATE TABLE bo AS SELECT * FROM read_csv(
 ALTER TABLE bo ADD COLUMN bm_unit VARCHAR;
 UPDATE bo SET bm_unit = SUBSTRING(filename, 18, LENGTH(filename) - 21);
 
+-- Total generation
 CREATE TABLE gen AS SELECT * FROM read_csv('./*/generation/total/*.csv', filename=True, union_by_name=True);
 ALTER TABLE gen DROP COLUMN column0;
 ALTER TABLE gen ADD COLUMN bm_unit VARCHAR;
 UPDATE gen SET bm_unit = SUBSTRING(filename, 25, LENGTH(filename) - 28);
 
+-- Average system buy price recalculated from all the cashflows and all the extra generation for each period
 CREATE TABLE avg_price AS (
     SELECT gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod, SUM(totalCashflow) / SUM(extra) AS price FROM (
         ic JOIN gen ON gen.bm_unit = ic.bm_unit AND gen.settlementDate = ic.settlementDate AND gen.settlementPeriod = ic.settlementPeriod
@@ -26,6 +28,7 @@ CREATE TABLE avg_price AS (
     GROUP BY gen.settlementDate, gen.settlementPeriod
 );
 
+-- Generation with only SO-flagged acceptances (note, that only the EXTRA and CURTAILMENT values are usable in this)
 CREATE TABLE so AS SELECT * FROM read_csv('./*/generation/so_only/*.csv', filename=True, union_by_name=True);
 ALTER TABLE so DROP COLUMN column0;
 ALTER TABLE so ADD COLUMN bm_unit VARCHAR;
@@ -39,6 +42,7 @@ CREATE TABLE unit_metadata AS SELECT * FROM read_csv('../bm_unit_with_repd.csv')
 ALTER TABLE unit_metadata ADD COLUMN general_unit VARCHAR;
 UPDATE unit_metadata SET general_unit = split(bm_unit, '-')[1];
 
+-- Metadata for only the wind units (used to filter)
 CREATE TABLE wind_with_metadata AS (
     SELECT * FROM wind INNER JOIN (
         SELECT general_unit, FIRST(repd_site_name) AS site_name, FIRST(repd_lat) AS lat, FIRST(repd_long) AS long, FIRST(capacity) AS capacity, FIRST(region) AS region
@@ -46,8 +50,9 @@ CREATE TABLE wind_with_metadata AS (
     ) AS tmp ON wind.general_unit = tmp.general_unit
 );
 
-CREATE TABLE merged AS (
-    SELECT * FROM gen JOIN (SELECT * FROM ic INNER JOIN wind_with_metadata ON ic.bm_unit = wind_with_metadata.bm_unit) AS other
+-- Generation from WIND sites only, with their corresponding bid cashflows for the curtailment costs
+CREATE TABLE wind_gen AS (
+    SELECT * FROM gen JOIN (SELECT * FROM ic INNER JOIN wind_with_metadata ON ic.bm_unit = wind_with_metadata.bm_unit WHERE ic.flow_type = 'bid') AS other
     ON gen.bm_unit = other.bm_unit AND gen.settlementDate = other.settlementDate AND gen.settlementPeriod = other.settlementPeriod
 );
 
@@ -59,13 +64,13 @@ CREATE TABLE replacement_cost AS (
 );        
 
 -- These three are given very distinct unit names, so merging them by hand
-UPDATE merged SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
+UPDATE wind_gen SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
 
 -- Getting the yearly aggregates
-COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2021 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2021.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2022 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2022.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2023 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2023.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2024 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2024.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM merged WHERE YEAR(settlementDate) = 2025 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2025.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2021 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2021.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2022 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2022.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2023 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2023.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2024 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2024.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2025 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2025.csv';
 
--- 
+-- Coverage for SO spending

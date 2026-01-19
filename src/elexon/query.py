@@ -60,14 +60,13 @@ def long_date_range_handler(
 async def _elexon_get_request_async(
     session: aiohttp.ClientSession,
     url: str,
-    max_retries: int = 5,
-    base_delay: float = 1.0,
+    max_retries: int = 7,
 ) -> Optional[pl.DataFrame]:
     """Async version of _elexon_get_request for use with aiohttp.
 
     Includes retry logic with exponential backoff for rate limiting (429).
     """
-    delays = [50, 10, 20, 30, 30]  # https://bmrs.elexon.co.uk/api-documentation/guidance
+    delays = [50, 10, 20, 30, 30, 30, 30]  # https://bmrs.elexon.co.uk/api-documentation/guidance
     for attempt in range(max_retries):
         async with session.get(url) as response:
             if response.status == 200:
