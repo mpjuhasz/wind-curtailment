@@ -28,11 +28,21 @@ def run_from_config(config_path: str, output_folder: str):
         
         for unit in track(config["units"], description=f"Getting indicative cashflow data ({cashflow_type}):"):
             output_path = Path(type_folder / f"{unit}.csv")
+            
+            _acceptance = pl.read_csv(str(output_path).replace(f"indicative_cashflow/{cashflow_type}", "acceptance"))
+            
+            # This is to reduce the number of calls we're making to the API: if there's no acceptance, there shouldn't be
+            # a cashflow for it
+            if _acceptance.is_empty():
+                continue
+
+            
             if output_path.exists():
                 if not retry_empty:
                     continue
                 else:
                     _df = pl.read_csv(output_path)
+                    
                     if not _df.is_empty():
                         continue
                     else:
