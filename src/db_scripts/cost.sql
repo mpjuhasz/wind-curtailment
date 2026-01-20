@@ -14,6 +14,9 @@ CREATE TABLE bo AS SELECT * FROM read_csv(
 ALTER TABLE bo ADD COLUMN bm_unit VARCHAR;
 UPDATE bo SET bm_unit = SUBSTRING(filename, 18, LENGTH(filename) - 21);
 
+-- System-level data (buy- and sell-price, imbalance, etc)
+CREATE TABLE system AS SELECT * FROM read_csv('./*/imbalance_settlement.csv', filename=True, union_by_name=True);
+
 -- Total generation
 CREATE TABLE gen AS SELECT * FROM read_csv('./*/generation/total/*.csv', filename=True, union_by_name=True);
 ALTER TABLE gen DROP COLUMN column0;
@@ -56,12 +59,26 @@ CREATE TABLE wind_gen AS (
     ON gen.bm_unit = other.bm_unit AND gen.settlementDate = other.settlementDate AND gen.settlementPeriod = other.settlementPeriod
 );
 
+CREATE TABLE wind_gen_so AS (
+    SELECT * FROM so JOIN (SELECT * FROM ic INNER JOIN wind_with_metadata ON ic.bm_unit = wind_with_metadata.bm_unit WHERE ic.flow_type = 'bid') AS other
+    ON so.bm_unit = other.bm_unit AND so.settlementDate = other.settlementDate AND so.settlementPeriod = other.settlementPeriod
+);
+
+-- Am I looking at the right thing with SO? Should only be wind generation!
 CREATE TABLE replacement_cost AS (
     SELECT avg_price.settlementDate AS settlementDate, avg_price.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, avg_price.price AS price, missing_after_so.extra_for_so * avg_price.price AS total FROM (
-        (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
+        (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
         JOIN avg_price ON avg_price.settlementDate = missing_after_so.settlementDate AND avg_price.settlementPeriod = missing_after_so.settlementPeriod
     )
-);        
+);
+
+
+CREATE TABLE replacement_cost_system AS (
+    SELECT system.settlementDate AS settlementDate, system.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, system.systemBuyPrice AS price, missing_after_so.extra_for_so * system.systemBuyPrice AS total FROM (
+        (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
+        JOIN system ON system.settlementDate = missing_after_so.settlementDate AND system.settlementPeriod = missing_after_so.settlementPeriod
+    )
+);
 
 -- These three are given very distinct unit names, so merging them by hand
 UPDATE wind_gen SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
@@ -74,3 +91,6 @@ COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS
 COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2025 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2025.csv';
 
 -- Coverage for SO spending
+SELECT YEAR(settlementDate) AS "year", sum(total) AS totalCost FROM replacement_cost GROUP BY YEAR(settlementDate);
+
+-- 
