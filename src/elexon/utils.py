@@ -1,8 +1,8 @@
+import os
+from pathlib import Path
 from typing import Literal, Optional
 
 import polars as pl
-from pathlib import Path
-import os
 
 ENERGY_MULTIPLIERS = {"MWh": 1, "GWh": 1 / 1_000}
 
@@ -11,6 +11,7 @@ def safe_create_dir(path: Path) -> None:
     """Creates a dir if it doesn't already exist"""
     if not path.exists():
         os.mkdir(path)
+
 
 def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     """
@@ -69,22 +70,67 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
 def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
     """Smoothens the physical dataframe"""
     # TODO why am I not using the timeTo here?
-    # TODO seems like it can happen, that there's no physical notification. What to do in this case?
-    physical_smoothened = (
-        physical.select(
-            pl.col("timeFrom").alias("time"),
-            pl.col("levelFrom").alias("level"),
-            pl.col("settlementPeriod"),
-            pl.col("settlementDate"),
+    # TODO seems like it can happen, that there's no physical notification. What to do in this case?
+    physical_parsed = physical.with_columns(
+        pl.col("timeFrom")
+        .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
+        .alias("from"),
+        pl.col("timeTo")
+        .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
+        .alias("to"),
+    )
+
+    physical_deduplicated = physical_parsed.unique(
+        subset=["settlementDate", "settlementPeriod"], keep="last"
+    ).select("settlementDate", "settlementPeriod", "from", "to", "levelFrom", "levelTo")
+
+    full_time_range = pl.DataFrame(
+        {
+            "time": pl.datetime_range(
+                start=physical_parsed.select(pl.col("from").min()).item(),
+                end=physical_parsed.select(pl.col("to").max()).item(),
+                closed="left",
+                interval="1m",
+                eager=True,
+            )
+        }
+    )
+
+    physical_smoothened_matched = (
+        full_time_range.join_where(
+            physical_deduplicated,
+            (pl.col("time").ge(pl.col("from")) & pl.col("time").lt(pl.col("to"))),
         )
         .with_columns(
-            pl.col("level"),
-            pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
+            (
+                pl.col("levelFrom")
+                + (pl.col("levelTo") - pl.col("levelFrom"))
+                * (
+                    pl.lit(1)
+                    # (pl.col("time").dt.total_minutes() - pl.col("from").dt.total_minutes())
+                    # / (pl.col("to").dt.total_minutes() - pl.col("from").dt.total_minutes())
+                )
+            ).alias("level").cast(pl.Float64),
+            pl.col("settlementPeriod").cast(pl.Int64)
         )
-        .sort(by="time")
-        .upsample(time_column="time", every="1m")
-        .fill_null(strategy="forward")
+        .select("time", "level", "settlementPeriod", "settlementDate")
     )
+
+    physical_smoothened_unmatched = (
+        full_time_range.join(physical_smoothened_matched, on="time", how="anti")
+    ).with_columns(
+        pl.lit(0).alias("level").cast(pl.Float64),
+        pl.col("time").dt.strftime(format="%Y-%m-%d").alias("settlementDate"),
+        (
+            (pl.col("time").dt.minute() // 30) * 1
+            + (pl.col("time").dt.hour() // 24) * 2
+        ).alias("settlementPeriod").cast(pl.Int64),
+    ).select("time", "level", "settlementPeriod", "settlementDate")
+
+    physical_smoothened = pl.concat(
+        [physical_smoothened_matched, physical_smoothened_unmatched]
+    ).sort(by="time")
+
     return physical_smoothened
 
 
@@ -100,8 +146,8 @@ def aggregate_acceptance_and_pn(
     It takes the difference as `accepted - physical`. This means, that curtailment will
     have negative sign, and extra generation will be positive. This makes more sense
     than the other way around (which is how I've initially set this up).
-    
-    TODO: this currently doesn't take into account cancelling acceptances 
+
+    TODO: this currently doesn't take into account cancelling acceptances
     """
     if accepted is not None:
         accepted_smoothened = resolve_acceptances(accepted)
@@ -186,7 +232,7 @@ def format_bid_offer_table(df: pl.DataFrame) -> pl.DataFrame:
     """Formats the bids and prices adding a row with zero so that the intervals are complete"""
     curtailment_val = df.select(pl.col("curtailment")).limit(1).item()
     extra_val = df.select(pl.col("extra")).limit(1).item()
-    
+
     sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(
         by="pairId", descending=True
     )

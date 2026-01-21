@@ -1,6 +1,5 @@
 import asyncio
 import json
-
 from datetime import datetime
 from pathlib import Path
 from typing import Literal, Optional
@@ -15,9 +14,10 @@ from src.elexon.query import get_acceptances, get_physical
 from src.elexon.utils import (
     aggregate_acceptance_and_pn,
     aggregate_bm_unit_generation,
+    safe_create_dir,
     smoothen_physical,
 )
-from src.elexon.utils import safe_create_dir
+
 
 def downsample_aggregate_for_bm_unit(
     bm_unit: str,
@@ -25,13 +25,13 @@ def downsample_aggregate_for_bm_unit(
     to_time: str,
     downsample_frequency: str,
     energy_unit: Literal["MWh", "GWh"],
-) -> tuple[Optional[pl.DataFrame], Optional[pl.DataFrame], Optional[pl.DataFrame]]:
+) -> tuple[Optional[pl.DataFrame], Optional[pl.DataFrame], Optional[pl.DataFrame], Optional[pl.DataFrame]]:
     """Daily aggregates for the bm unit generation and curtailment"""
     physical = asyncio.run(get_physical(bm_unit, from_time, to_time))
     acceptances = asyncio.run(get_acceptances(bm_unit, from_time, to_time))
 
     if physical is None and acceptances is None:
-        return None, None, None
+        return None, None, None, None
 
     physical_smoothened = smoothen_physical(physical)
     agg_so_only = None
@@ -49,7 +49,7 @@ def downsample_aggregate_for_bm_unit(
         acceptances, physical_smoothened, downsample_frequency, energy_unit
     )
 
-    return agg, agg_so_only, acceptances
+    return agg, agg_so_only, acceptances, physical
 
 
 def save_with_empty_default(df: Optional[pl.DataFrame], path: str) -> None:
@@ -75,12 +75,13 @@ def downsample_for_config(config_path: str, output_folder: str):
     safe_create_dir(output_folder / "generation/total")
     safe_create_dir(output_folder / "generation/so_only")
     safe_create_dir(output_folder / "acceptance")
+    safe_create_dir(output_folder / "physical")
 
     for unit in track(config["units"], description="Getting generation data:"):
         output_path = Path(f"{output_folder}/generation/{unit}.csv")
         if output_path.exists():
             continue
-        agg, agg_so_only, acceptances = downsample_aggregate_for_bm_unit(
+        agg, agg_so_only, acceptances, physical = downsample_aggregate_for_bm_unit(
             unit, from_time, to_time, downsample_frequency, energy_unit
         )
 
@@ -89,6 +90,7 @@ def downsample_for_config(config_path: str, output_folder: str):
             agg_so_only, f"{output_folder}/generation/so_only/{unit}.csv"
         )
         save_with_empty_default(acceptances, f"{output_folder}/acceptance/{unit}.csv")
+        save_with_empty_default(physical, f"{output_folder}/physical/{unit}.csv")
 
 
 def totals_for_bm_unit(bm_unit: str, from_time: str, to_time: str) -> dict:

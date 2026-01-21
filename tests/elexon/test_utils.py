@@ -2,7 +2,12 @@ import polars as pl
 import pytest
 from polars.testing import assert_frame_equal
 
-from src.elexon.utils import aggregate_prices, cashflow, format_bid_offer_table
+from src.elexon.utils import (
+    aggregate_prices,
+    cashflow,
+    format_bid_offer_table,
+    smoothen_physical,
+)
 
 
 @pytest.mark.parametrize(
@@ -52,7 +57,7 @@ from src.elexon.utils import aggregate_prices, cashflow, format_bid_offer_table
                     "pairId": [-1, 1, 2],
                 }
             ),
-                pl.DataFrame(
+            pl.DataFrame(
                 {
                     "levelFrom": [-300, 0, 33],
                     "levelTo": [0, 33, 300],
@@ -223,29 +228,6 @@ def test_format_bid_price_table(
 )
 def test_aggregate_prices(bid_price_table: pl.DataFrame, prices: dict[str, float]):
     assert aggregate_prices(bid_price_table) == prices
-
-
-"""
-bo_df:
-
-|    | settlementDate      |   settlementPeriod | nationalGridBmUnit   | bmUnit    | timeFrom                  | timeTo                    |   levelFrom |   levelTo |    bid |   offer |   pairId |
-|---:|:--------------------|-------------------:|:---------------------|:----------|:--------------------------|:--------------------------|------------:|----------:|-------:|--------:|---------:|
-|  0 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |        -100 |      -100 | -99999 |  -99999 |       -2 |
-|  1 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |        -100 |      -100 |    116 |     174 |       -1 |
-|  2 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |          55 |        55 |    116 |     174 |        1 |
-|  3 | 2024-12-10 00:00:00 |                 37 | LKSDB-1              | T_LKSDB-1 | 2024-12-10 18:00:00+00:00 | 2024-12-10 18:30:00+00:00 |         145 |       145 |  99999 |   99999 |        2 |
-
-
-gen_df: 
-
-|    | time                |   physical_level |   extra |   curtailment |   generated |   settlementPeriod | settlementDate      |
-|---:|:--------------------|-----------------:|--------:|--------------:|------------:|-------------------:|:--------------------|
-|  0 | 2024-12-10 18:00:00 |            21.75 |       0 |        -18.75 |           3 |                 37 | 2024-12-10 00:00:00 |
-
-
-expected output:
--18.75 * 116
-"""
 
 
 @pytest.mark.parametrize(
@@ -511,3 +493,127 @@ def test_calculate_cashflow(
 ):
     cf = cashflow(bo_df, gen_df)
     assert_frame_equal(expected_result, cf, check_row_order=False)
+
+
+@pytest.mark.parametrize(
+    ("raw_df", "expected_result"),
+    [
+        (
+            pl.DataFrame(
+                {
+                    "dataset": ["PN", "PN", "PN", "PN", "PN", "PN"],
+                    "settlementDate": ["2021-02-10"] * 6,
+                    "settlementPeriod": [41, 42, 42, 42, 42, 43],
+                    "timeFrom": [
+                        "2021-02-10T20:00:00Z",
+                        "2021-02-10T20:30:00Z",
+                        "2021-02-10T20:36:00Z",
+                        "2021-02-10T20:47:00Z",
+                        "2021-02-10T20:59:00Z",
+                        "2021-02-10T21:00:00Z",
+                    ],
+                    "timeTo": [
+                        "2021-02-10T20:30:00Z",
+                        "2021-02-10T20:36:00Z",
+                        "2021-02-10T20:47:00Z",
+                        "2021-02-10T20:59:00Z",
+                        "2021-02-10T21:00:00Z",
+                        "2021-02-10T21:30:00Z",
+                    ],
+                    "levelFrom": [421, 421, 421, 158, 30, 0],
+                    "levelTo": [421, 421, 158, 30, 0, 0],
+                    "nationalGridBmUnit": ["WBURB-2"] * 6,
+                    "bmUnit": ["T_WBURB-2"] * 6,
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": [
+                        f"2021-02-10T{20 + i // 60:02d}:{i % 60:02d}:00Z"
+                        for i in range(90)
+                    ],
+                    "level": (
+                        [421.0] * 30  # 20:00-20:29 (30 mins at 421)
+                        + [421.0] * 6  # 20:30-20:35 (6 mins at 421)
+                        + [
+                            421.0 - (421.0 - 158.0) * i / 11 for i in range(11)
+                        ]  # 20:36-20:46 (11 mins declining)
+                        + [
+                            158.0 - (158.0 - 30.0) * i / 12 for i in range(12)
+                        ]  # 20:47-20:58 (12 mins declining)
+                        + [
+                            30.0 - 30.0 * i / 1 for i in range(1)
+                        ]  # 20:59 (1 min declining)
+                        + [0.0] * 30  # 21:00-21:29 (30 mins at 0)
+                    ),
+                    "settlementPeriod": [41] * 30 + [42] * 30 + [43] * 30,
+                    "settlementDate": ["2021-02-10"] * 90,
+                }
+            ).with_columns(
+                pl.col("time").str.strptime(
+                    format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime
+                ),
+                pl.col("level").cast(pl.Float64),
+            ),
+        ),
+        (
+            pl.DataFrame(
+                {
+                    "dataset": ["PN", "PN", "PN", "PN", "PN", "PN", "PN"],
+                    "settlementDate": [
+                        "2021-02-23",
+                        "2021-02-24",
+                        "2021-02-24",
+                        "2021-02-24",
+                        "2021-02-28",
+                        "2021-02-28",
+                        "2021-02-28",
+                    ],
+                    "settlementPeriod": [48, 1, 1, 2, 3, 4, 5],
+                    "timeFrom": [
+                        "2021-02-23T23:30:00Z",
+                        "2021-02-24T00:00:00Z",
+                        "2021-02-24T00:00:00Z",
+                        "2021-02-24T00:30:00Z",
+                        "2021-02-28T01:00:00Z",
+                        "2021-02-28T01:30:00Z",
+                        "2021-02-28T02:00:00Z",
+                    ],
+                    "timeTo": [
+                        "2021-02-24T00:00:00Z",
+                        "2021-02-24T00:30:00Z",
+                        "2021-02-24T00:30:00Z",
+                        "2021-02-24T01:00:00Z",
+                        "2021-02-28T01:30:00Z",
+                        "2021-02-28T02:00:00Z",
+                        "2021-02-28T02:30:00Z",
+                    ],
+                    "levelFrom": [0, 0, 0, 0, 421, 421, 421],
+                    "levelTo": [0, 0, 0, 0, 421, 421, 421],
+                    "nationalGridBmUnit": ["WBURB-2"] * 7,
+                    "bmUnit": ["T_WBURB-2"] * 7,
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": pl.datetime_range(start=pl.datetime(2021, 2, 23, 23, 30), end=pl.datetime(2021, 2, 28, 2, 30), interval="1m", eager=True, closed="left").to_list(),
+                    "level": [0.0] * 5850 + [421.0] * 90,  # Feb 23-28: zeros until Feb 28 01:00, then 421 until 02:30
+                    "settlementPeriod": (
+                        [48] * 30  # Feb 23
+                        + [period for _ in range(4) for period in range(1, 49) for _ in range(30)]  # Feb 24-27
+                        + [period for period in range(1, 6) for _ in range(30)]  # Feb 28
+                    ),
+                    "settlementDate": (
+                        ["2021-02-23"] * 30  # Feb 23
+                        + [f"2021-02-{24 + d:02d}" for d in range(4) for _ in range(24 * 60)]  # Feb 24-27
+                        + ["2021-02-28"] * 150  # Feb 28
+                    ),
+                }
+            ).with_columns(
+                pl.col("level").cast(pl.Float64),
+            ),
+        ),
+    ],
+)
+def test_smoothen_physical(raw_df: pl.DataFrame, expected_result: pl.DataFrame):
+    assert_frame_equal(smoothen_physical(raw_df), expected_result)
