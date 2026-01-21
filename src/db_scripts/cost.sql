@@ -72,7 +72,6 @@ CREATE TABLE replacement_cost AS (
     )
 );
 
-
 CREATE TABLE replacement_cost_system AS (
     SELECT system.settlementDate AS settlementDate, system.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, system.systemBuyPrice AS price, missing_after_so.extra_for_so * system.systemBuyPrice AS total FROM (
         (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
@@ -93,4 +92,10 @@ COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS
 -- Coverage for SO spending
 SELECT YEAR(settlementDate) AS "year", sum(total) AS totalCost FROM replacement_cost GROUP BY YEAR(settlementDate);
 
--- 
+-- Validate generation
+SELECT sums.settlementDate, sums.settlementPeriod, system.totalAcceptedOfferVolume - up AS upDiff, system.totalAcceptedBidVolume - down AS downDiff FROM system JOIN (
+    SELECT settlementDate, settlementPeriod, sum(extra) AS up, sum(curtailment) AS down FROM gen GROUP BY settlementDate, settlementPeriod
+) AS sums ON system.settlementDate = sums.settlementDate AND system.settlementPeriod = sums.settlementPeriod
+ORDER BY ABS(downDiff) DESC;
+
+-- Validate cashflows

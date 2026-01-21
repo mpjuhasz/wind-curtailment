@@ -68,6 +68,8 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
 
 def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
     """Smoothens the physical dataframe"""
+    # TODO why am I not using the timeTo here?
+    # TODO seems like it can happen, that there's no physical notification. What to do in this case?
     physical_smoothened = (
         physical.select(
             pl.col("timeFrom").alias("time"),
