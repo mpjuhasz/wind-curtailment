@@ -596,16 +596,35 @@ def test_calculate_cashflow(
             ),
             pl.DataFrame(
                 {
-                    "time": pl.datetime_range(start=pl.datetime(2021, 2, 23, 23, 30), end=pl.datetime(2021, 2, 28, 2, 30), interval="1m", eager=True, closed="left").to_list(),
-                    "level": [0.0] * 5850 + [421.0] * 90,  # Feb 23-28: zeros until Feb 28 01:00, then 421 until 02:30
+                    "time": pl.datetime_range(
+                        start=pl.datetime(2021, 2, 23, 23, 30),
+                        end=pl.datetime(2021, 2, 28, 2, 30),
+                        interval="1m",
+                        eager=True,
+                        closed="left",
+                    ).to_list(),
+                    "level": [0.0] * 5850
+                    + [421.0]
+                    * 90,  # Feb 23-28: zeros until Feb 28 01:00, then 421 until 02:30
                     "settlementPeriod": (
                         [48] * 30  # Feb 23
-                        + [period for _ in range(4) for period in range(1, 49) for _ in range(30)]  # Feb 24-27
-                        + [period for period in range(1, 6) for _ in range(30)]  # Feb 28
+                        + [
+                            period
+                            for _ in range(4)
+                            for period in range(1, 49)
+                            for _ in range(30)
+                        ]  # Feb 24-27
+                        + [
+                            period for period in range(1, 6) for _ in range(30)
+                        ]  # Feb 28
                     ),
                     "settlementDate": (
                         ["2021-02-23"] * 30  # Feb 23
-                        + [f"2021-02-{24 + d:02d}" for d in range(4) for _ in range(24 * 60)]  # Feb 24-27
+                        + [
+                            f"2021-02-{24 + d:02d}"
+                            for d in range(4)
+                            for _ in range(24 * 60)
+                        ]  # Feb 24-27
                         + ["2021-02-28"] * 150  # Feb 28
                     ),
                 }
@@ -616,4 +635,7 @@ def test_calculate_cashflow(
     ],
 )
 def test_smoothen_physical(raw_df: pl.DataFrame, expected_result: pl.DataFrame):
-    assert_frame_equal(smoothen_physical(raw_df), expected_result)
+    with pl.Config(tbl_rows=100, tbl_cols=20, fmt_str_lengths=100):
+        output = smoothen_physical(raw_df)
+
+        assert_frame_equal(output, expected_result)

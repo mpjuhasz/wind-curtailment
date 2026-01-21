@@ -79,10 +79,12 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
         .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
         .alias("to"),
     )
-
+    
+    # Currently only deduplicating, if there's an overlap with exactly the same start and end
     physical_deduplicated = physical_parsed.unique(
-        subset=["settlementDate", "settlementPeriod"], keep="last"
+        subset=["settlementDate", "settlementPeriod", "from", "to"], keep="last"
     ).select("settlementDate", "settlementPeriod", "from", "to", "levelFrom", "levelTo")
+
 
     full_time_range = pl.DataFrame(
         {
@@ -106,9 +108,8 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
                 pl.col("levelFrom")
                 + (pl.col("levelTo") - pl.col("levelFrom"))
                 * (
-                    pl.lit(1)
-                    # (pl.col("time").dt.total_minutes() - pl.col("from").dt.total_minutes())
-                    # / (pl.col("to").dt.total_minutes() - pl.col("from").dt.total_minutes())
+                    (pl.col("time").dt.minute().sub(pl.col("from").dt.minute()))
+                    / (pl.col("to").dt.minute().sub(pl.col("from").dt.minute()))
                 )
             ).alias("level").cast(pl.Float64),
             pl.col("settlementPeriod").cast(pl.Int64)
@@ -120,11 +121,11 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
         full_time_range.join(physical_smoothened_matched, on="time", how="anti")
     ).with_columns(
         pl.lit(0).alias("level").cast(pl.Float64),
-        pl.col("time").dt.strftime(format="%Y-%m-%d").alias("settlementDate"),
         (
-            (pl.col("time").dt.minute() // 30) * 1
-            + (pl.col("time").dt.hour() // 24) * 2
+            (pl.col("time").dt.minute() // 30 + 1) * 1
+            + (pl.col("time").dt.hour()) * 2
         ).alias("settlementPeriod").cast(pl.Int64),
+        pl.col("time").dt.strftime(format="%Y-%m-%d").alias("settlementDate"),
     ).select("time", "level", "settlementPeriod", "settlementDate")
 
     physical_smoothened = pl.concat(
