@@ -1,13 +1,13 @@
-CREATE TABLE ic AS SELECT * FROM read_csv('./*/indicative_cashflow/*/*.csv', filename=True, union_by_name=True);
+CREATE TABLE ic AS SELECT * FROM read_csv('./indicative_cashflow/*/*.csv', filename=True, union_by_name=True);
 ALTER TABLE ic DROP COLUMN column0;
 ALTER TABLE ic ADD COLUMN bm_unit VARCHAR;
-UPDATE ic SET bm_unit = SUBSTRING(filename, 32, LENGTH(filename) - 35);
-UPDATE ic SET bm_unit = SUBSTRING(filename, 34, LENGTH(filename) - 37) WHERE filename LIKE '%/offer/%';
+UPDATE ic SET bm_unit = SUBSTRING(filename, 27, LENGTH(filename) - 30);
+UPDATE ic SET bm_unit = SUBSTRING(filename, 29, LENGTH(filename) - 32) WHERE filename LIKE '%/offer/%';
 ALTER TABLE ic ADD COLUMN flow_type VARCHAR;
-UPDATE ic SET flow_type =  split(SUBSTRING(filename, 28, LENGTH(filename)), '/')[1];
+UPDATE ic SET flow_type =  split(SUBSTRING(filename, 23, LENGTH(filename)), '/')[1];
 
 CREATE TABLE bo AS SELECT * FROM read_csv(
-    './*/bid_offer/*.csv',
+    './bid_offer/*.csv',
     filename=True,
     union_by_name=True
 );
@@ -15,13 +15,13 @@ ALTER TABLE bo ADD COLUMN bm_unit VARCHAR;
 UPDATE bo SET bm_unit = SUBSTRING(filename, 18, LENGTH(filename) - 21);
 
 -- System-level data (buy- and sell-price, imbalance, etc)
-CREATE TABLE system AS SELECT * FROM read_csv('./*/imbalance_settlement.csv', filename=True, union_by_name=True);
+CREATE TABLE system AS SELECT * FROM read_csv('./imbalance_settlement.csv', filename=True, union_by_name=True);
 
 -- Total generation
-CREATE TABLE gen AS SELECT * FROM read_csv('./*/generation/total/*.csv', filename=True, union_by_name=True);
+CREATE TABLE gen AS SELECT * FROM read_csv('./generation/total/*.csv', filename=True, union_by_name=True);
 ALTER TABLE gen DROP COLUMN column0;
 ALTER TABLE gen ADD COLUMN bm_unit VARCHAR;
-UPDATE gen SET bm_unit = SUBSTRING(filename, 25, LENGTH(filename) - 28);
+UPDATE gen SET bm_unit = SUBSTRING(filename, 20, LENGTH(filename) - 23);
 
 -- Average system buy price recalculated from all the cashflows and all the extra generation for each period
 CREATE TABLE avg_price AS (
@@ -32,10 +32,10 @@ CREATE TABLE avg_price AS (
 );
 
 -- Generation with only SO-flagged acceptances (note, that only the EXTRA and CURTAILMENT values are usable in this)
-CREATE TABLE so AS SELECT * FROM read_csv('./*/generation/so_only/*.csv', filename=True, union_by_name=True);
+CREATE TABLE so AS SELECT * FROM read_csv('./generation/so_only/*.csv', filename=True, union_by_name=True);
 ALTER TABLE so DROP COLUMN column0;
 ALTER TABLE so ADD COLUMN bm_unit VARCHAR;
-UPDATE so SET bm_unit = SUBSTRING(filename, 27, LENGTH(filename) - 30);
+UPDATE so SET bm_unit = SUBSTRING(filename, 22, LENGTH(filename) - 25);
 
 CREATE TABLE wind AS SELECT * FROM read_csv('./wind_bm_units.csv');
 ALTER TABLE wind ADD COLUMN general_unit VARCHAR;
@@ -72,15 +72,18 @@ CREATE TABLE replacement_cost AS (
     )
 );
 
-CREATE TABLE replacement_cost_system AS (
-    SELECT system.settlementDate AS settlementDate, system.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, system.systemBuyPrice AS price, missing_after_so.extra_for_so * system.systemBuyPrice AS total FROM (
-        (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
-        JOIN system ON system.settlementDate = missing_after_so.settlementDate AND system.settlementPeriod = missing_after_so.settlementPeriod
-    )
-);
+-- CREATE TABLE replacement_cost_system AS (
+--     SELECT system.settlementDate AS settlementDate, system.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, system.systemBuyPrice AS price, missing_after_so.extra_for_so * system.systemBuyPrice AS total FROM (
+--         (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
+--         JOIN system ON system.settlementDate = missing_after_so.settlementDate AND system.settlementPeriod = missing_after_so.settlementPeriod
+--     )
+-- );
 
 -- These three are given very distinct unit names, so merging them by hand
 UPDATE wind_gen SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
+
+
+SELECT count(*) AS totalRows FROM wind_gen;
 
 -- Getting the yearly aggregates
 COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2021 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2021.csv';
@@ -91,6 +94,19 @@ COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS
 
 -- Coverage for SO spending
 SELECT YEAR(settlementDate) AS "year", sum(total) AS totalCost FROM replacement_cost GROUP BY YEAR(settlementDate);
+
+-- Total curtailment and direct cost per year:
+SELECT YEAR(settlementDate) AS date, sum(curtailment) * -1 / 1000000 AS totalCurtailmentTwh, SUM(totalCashflow) / 1000000 AS totalCostMillion FROM wind_gen GROUP BY YEAR(settlementDate);
+
+-- Total replacement cost per year:
+select year(settlementDate) AS year, sum(total) /1000000 as totalMillion from replacement_cost GROUP BY year(settlementDate);
+
+-- 2024 top units
+SELECT general_unit, sum(totalCashflow) / 1000000 AS totalMillion, sum(curtailment) * -1 / 1000 AS totalCurtailmentGWh, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2024 GROUP BY general_unit ORDER BY totalCurtailmentGWh DESC LIMIT 10;
+
+-- Random day: 12/06/2025
+SELECT settlementDate, ROUND(SUM(curtailment) * -1) AS totalCurtailment, ROUND(SUM(totalCashflow)) / 1000000 AS costMillion FROM wind_gen WHERE settlementDate = '2025-06-12' GROUP BY settlementDate;
+SELECT settlementDate, ROUND(SUM(total)) / 1000000 AS costMillion FROM replacement_cost WHERE settlementDate = '2025-06-12' GROUP BY settlementDate;
 
 -- Validate generation
 SELECT sums.settlementDate, sums.settlementPeriod, system.totalAcceptedOfferVolume - up AS upDiff, system.totalAcceptedBidVolume - down AS downDiff FROM system JOIN (

@@ -79,6 +79,8 @@ async def _elexon_get_request_async(
         async with session.get(url) as response:
             if response.status == 200:
                 data = await response.json()
+                if attempt > 0:
+                    print("-" * 30)
                 return pl.DataFrame(data.get("data"))
             elif response.status == 429:
                 delay = delays[attempt]
