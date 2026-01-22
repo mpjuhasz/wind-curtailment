@@ -37,8 +37,8 @@ def run_from_config(config_path: str, output_folder: str):
                 continue
             else:
                 # restricting the search to those periods where we had acceptances
-                to_time = _acceptance.select(pl.col("time").max()).item()
-                from_time = _acceptance.select(pl.col("time").min()).item()
+                to_time = _acceptance.select(pl.col("settlementDate").max()).item()
+                from_time = _acceptance.select(pl.col("settlementDate").min()).item()
             
             if output_path.exists():
                 if not retry_empty:

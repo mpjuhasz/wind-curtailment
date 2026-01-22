@@ -20,18 +20,14 @@ from src.elexon.utils import (
 
 
 def downsample_aggregate_for_bm_unit(
-    bm_unit: str,
-    from_time: str,
-    to_time: str,
+    physical: Optional[pl.DataFrame],
+    acceptances: Optional[pl.DataFrame],
     downsample_frequency: str,
     energy_unit: Literal["MWh", "GWh"],
-) -> tuple[Optional[pl.DataFrame], Optional[pl.DataFrame], Optional[pl.DataFrame], Optional[pl.DataFrame]]:
+) -> tuple[Optional[pl.DataFrame], Optional[pl.DataFrame]]:
     """Daily aggregates for the bm unit generation and curtailment"""
-    physical = asyncio.run(get_physical(bm_unit, from_time, to_time))
-    acceptances = asyncio.run(get_acceptances(bm_unit, from_time, to_time))
-
     if physical is None and acceptances is None:
-        return None, None, None, None
+        return None, None
 
     physical_smoothened = smoothen_physical(physical)
     agg_so_only = None
@@ -49,7 +45,7 @@ def downsample_aggregate_for_bm_unit(
         acceptances, physical_smoothened, downsample_frequency, energy_unit
     )
 
-    return agg, agg_so_only, acceptances, physical
+    return agg, agg_so_only
 
 
 def save_with_empty_default(df: Optional[pl.DataFrame], path: str) -> None:
@@ -78,11 +74,22 @@ def downsample_for_config(config_path: str, output_folder: str):
     safe_create_dir(output_folder / "physical")
 
     for unit in track(config["units"], description="Getting generation data:"):
-        output_path = Path(f"{output_folder}/generation/{unit}.csv")
+        output_path = Path(f"{output_folder}/generation/total/{unit}.csv")
         if output_path.exists():
             continue
-        agg, agg_so_only, acceptances, physical = downsample_aggregate_for_bm_unit(
-            unit, from_time, to_time, downsample_frequency, energy_unit
+        
+        if Path(f"{output_folder}/acceptance/{unit}.csv").exists():
+            acceptances = pl.read_csv(f"{output_folder}/acceptance/{unit}.csv")
+        else:
+            acceptances = asyncio.run(get_acceptances(unit, from_time, to_time))
+        
+        if Path(f"{output_folder}/physical/{unit}.csv").exists():
+            physical = pl.read_csv(f"{output_folder}/physical/{unit}.csv")
+        else:
+            physical = asyncio.run(get_physical(unit, from_time, to_time))
+        
+        agg, agg_so_only = downsample_aggregate_for_bm_unit(
+            physical, acceptances, downsample_frequency, energy_unit
         )
 
         save_with_empty_default(agg, f"{output_folder}/generation/total/{unit}.csv")

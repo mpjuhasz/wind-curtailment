@@ -2,7 +2,7 @@ from_time: "2021-01-01T00:00:00Z"
 to_time: "2026-01-01T00:00:01Z"
 downsample_frequency: "30m"
 energy_unit: "MWh"
-retry_empty: true
+retry_empty: false
 units:
 - E_ABERDARE
 - T_ABRBO-1
