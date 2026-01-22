@@ -85,7 +85,6 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
         subset=["settlementDate", "settlementPeriod", "from", "to"], keep="last"
     ).select("settlementDate", "settlementPeriod", "from", "to", "levelFrom", "levelTo")
 
-
     full_time_range = pl.DataFrame(
         {
             "time": pl.datetime_range(
@@ -103,6 +102,7 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
             physical_deduplicated,
             (pl.col("time").ge(pl.col("from")) & pl.col("time").lt(pl.col("to"))),
         )
+        .unique(subset=["time"], keep="last")
         .with_columns(
             (
                 pl.col("levelFrom")

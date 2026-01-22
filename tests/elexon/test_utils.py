@@ -495,9 +495,58 @@ def test_calculate_cashflow(
     assert_frame_equal(expected_result, cf, check_row_order=False)
 
 
+
 @pytest.mark.parametrize(
     ("raw_df", "expected_result"),
     [
+        # NOTE: not sure about this, one, it currenlty fails with taking into account the last row that overwrites the first
+        # I don't actually know whether this ever happens, so will have to look at the PNs first
+        (
+            pl.DataFrame(
+                {
+                    "dataset": ["PN"] * 4,
+                    "settlementDate": ["2021-02-28"] * 4,
+                    "settlementPeriod": [21, 21, 22, 22],
+                    "timeFrom": [
+                        "2021-02-28T10:00:00Z",
+                        "2021-02-28T10:01:00Z",
+                        "2021-02-28T10:30:00Z",
+                        "2021-02-28T10:30:00Z",
+                    ],
+                    "timeTo": [
+                        "2021-02-28T10:01:00Z",
+                        "2021-02-28T10:30:00Z",
+                        "2021-02-28T11:00:00Z",
+                        "2021-02-28T10:40:00Z",
+                    ],
+                    "levelFrom": [421, 446, 446, 446],
+                    "levelTo": [446, 446, 446, 410],
+                    "nationalGridBmUnit": ["WBURB-2"] * 4,
+                    "bmUnit": ["T_WBURB-2"] * 4,
+                }
+            ),
+            pl.DataFrame(
+                {
+                    "time": [
+                        f"2021-02-28T{10 + i // 60:02d}:{i % 60:02d}:00Z"
+                        for i in range(60)
+                    ],
+                    "level": (
+                        [421.0] * 1  # 10:00 (1 min at 446 after ramping)
+                        + [446.0] * 29  # 10:01-10:29 (29 mins at 446)
+                        # + [446.0 - 36.0 * i / 10 for i in range(10)] # coming down to 410
+                        + [446.0] * 30  # 10:30-10:59 (30 mins at 446)
+                    ),
+                    "settlementPeriod": [21] * 30 + [22] * 30,
+                    "settlementDate": ["2021-02-28"] * 60,
+                }
+            ).with_columns(
+                pl.col("time").str.strptime(
+                    format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime
+                ),
+                pl.col("level").cast(pl.Float64),
+            ),
+        ),
         (
             pl.DataFrame(
                 {
