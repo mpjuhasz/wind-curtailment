@@ -12,7 +12,7 @@ CREATE TABLE bo AS SELECT * FROM read_csv(
     union_by_name=True
 );
 ALTER TABLE bo ADD COLUMN bm_unit VARCHAR;
-UPDATE bo SET bm_unit = SUBSTRING(filename, 18, LENGTH(filename) - 21);
+UPDATE bo SET bm_unit = SUBSTRING(filename, 13, LENGTH(filename) - 16);
 
 -- System-level data (buy- and sell-price, imbalance, etc)
 CREATE TABLE system AS SELECT * FROM read_csv('./imbalance_settlement.csv', filename=True, union_by_name=True);
@@ -41,6 +41,13 @@ CREATE TABLE wind AS SELECT * FROM read_csv('./wind_bm_units.csv');
 ALTER TABLE wind ADD COLUMN general_unit VARCHAR;
 UPDATE wind SET general_unit = split(bm_unit, '-')[1];
 
+CREATE TABLE units AS SELECT * FROM read_json("../../raw/bm_units.json");
+ALTER TABLE units ADD COLUMN bm_unit VARCHAR;
+UPDATE units SET bm_unit = elexonBmUnit;
+ALTER TABLE units ADD COLUMN general_unit VARCHAR;
+UPDATE units SET general_unit = split(bm_unit, '-')[1];
+UPDATE units SET fuelType = 'BESS' WHERE (bmUnitName LIKE '%BESS%' OR bmUnitName LIKE '%Battery%') AND (fuelType IS NULL OR fuelType == 'OTHER');
+
 CREATE TABLE unit_metadata AS SELECT * FROM read_csv('../bm_unit_with_repd.csv');
 ALTER TABLE unit_metadata ADD COLUMN general_unit VARCHAR;
 UPDATE unit_metadata SET general_unit = split(bm_unit, '-')[1];
@@ -62,6 +69,10 @@ CREATE TABLE wind_gen AS (
 CREATE TABLE wind_gen_so AS (
     SELECT * FROM so JOIN (SELECT * FROM ic INNER JOIN wind_with_metadata ON ic.bm_unit = wind_with_metadata.bm_unit WHERE ic.flow_type = 'bid') AS other
     ON so.bm_unit = other.bm_unit AND so.settlementDate = other.settlementDate AND so.settlementPeriod = other.settlementPeriod
+);
+
+CREATE TABLE wind_gen_no_ic AS (
+    SELECT * FROM gen INNER JOIN wind_with_metadata ON gen.bm_unit = wind_with_metadata.bm_unit
 );
 
 -- Am I looking at the right thing with SO? Should only be wind generation!
@@ -116,6 +127,9 @@ SELECT sums.settlementDate, sums.settlementPeriod, system.totalAcceptedOfferVolu
 ) AS sums ON system.settlementDate = sums.settlementDate AND system.settlementPeriod = sums.settlementPeriod
 ORDER BY ABS(downDiff) DESC;
 
+-- Yearly aggregate of total generation, curtailment and ratio:
+select sum(curtailment) * -1 / 1000000 AS totalCurtailmentTWh, sum(generated) / 1000000 AS totalGeneratedTWh, ROUND(sum(curtailment) * -100 / sum(generated), 2) AS percentadeDiscarded, YEAR("settlementDate") as "year" from wind_gen_no_ic where "year" > 2020 AND "year" < 2026 group by "year";
+
 -- Total costs:
 COPY(
     SELECT curtailment.date, ROUND(totalCurtailmentTwh, 3) AS totalCurtailmentTwh, ROUND(curtailmentCost, 1) AS curtailmentCost, ROUND(replacementCost, 1) AS replacementCost FROM (
@@ -127,3 +141,39 @@ COPY(
 ) TO "./analysis/yearly.csv";
 
 SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", SUM(curtailment) * -1 AS totalCurtailmnet, SUM(totalCashflow) AS curtailmentCost FROM wind_gen WHERE totalCashflow > 0 GROUP BY "year", "month";
+
+--  What types are getting turned on WHEN there's curtailment?
+
+SELECT fuel, sum(extra) / 1000 AS totalUpGWh FROM (
+    SELECT up.bm_unit AS bm_unit, units.fuelType AS fuel, settlementDate, settlementPeriod, extra FROM (SELECT gen.settlementDate, gen.settlementPeriod, bm_unit, extra FROM gen JOIN (
+        SELECT settlementDate, settlementPeriod, SUM(curtailment) < 0 AS curtailed FROM wind_gen  GROUP BY settlementDate, settlementPeriod
+    ) AS curtailmentPeriods
+    ON curtailmentPeriods.settlementDate = gen.settlementDate AND curtailmentPeriods.settlementPeriod = gen.settlementPeriod
+    WHERE gen.extra > 0 AND curtailmentPeriods.curtailed) AS up JOIN units ON up.bm_unit = units.bm_unit
+) GROUP BY fuel ORDER BY sum(extra) DESC;
+
+
+-- TODO: this could be another one of the bar charts. 
+-- Which units make the biggest killing on this?
+-- Need to group by general_unit AND fuelType, because WBURB for example has both Battery AND CCGT!
+SELECT general_unit, fuelType, sum(extra) / 1000 AS totalUpGWh FROM (
+    SELECT units.general_unit as general_unit, up.bm_unit AS bm_unit, units.fuelType AS fuelType, settlementDate, settlementPeriod, extra
+    FROM (
+        SELECT gen.settlementDate, gen.settlementPeriod, bm_unit, extra FROM gen JOIN (
+            SELECT settlementDate, settlementPeriod, SUM(curtailment) < 0 AS curtailed FROM wind_gen  GROUP BY settlementDate, settlementPeriod
+        ) AS curtailmentPeriods ON curtailmentPeriods.settlementDate = gen.settlementDate AND curtailmentPeriods.settlementPeriod = gen.settlementPeriod
+        WHERE gen.extra > 0 AND curtailmentPeriods.curtailed
+    ) AS up JOIN units ON up.bm_unit = units.bm_unit
+) GROUP BY general_unit, fuelType ORDER BY sum(extra) DESC;
+
+
+-- What was the offer price when the UP was accepted?
+SELECT settlementDate, settlementPeriod, 
+    MIN(offer) FILTER (WHERE accepted) AS avg_offer_accepted,
+    MIN(offer) FILTER (WHERE NOT accepted) AS avg_offer_not_accepted
+FROM (
+    SELECT gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
+    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
+    JOIN gen
+    ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
+) GROUP BY settlementDate, settlementPeriod;
