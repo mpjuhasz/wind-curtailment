@@ -144,13 +144,14 @@ SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", SUM(cur
 
 --  What types are getting turned on WHEN there's curtailment?
 
-SELECT fuel, sum(extra) / 1000 AS totalUpGWh FROM (
+
+COPY (SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuel, sum(extra) / 1000 AS totalUpGWh FROM (
     SELECT up.bm_unit AS bm_unit, units.fuelType AS fuel, settlementDate, settlementPeriod, extra FROM (SELECT gen.settlementDate, gen.settlementPeriod, bm_unit, extra FROM gen JOIN (
         SELECT settlementDate, settlementPeriod, SUM(curtailment) < 0 AS curtailed FROM wind_gen  GROUP BY settlementDate, settlementPeriod
     ) AS curtailmentPeriods
     ON curtailmentPeriods.settlementDate = gen.settlementDate AND curtailmentPeriods.settlementPeriod = gen.settlementPeriod
     WHERE gen.extra > 0 AND curtailmentPeriods.curtailed) AS up JOIN units ON up.bm_unit = units.bm_unit
-) GROUP BY fuel ORDER BY sum(extra) DESC;
+) WHERE YEAR(settlementDate) < 2026 GROUP BY fuel, YEAR(settlementDate), MONTH(settlementDate) ORDER BY YEAR(settlementDate), MONTH(settlementDate), sum(extra) DESC) TO "./analysis/yearly_up_fuel_type.csv";
 
 
 -- TODO: this could be another one of the bar charts. 
