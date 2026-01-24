@@ -83,12 +83,6 @@ CREATE TABLE replacement_cost AS (
     )
 );
 
--- CREATE TABLE replacement_cost_system AS (
---     SELECT system.settlementDate AS settlementDate, system.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, system.systemBuyPrice AS price, missing_after_so.extra_for_so * system.systemBuyPrice AS total FROM (
---         (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
---         JOIN system ON system.settlementDate = missing_after_so.settlementDate AND system.settlementPeriod = missing_after_so.settlementPeriod
---     )
--- );
 
 -- These three are given very distinct unit names, so merging them by hand
 UPDATE wind_gen SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
@@ -178,3 +172,20 @@ FROM (
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 ) GROUP BY settlementDate, settlementPeriod;
+
+
+-- All first pair offer prices saved
+COPY (
+    SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
+    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
+    JOIN gen
+    ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
+) TO "./analysis/all_offers.csv";
+
+-- All bids:
+COPY (
+    SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
+    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
+    JOIN gen
+    ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
+) TO "./analysis/all_bids.csv";
