@@ -26,6 +26,9 @@ raw:
   - name: AGV_2024/
     source: https://www.elexon.co.uk/bsc/data/open-settlement-data/
     description: GSP group level demand data per settlement period for 2024
+  - name: BMUFuelType.xlsx
+    source: https://www.elexon.co.uk/documents/data/operational-data/bmu-fuel-type/
+    description: more detailed fuel types of the bm units than `bm_units.json`
 
 
 interim:

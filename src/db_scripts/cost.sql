@@ -41,12 +41,20 @@ CREATE TABLE wind AS SELECT * FROM read_csv('./wind_bm_units.csv');
 ALTER TABLE wind ADD COLUMN general_unit VARCHAR;
 UPDATE wind SET general_unit = split(bm_unit, '-')[1];
 
-CREATE TABLE units AS SELECT * FROM read_json("../../raw/bm_units.json");
-ALTER TABLE units ADD COLUMN bm_unit VARCHAR;
-UPDATE units SET bm_unit = elexonBmUnit;
-ALTER TABLE units ADD COLUMN general_unit VARCHAR;
-UPDATE units SET general_unit = split(bm_unit, '-')[1];
-UPDATE units SET fuelType = 'BESS' WHERE (bmUnitName LIKE '%BESS%' OR bmUnitName LIKE '%Battery%') AND (fuelType IS NULL OR fuelType == 'OTHER');
+CREATE TABLE raw_units AS SELECT * FROM read_json("../../raw/bm_units.json");
+ALTER TABLE raw_units ADD COLUMN bm_unit VARCHAR;
+UPDATE raw_units SET bm_unit = elexonBmUnit;
+ALTER TABLE raw_units ADD COLUMN general_unit VARCHAR;
+UPDATE raw_units SET general_unit = split(bm_unit, '-')[1];
+-- UPDATE units SET fuelType = 'BESS' WHERE (bmUnitName LIKE '%BESS%' OR bmUnitName LIKE '%Battery%') AND (fuelType IS NULL OR fuelType == 'OTHER');
+CREATE TABLE unit_fuel_types AS SELECT * FROM read_xlsx("../../raw/BMUFuelType.xlsx", header=true, empty_as_varchar=true);
+CREATE TABLE units AS SELECT * FROM raw_units JOIN unit_fuel_types ON raw_units.bm_unit = unit_fuel_types."SETT UNIT ID";
+DROP TABLE raw_units;
+DROP TABLE unit_fuel_types;
+UPDATE units SET "BMRS FUEL TYPE" = "REG FUEL TYPE" WHERE "BMRS FUEL TYPE" = 'OTHER';
+UPDATE units SET fuelType = "BMRS FUEL TYPE" WHERE fuelType IS NULL OR fuelType = 'OTHER';
+UPDATE units SET fuelType = 'CCGT' WHERE fuelType = 'GAS';
+UPDATE units SET fuelType = 'BESS' WHERE fuelType = 'BATTERY';
 
 CREATE TABLE unit_metadata AS SELECT * FROM read_csv('../bm_unit_with_repd.csv');
 ALTER TABLE unit_metadata ADD COLUMN general_unit VARCHAR;
@@ -154,8 +162,6 @@ COPY (SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", f
 ) WHERE YEAR(settlementDate) < 2026 GROUP BY fuel, YEAR(settlementDate), MONTH(settlementDate) ORDER BY YEAR(settlementDate), MONTH(settlementDate), sum(extra) DESC) TO "./analysis/yearly_up_fuel_type.csv";
 
 
--- TODO: this could be another one of the bar charts. 
--- Which units make the biggest killing on this?
 -- Need to group by general_unit AND fuelType, because WBURB for example has both Battery AND CCGT!
 SELECT general_unit, fuelType, sum(extra) / 1000 AS totalUpGWh FROM (
     SELECT units.general_unit as general_unit, up.bm_unit AS bm_unit, units.fuelType AS fuelType, settlementDate, settlementPeriod, extra
@@ -200,7 +206,37 @@ COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCas
 COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCashflow) AS totalCost, sum(extra) / 1000 AS totalExtraGWh, FIRST(bmUnitName) AS site_name, FIRST(long) AS long, FIRST(lat) AS lat FROM extra_gen JOIN generator_metadata ON extra_gen.bm_unit = generator_metadata.bm_unit WHERE YEAR(settlementDate) = 2024 AND totalCashflow > 0 GROUP BY general_unit, fuelType ORDER BY totalCost DESC LIMIT 20) TO './analysis/aggregate_extras/2024.csv';
 COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCashflow) AS totalCost, sum(extra) / 1000 AS totalExtraGWh, FIRST(bmUnitName) AS site_name, FIRST(long) AS long, FIRST(lat) AS lat FROM extra_gen JOIN generator_metadata ON extra_gen.bm_unit = generator_metadata.bm_unit WHERE YEAR(settlementDate) = 2025 AND totalCashflow > 0 GROUP BY general_unit, fuelType ORDER BY totalCost DESC LIMIT 20) TO './analysis/aggregate_extras/2025.csv';
 
+-- Top losers, i.e. who are those that placed bids cheaper than the existing ones, but didn't get them accepted?
 
+CREATE TABLE first_offers AS (
+    SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
+    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
+    JOIN gen
+    ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
+)
+
+SELECT o.bm_unit, skip_count, mean_skip_diff, gspGroupName, fuelType, num_acceptance FROM 
+(SELECT bm_unit, COUNT(offer) AS skip_count, AVG(diff) AS mean_skip_diff, COUNT(accepted) FILTER(WHERE accepted = true) AS num_acceptance FROM (
+    SELECT first_offers.bm_unit, first_offers.accepted AS accepted, first_offers.offer AS offer, max_offer.offer AS limit_in_period, limit_in_period - first_offers.offer AS diff, first_offers.settlementDate, first_offers.settlementPeriod
+    FROM first_offers JOIN (SELECT MAX(offer) AS offer, settlementDate, settlementPeriod FROM first_offers WHERE accepted GROUP BY settlementDate, settlementPeriod) AS max_offer
+    ON first_offers.settlementDate = max_offer.settlementDate AND first_offers.settlementPeriod = max_offer.settlementPeriod
+    WHERE first_offers.offer < limit_in_period AND first_offers.offer > -999  AND first_offers.settlementDate > '2025-01-01'
+) GROUP BY bm_unit) AS o JOIN units
+ON units.bm_unit = o.bm_unit
+-- WHERE fuelType != 'CCGT'
+ORDER BY skip_count DESC;
+
+
+SELECT * FROM (SELECT MAX(offer) AS offer, settlementDate, settlementPeriod FROM first_offers WHERE accepted GROUP BY settlementDate, settlementPeriod) AS max_offer JOIN (
+    PIVOT (SELECT settlementDate, settlementPeriod, bm_unit, levelTo, offer FROM bo WHERE pairId = 1 AND bm_unit IN ('2__LRWED001', 'E_ROARB-1', 'E_BARNB-1') AND offer < 999) AS temp ON bm_unit USING FIRST(offer)
+) AS piv ON max_offer.settlementPeriod = piv.settlementPeriod AND max_offer.settlementDate = piv.settlementDate;
+
+COPY (SELECT settlementDate, settlementPeriod, offs.bm_unit, levelTo, offer, site_name, lat, long FROM (
+    SELECT settlementDate, settlementPeriod, bm_unit, levelTo, offer FROM bo WHERE pairId = 1 AND bm_unit IN ('2__LRWED001', 'E_ROARB-1', 'E_BARNB-1') AND offer < 999 AND YEAR(settlementDate) = '2025'
+) AS offs JOIN generator_metadata ON generator_metadata.bm_unit = offs.bm_unit) TO './analysis/skipped_batteries_2025.csv';
+
+
+COPY (SELECT bm_unit, levelTo, settlementDate, settlementPeriod FROM first_offers WHERE YEAR(settlementDate) = '2025' AND accepted) TO './analysis/first_acceptances_2025.csv';
 
 -- All bids:
 COPY (
