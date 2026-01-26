@@ -227,16 +227,28 @@ ON units.bm_unit = o.bm_unit
 ORDER BY skip_count DESC;
 
 
-SELECT * FROM (SELECT MAX(offer) AS offer, settlementDate, settlementPeriod FROM first_offers WHERE accepted GROUP BY settlementDate, settlementPeriod) AS max_offer JOIN (
-    PIVOT (SELECT settlementDate, settlementPeriod, bm_unit, levelTo, offer FROM bo WHERE pairId = 1 AND bm_unit IN ('2__LRWED001', 'E_ROARB-1', 'E_BARNB-1') AND offer < 999) AS temp ON bm_unit USING FIRST(offer)
-) AS piv ON max_offer.settlementPeriod = piv.settlementPeriod AND max_offer.settlementDate = piv.settlementDate;
+SELECT count(accepted) FILTER(WHERE accepted) AS a, count(accepted) FILTER (WHERE NOT accepted) AS r, settlementDate, settlementPeriod FROM (SELECT first_offers.bm_unit, first_offers.accepted AS accepted, first_offers.offer AS offer, max_offer.offer AS limit_in_period, limit_in_period - first_offers.offer AS diff, first_offers.settlementDate, first_offers.settlementPeriod
+FROM first_offers JOIN (SELECT MAX(offer) AS offer, settlementDate, settlementPeriod FROM first_offers WHERE accepted GROUP BY settlementDate, settlementPeriod) AS max_offer
+ON first_offers.settlementDate = max_offer.settlementDate AND first_offers.settlementPeriod = max_offer.settlementPeriod
+WHERE first_offers.offer < limit_in_period AND first_offers.offer > -999  AND first_offers.settlementDate > '2025-01-01') GROUP BY settlementDate, settlementPeriod ORDER BY a DESC;
+
 
 COPY (SELECT settlementDate, settlementPeriod, offs.bm_unit, levelTo, offer, site_name, lat, long FROM (
-    SELECT settlementDate, settlementPeriod, bm_unit, levelTo, offer FROM bo WHERE pairId = 1 AND bm_unit IN ('2__LRWED001', 'E_ROARB-1', 'E_BARNB-1') AND offer < 999 AND YEAR(settlementDate) = '2025'
+    SELECT settlementDate, settlementPeriod, bm_unit, levelTo, offer FROM first_offers WHERE bm_unit IN ('2__LRWED001', 'E_ROARB-1', 'E_BARNB-1') AND NOT accepted AND YEAR(settlementDate) = '2025'
 ) AS offs JOIN generator_metadata ON generator_metadata.bm_unit = offs.bm_unit) TO './analysis/skipped_batteries_2025.csv';
 
 
-COPY (SELECT bm_unit, levelTo, settlementDate, settlementPeriod FROM first_offers WHERE YEAR(settlementDate) = '2025' AND accepted) TO './analysis/first_acceptances_2025.csv';
+
+CREATE TABLE acceptances_2025 AS (
+    SELECT units.bm_unit AS bm_unit, levelTo, offer, settlementDate, settlementPeriod, b.site_name, bmUnitName FROM (
+        SELECT a.bm_unit AS bm_unit, levelTo, offer, settlementDate, settlementPeriod, site_name FROM (
+            SELECT bm_unit, levelTo, offer, settlementDate, settlementPeriod FROM first_offers WHERE YEAR(settlementDate) = '2025' AND accepted
+        ) AS a LEFT JOIN generator_metadata ON a.bm_unit = generator_metadata.bm_unit
+    ) AS b JOIN units ON units.bm_unit = b.bm_unit
+);
+UPDATE acceptances_2025 SET site_name = bmUnitName WHERE site_name IS NULL;
+
+COPY (SELECT * FROM acceptances_2025) TO './analysis/first_acceptances_2025.csv';
 
 -- All bids:
 COPY (
