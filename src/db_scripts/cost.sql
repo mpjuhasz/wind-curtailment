@@ -268,3 +268,48 @@ COPY (
 ) TO "./analysis/beatrice_bids.csv";
 
 
+-- Dispatch times:
+
+CREATE TABLE acc AS SELECT * FROM read_csv('./acceptance/*.csv', filename=True, union_by_name=True);
+ALTER TABLE acc ADD COLUMN bm_unit VARCHAR;
+UPDATE acc SET bm_unit = SUBSTRING(filename, 14, LENGTH(filename) - 17);
+
+
+-- Leaving this here for reference, but of course it's not this simple. One needs to merge together those that are consecutive for each bm_unit, because oftern different levels are instructed by the minute.
+COPY (
+    SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuelType, dispatchTime, count(dispatch_times.bm_unit) FROM
+    (select bm_unit, settlementDate, settlementPeriodFrom, timeTo - timeFrom AS dispatchTime from acc where levelFrom != 0 OR levelTo != 0) AS dispatch_times JOIN units ON dispatch_times.bm_unit = units.bm_unit
+    WHERE fuelType IN ('BESS', 'CCGT') AND YEAR(settlementDate) > 2020 AND YEAR(settlementDate) < 2026 GROUP BY YEAR(settlementDate), MONTH(settlementDate), fuelType, dispatchTime
+    ORDER BY "year", "month", fuelType, dispatchTime
+) TO './analysis/dispatch_times.csv';
+
+
+COPY (
+    SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuelType, dispatchTime, count(dispatch_times.bm_unit) AS "count" FROM
+    (SELECT 
+        bm_unit,
+        settlementDate,
+        MAX(timeTo) - MIN(timeFrom) AS dispatchTime,
+    FROM (
+        SELECT 
+            bm_unit,
+            settlementDate,
+            timeTo,
+            timeFrom,
+            -- Create a group identifier: increment when there's a gap
+            SUM(CASE WHEN overlap THEN 0 ELSE 1 END) OVER (PARTITION BY bm_unit, settlementDate ORDER BY timeFrom) AS interval_group
+        FROM (
+            SELECT 
+                bm_unit, 
+                LAG(bm_unit, 1) OVER (ORDER BY bm_unit, settlementDate, timeFrom) AS lagged_bm_unit,
+                settlementDate,
+                timeFrom,
+                timeTo,
+                LAG(timeTo, 1) OVER (ORDER BY bm_unit, settlementDate, timeFrom) AS laggedTimeTo,
+                laggedTimeTo = timeFrom AND bm_unit = lagged_bm_unit AS overlap
+            FROM acc WHERE levelFrom != 0 OR levelTo != 0 ORDER BY bm_unit, settlementDate, timeFrom
+        )
+    ) GROUP BY bm_unit, settlementDate, interval_group) AS dispatch_times JOIN units ON dispatch_times.bm_unit = units.bm_unit
+    WHERE fuelType IN ('BESS', 'CCGT') AND YEAR(settlementDate) > 2020 AND YEAR(settlementDate) < 2026 GROUP BY YEAR(settlementDate), MONTH(settlementDate), fuelType, dispatchTime
+    ORDER BY "year", "month", fuelType, dispatchTime
+) TO './analysis/dispatch_times_aggregate.csv';
