@@ -105,11 +105,11 @@ UPDATE wind_gen SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T
 SELECT count(*) AS totalRows FROM wind_gen;
 
 -- Getting the yearly aggregates
-COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2021 AND totalCashflow > 0 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2021.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2022 AND totalCashflow > 0 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2022.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2023 AND totalCashflow > 0 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2023.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2024 AND totalCashflow > 0 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2024.csv';
-COPY (SELECT general_unit, sum(totalCashflow) AS total, sum(curtailment) * -1 AS totalCurtailment, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2025 AND totalCashflow > 0 GROUP BY general_unit ORDER BY total DESC) TO './analysis/aggregate_curtailments/2025.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS totalCost, sum(curtailment) * -1 / 1000 AS totalCurtailmentGWh, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2021 AND totalCashflow > 0 GROUP BY general_unit ORDER BY totalCost DESC) TO './analysis/aggregate_curtailments/2021.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS totalCost, sum(curtailment) * -1 / 1000 AS totalCurtailmentGWh, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2022 AND totalCashflow > 0 GROUP BY general_unit ORDER BY totalCost DESC) TO './analysis/aggregate_curtailments/2022.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS totalCost, sum(curtailment) * -1 / 1000 AS totalCurtailmentGWh, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2023 AND totalCashflow > 0 GROUP BY general_unit ORDER BY totalCost DESC) TO './analysis/aggregate_curtailments/2023.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS totalCost, sum(curtailment) * -1 / 1000 AS totalCurtailmentGWh, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2024 AND totalCashflow > 0 GROUP BY general_unit ORDER BY totalCost DESC) TO './analysis/aggregate_curtailments/2024.csv';
+COPY (SELECT general_unit, sum(totalCashflow) AS totalCost, sum(curtailment) * -1 / 1000 AS totalCurtailmentGWh, FIRST(site_name) AS site_name, FIRST(lat) AS lat, FIRST(long) AS long FROM wind_gen WHERE YEAR(settlementDate) = 2025 AND totalCashflow > 0 GROUP BY general_unit ORDER BY totalCost DESC) TO './analysis/aggregate_curtailments/2025.csv';
 
 -- Coverage for SO spending
 SELECT YEAR(settlementDate) AS "year", sum(total) AS totalCost FROM replacement_cost GROUP BY YEAR(settlementDate);
@@ -267,6 +267,24 @@ COPY (
     WHERE gen.bm_unit LIKE 'T_BEATO%'
 ) TO "./analysis/beatrice_bids.csv";
 
+-- Odd bids
+CREATE TABLE first_bids AS (
+    SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
+    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
+    JOIN gen
+    ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
+);
+
+SELECT bm_unit, COUNT(diff) AS c FROM (
+    SELECT 
+        bm_unit, 
+        settlementDate,
+        bid,
+        LAG(bid, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedBid,
+        ABS(laggedBid - bid) AS diff
+    FROM first_bids
+) WHERE diff > 0 AND diff < 0.5
+GROUP BY bm_unit ORDER BY c DESC;
 
 -- Dispatch times:
 
