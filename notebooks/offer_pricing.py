@@ -84,7 +84,33 @@ def _(alt, pl):
 
 @app.cell
 def _(alt, bids, pl):
-    _data =  bids.filter(pl.col("bm_unit").str.starts_with("T_MOWEO"))
+    _data =  bids.filter(pl.col("bm_unit").str.starts_with("T_DOREW"))
+    _d = _data.group_by(["settlementDate"]).agg(
+        pl.col("bid").mean().alias("avg_bid"),
+        pl.col("bid").max().alias("max_bid"),
+        pl.col("bid").min().alias("min_bid"),
+    ).sort(["settlementDate"])
+
+
+    _chart = alt.Chart(_d.to_pandas()).mark_line().encode(
+        x="settlementDate:T",
+        y="avg_bid:Q",
+        tooltip=["settlementDate:T", "avg_bid"]
+    ) + alt.Chart(_d.to_pandas()).mark_area(opacity=0.3).encode(
+        x="settlementDate:T",
+        y="max_bid:Q",
+        y2="min_bid:Q",
+        tooltip=["settlementDate:T", "max_bid", "min_bid"]
+    ).interactive()
+
+
+    _chart.show()
+    return
+
+
+@app.cell
+def _(alt, bids, pl):
+    _data =  bids.filter(pl.col("bm_unit").str.starts_with("T_SGRWO"))
     _d = _data.group_by(["settlementDate"]).agg(
         pl.col("bid").mean().alias("avg_bid"),
         pl.col("bid").max().alias("max_bid"),

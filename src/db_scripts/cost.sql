@@ -275,16 +275,85 @@ CREATE TABLE first_bids AS (
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 );
 
-SELECT bm_unit, COUNT(diff) AS c FROM (
+-- This isn't too informative
+SELECT bm_unit, laggedBmUnit, COUNT(diff) AS c FROM (
     SELECT 
         bm_unit, 
+        accepted,
         settlementDate,
+        settlementPeriod,
         bid,
         LAG(bid, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedBid,
-        ABS(laggedBid - bid) AS diff
+        ABS(laggedBid - bid) AS diff,
+        LAG(accepted, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedAccepted,
+        LAG(bm_unit, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedBmUnit,
     FROM first_bids
-) WHERE diff > 0 AND diff < 0.5
-GROUP BY bm_unit ORDER BY c DESC;
+) WHERE diff > 0 AND diff < 0.5 AND accepted AND NOT laggedAccepted
+GROUP BY bm_unit, laggedBmUnit ORDER BY c DESC;
+
+-- Strictly the ones that are undercutting others:
+-- For each bid I want the count of other bids in the same period that it has undercut by a maximum of 0.5
+
+-- This is wildly inefficient
+SELECT f1.settlementDate, f1.settlementPeriod, f1.bm_unit, f1.bid, count(f2.bid) AS undercut
+FROM first_bids AS f1 JOIN first_bids AS f2 
+ON f1.settlementDate = f2.settlementDate 
+    AND f1.settlementPeriod = f2.settlementPeriod 
+    AND f1.bid < f2.bid 
+    AND f1.bid + 0.5 > f2.bid
+GROUP BY f1.settlementDate, f1.settlementPeriod, f1.bm_unit, f1.bid
+ORDER BY undercut DESC;
+
+-- I'm not certain that this reflects the issues I'm looking for. Also, it'll probably need location data 
+-- to make it comparable and useful
+SELECT bm_unit, COUNT(*) FILTER(WHERE otherBid < bid AND otherBid > bid - 0.5) AS undercutBids
+FROM (
+    SELECT f1.settlementDate, f1.settlementPeriod, f1.bm_unit, f1.bid AS bid, f2.bid AS otherBid
+    FROM (
+        SELECT * 
+        FROM first_bids 
+        -- I want only windfarm for this, so negative prices
+        WHERE bid < 0 
+        AND YEAR(settlementDate) = '2022' 
+        AND accepted
+        -- AND MONTH(settlementDate) = '10'
+    ) AS f1 CROSS JOIN first_bids AS f2 
+    WHERE f1.settlementDate = f2.settlementDate AND f1.settlementPeriod = f2.settlementPeriod 
+) GROUP BY bm_unit
+ORDER BY undercutBids DESC;
+
+
+-- Looking at long spans of consistent pricing, like we saw with Beatrice:
+
+SELECT 
+    bm_unit, 
+    COUNT(interval_group) AS pricingLength,
+    MIN(settlementDate) AS "start",
+    MAX(settlementDate) AS "end",
+    AVG(bid) AS avgBidPrice,
+    COUNT(accepted) AS acceptedCount
+FROM (
+    SELECT 
+        bm_unit,
+        settlementDate,
+        settlementPeriod,
+        bid,
+        accepted,
+        SUM(CASE WHEN fixedPrice THEN 0 ELSE 1 END) OVER (PARTITION BY bm_unit ORDER BY settlementDate, settlementPeriod) AS interval_group
+    FROM (
+        SELECT 
+            bm_unit, 
+            settlementDate,
+            settlementPeriod,
+            bid,
+            LAG(bid, 1) OVER (ORDER BY bm_unit, settlementDate, settlementPeriod) AS laggedBid,
+            ABS(laggedBid - bid) < 0.5 AS fixedPrice,
+            accepted,
+        FROM first_bids WHERE bid < 0 ORDER BY bm_unit, settlementDate, settlementPeriod
+    ) ORDER BY bm_unit, settlementDate, settlementPeriod
+) GROUP BY bm_unit, interval_group
+ORDER BY acceptedCount DESC;
+
 
 -- Dispatch times:
 
