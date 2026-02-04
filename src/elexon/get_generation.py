@@ -77,17 +77,17 @@ def downsample_for_config(config_path: str, output_folder: str):
         output_path = Path(f"{output_folder}/generation/total/{unit}.csv")
         if output_path.exists():
             continue
-        
+
         if Path(f"{output_folder}/acceptance/{unit}.csv").exists():
             acceptances = pl.read_csv(f"{output_folder}/acceptance/{unit}.csv")
         else:
             acceptances = asyncio.run(get_acceptances(unit, from_time, to_time))
-        
+
         if Path(f"{output_folder}/physical/{unit}.csv").exists():
             physical = pl.read_csv(f"{output_folder}/physical/{unit}.csv")
         else:
             physical = asyncio.run(get_physical(unit, from_time, to_time))
-        
+
         agg, agg_so_only = downsample_aggregate_for_bm_unit(
             physical, acceptances, downsample_frequency, energy_unit
         )

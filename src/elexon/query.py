@@ -85,7 +85,8 @@ async def _elexon_get_request_async(
             elif response.status == 429:
                 delay = delays[attempt]
                 print(
-                    f"Rate limited (429), retrying in {delay:.1f}s (attempt {attempt + 1}/{max_retries})"
+                    f"Rate limited (429), retrying in {delay:.1f}s (attempt"
+                    f" {attempt + 1}/{max_retries})"
                 )
                 await asyncio.sleep(delay)
             else:
@@ -99,7 +100,10 @@ async def get_indicative_imbalance_settlement(
     session: aiohttp.ClientSession, settlementDate: str, settlementPeriod: int
 ):
     """Gets the indicative imbalance settlement for a particular settlementPeriod."""
-    url = f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/system-prices/{settlementDate}/{settlementPeriod}"
+    url = (
+        f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/system-prices"
+        f"/{settlementDate}/{settlementPeriod}"
+    )
     return await _elexon_get_request_async(session, url)
 
 

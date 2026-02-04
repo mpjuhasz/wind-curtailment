@@ -100,7 +100,7 @@ CREATE TABLE replacement_cost AS (
 
 -- Comparing the replacement cost with the system price
 COPY (
-SELECT system.settlementDate, system.settlementPeriod, price as replacementPrice, systemBuyPrice 
+SELECT system.settlementDate, system.settlementPeriod, price as replacementPrice, systemBuyPrice
 FROM system JOIN replacement_cost ON system.settlementDate = replacement_cost.settlementDate AND system.settlementPeriod = replacement_cost.settlementPeriod
 ) TO './analysis/system_vs_replacement.csv';
 
@@ -179,12 +179,12 @@ SELECT general_unit, fuelType, sum(extra) / 1000 AS totalUpGWh FROM (
 
 
 -- What was the offer price when the UP was accepted?
-SELECT settlementDate, settlementPeriod, 
+SELECT settlementDate, settlementPeriod,
     MIN(offer) FILTER (WHERE accepted) AS avg_offer_accepted,
     MIN(offer) FILTER (WHERE NOT accepted) AS avg_offer_not_accepted
 FROM (
     SELECT gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
+    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 ) GROUP BY settlementDate, settlementPeriod;
@@ -193,7 +193,7 @@ FROM (
 -- All first pair offer prices saved
 COPY (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
+    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 ) TO "./analysis/all_offers.csv";
@@ -213,7 +213,7 @@ COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCas
 -- Top losers, i.e. who are those that placed bids cheaper than the existing ones, but didn't get them accepted?
 CREATE TABLE first_offers AS (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
+    FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 )
@@ -239,7 +239,7 @@ COPY (SELECT * FROM acceptances_2025) TO './analysis/first_acceptances_2025.csv'
 -- All bids:
 COPY (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
+    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 ) TO "./analysis/all_bids.csv";
@@ -248,7 +248,7 @@ COPY (
 COPY (
     SELECT bm_unit, levelTo, accepted, bid, beatrice.settlementDate AS settlementDate, beatrice.settlementPeriod AS settlementPeriod, systemSellPrice AS systemPrice, systemPrice - bid AS diff FROM (
         SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-        FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
+        FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo
         JOIN gen
         ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
         WHERE gen.bm_unit LIKE 'T_BEATO%'
@@ -258,41 +258,41 @@ COPY (
 -- Odd bids
 CREATE TABLE first_bids AS (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
+    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 );
 
 
--- I'm not certain that this reflects the issues I'm looking for. Also, it'll probably need location data 
+-- I'm not certain that this reflects the issues I'm looking for. Also, it'll probably need location data
 -- to make it comparable and useful
 SELECT bm_unit, COUNT(*) FILTER(WHERE otherBid < bid AND otherBid > bid - 0.5) AS undercutBids
 FROM (
     SELECT f1.settlementDate, f1.settlementPeriod, f1.bm_unit, f1.bid AS bid, f2.bid AS otherBid
     FROM (
-        SELECT * 
-        FROM first_bids 
+        SELECT *
+        FROM first_bids
         -- I want only windfarm for this, so negative prices
-        WHERE bid < 0 
-        AND YEAR(settlementDate) = '2022' 
+        WHERE bid < 0
+        AND YEAR(settlementDate) = '2022'
         AND accepted
         -- AND MONTH(settlementDate) = '10'
-    ) AS f1 CROSS JOIN first_bids AS f2 
-    WHERE f1.settlementDate = f2.settlementDate AND f1.settlementPeriod = f2.settlementPeriod 
+    ) AS f1 CROSS JOIN first_bids AS f2
+    WHERE f1.settlementDate = f2.settlementDate AND f1.settlementPeriod = f2.settlementPeriod
 ) GROUP BY bm_unit
 ORDER BY undercutBids DESC;
 
 
 -- Looking at long spans of consistent pricing, like we saw with Beatrice:
-SELECT 
-    bm_unit, 
+SELECT
+    bm_unit,
     COUNT(interval_group) AS pricingLength,
     MIN(settlementDate) AS "start",
     MAX(settlementDate) AS "end",
     AVG(bid) AS avgBidPrice,
     COUNT(accepted) AS acceptedCount
 FROM (
-    SELECT 
+    SELECT
         bm_unit,
         settlementDate,
         settlementPeriod,
@@ -300,8 +300,8 @@ FROM (
         accepted,
         SUM(CASE WHEN fixedPrice THEN 0 ELSE 1 END) OVER (PARTITION BY bm_unit ORDER BY settlementDate, settlementPeriod) AS interval_group
     FROM (
-        SELECT 
-            bm_unit, 
+        SELECT
+            bm_unit,
             settlementDate,
             settlementPeriod,
             bid,
@@ -323,12 +323,12 @@ UPDATE acc SET bm_unit = SUBSTRING(filename, 14, LENGTH(filename) - 17);
 -- Dispatch times
 COPY (
     SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuelType, dispatchTime, count(dispatch_times.bm_unit) AS "count" FROM
-    (SELECT 
+    (SELECT
         bm_unit,
         settlementDate,
         MAX(timeTo) - MIN(timeFrom) AS dispatchTime,
     FROM (
-        SELECT 
+        SELECT
             bm_unit,
             settlementDate,
             timeTo,
@@ -336,8 +336,8 @@ COPY (
             -- Create a group identifier: increment when there's a gap
             SUM(CASE WHEN overlap THEN 0 ELSE 1 END) OVER (PARTITION BY bm_unit, settlementDate ORDER BY timeFrom) AS interval_group
         FROM (
-            SELECT 
-                bm_unit, 
+            SELECT
+                bm_unit,
                 LAG(bm_unit, 1) OVER (ORDER BY bm_unit, settlementDate, timeFrom) AS lagged_bm_unit,
                 settlementDate,
                 timeFrom,

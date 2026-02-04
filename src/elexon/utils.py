@@ -79,7 +79,7 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
         .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
         .alias("to"),
     )
-    
+
     # Currently only deduplicating, if there's an overlap with exactly the same start and end
     physical_deduplicated = physical_parsed.unique(
         subset=["settlementDate", "settlementPeriod", "from", "to"], keep="last"
@@ -111,22 +111,28 @@ def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
                     (pl.col("time").dt.minute().sub(pl.col("from").dt.minute()))
                     / (pl.col("to").dt.minute().sub(pl.col("from").dt.minute()))
                 )
-            ).alias("level").cast(pl.Float64),
-            pl.col("settlementPeriod").cast(pl.Int64)
+            )
+            .alias("level")
+            .cast(pl.Float64),
+            pl.col("settlementPeriod").cast(pl.Int64),
         )
         .select("time", "level", "settlementPeriod", "settlementDate")
     )
 
     physical_smoothened_unmatched = (
-        full_time_range.join(physical_smoothened_matched, on="time", how="anti")
-    ).with_columns(
-        pl.lit(0).alias("level").cast(pl.Float64),
-        (
-            (pl.col("time").dt.minute() // 30 + 1) * 1
-            + (pl.col("time").dt.hour()) * 2
-        ).alias("settlementPeriod").cast(pl.Int64),
-        pl.col("time").dt.strftime(format="%Y-%m-%d").alias("settlementDate"),
-    ).select("time", "level", "settlementPeriod", "settlementDate")
+        (full_time_range.join(physical_smoothened_matched, on="time", how="anti"))
+        .with_columns(
+            pl.lit(0).alias("level").cast(pl.Float64),
+            (
+                (pl.col("time").dt.minute() // 30 + 1) * 1
+                + (pl.col("time").dt.hour()) * 2
+            )
+            .alias("settlementPeriod")
+            .cast(pl.Int64),
+            pl.col("time").dt.strftime(format="%Y-%m-%d").alias("settlementDate"),
+        )
+        .select("time", "level", "settlementPeriod", "settlementDate")
+    )
 
     physical_smoothened = pl.concat(
         [physical_smoothened_matched, physical_smoothened_unmatched]
@@ -363,7 +369,6 @@ def calculate_cashflow(df: pl.DataFrame) -> float:
     # for debugging: https://github.com/pola-rs/polars/issues/7704
     try:
         bid_price_table = format_bid_offer_table(
-            # TODO: I need to make sure this is fine here, and there aren't multiple for some other reason
             df.select(
                 "levelFrom", "levelTo", "bid", "offer", "curtailment", "extra", "pairId"
             ).unique()

@@ -25,13 +25,21 @@ def run_from_config(config_path: str, output_folder: str):
     for cashflow_type in ["bid", "offer"]:
         type_folder = Path(output_folder) / cashflow_type
         safe_create_dir(type_folder)
-        
-        for unit in track(config["units"], description=f"Getting indicative cashflow data ({cashflow_type}):"):
+
+        for unit in track(
+            config["units"],
+            description=f"Getting indicative cashflow data ({cashflow_type}):",
+        ):
             output_path = Path(type_folder / f"{unit}.csv")
-            
-            _acceptance = pl.read_csv(str(output_path).replace(f"indicative_cashflow/{cashflow_type}", "acceptance"))
-            
-            # This is to reduce the number of calls we're making to the API: if there's no acceptance, there shouldn't be
+
+            _acceptance = pl.read_csv(
+                str(output_path).replace(
+                    f"indicative_cashflow/{cashflow_type}", "acceptance"
+                )
+            )
+
+            # This is to reduce the number of calls we're making to the API: if there's
+            # no acceptance, there shouldn't be
             # a cashflow for it
             if _acceptance.is_empty():
                 continue
@@ -39,24 +47,27 @@ def run_from_config(config_path: str, output_folder: str):
                 # restricting the search to those periods where we had acceptances
                 to_time = _acceptance.select(pl.col("settlementDate").max()).item()
                 from_time = _acceptance.select(pl.col("settlementDate").min()).item()
-            
+
             if output_path.exists():
                 if not retry_empty:
                     continue
                 else:
                     _df = pl.read_csv(output_path)
-                    
+
                     if not _df.is_empty():
                         continue
                     else:
                         print(f"No data found for {unit}, retrying...")
 
-            dfs = asyncio.run(fetch_unit_cashflows(unit, from_time, to_time, cashflow_type))
+            dfs = asyncio.run(
+                fetch_unit_cashflows(unit, from_time, to_time, cashflow_type)
+            )
 
             if dfs:
                 agg = pl.concat(dfs)
                 if agg is not None:
-                    # NOTE: if more granular data is needed, then we need to unnest the `bidOfferPairCashflows`
+                    # NOTE: if more granular data is needed, then we need to unnest
+                    # x§the `bidOfferPairCashflows`
                     agg.write_csv(output_path)
                     continue
                 else:

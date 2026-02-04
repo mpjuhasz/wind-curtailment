@@ -18,21 +18,22 @@ def run_from_config(config_path: str, output_folder: str):
         yaml.safe_dump(config, f)
 
     bo_folder = output_folder + "/bid_offer"
-    gen_folder = output_folder  # run_gen creates its own folders for generation and acceptances
+    gen_folder = (
+        output_folder  # run_gen creates its own folders for generation and acceptances
+    )
     ic_folder = output_folder + "/indicative_cashflow"
     cashflow_folder = output_folder + "/calculated_cashflow"
-    
+
     for f in [bo_folder, gen_folder, ic_folder, cashflow_folder]:
         p = Path(f)
         if not p.exists():
             os.mkdir(p)
-    
+
     run_bo(config_path, bo_folder)
     run_gen(config_path, gen_folder)
     run_ic(config_path, ic_folder)
-    
-    
-    # turning off calc cf for now to speed things up. 
+
+    # turning off calc cf for now to speed things up.
     calc_cf(bo_folder, gen_folder + "/generation/total", cashflow_folder)
 
 
