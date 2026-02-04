@@ -46,7 +46,7 @@ ALTER TABLE raw_units ADD COLUMN bm_unit VARCHAR;
 UPDATE raw_units SET bm_unit = elexonBmUnit;
 ALTER TABLE raw_units ADD COLUMN general_unit VARCHAR;
 UPDATE raw_units SET general_unit = split(bm_unit, '-')[1];
--- UPDATE units SET fuelType = 'BESS' WHERE (bmUnitName LIKE '%BESS%' OR bmUnitName LIKE '%Battery%') AND (fuelType IS NULL OR fuelType == 'OTHER');
+
 CREATE TABLE unit_fuel_types AS SELECT * FROM read_xlsx("../../raw/BMUFuelType.xlsx", header=true, empty_as_varchar=true);
 CREATE TABLE units AS SELECT * FROM raw_units JOIN unit_fuel_types ON raw_units.bm_unit = unit_fuel_types."SETT UNIT ID";
 DROP TABLE raw_units;
@@ -98,6 +98,13 @@ CREATE TABLE replacement_cost AS (
 );
 
 
+-- Comparing the replacement cost with the system price
+COPY (
+SELECT system.settlementDate, system.settlementPeriod, price as replacementPrice, systemBuyPrice 
+FROM system JOIN replacement_cost ON system.settlementDate = replacement_cost.settlementDate AND system.settlementPeriod = replacement_cost.settlementPeriod
+) TO './analysis/system_vs_replacement.csv';
+
+
 -- These three are given very distinct unit names, so merging them by hand
 UPDATE wind_gen SET general_unit = 'T_CLDW' WHERE general_unit IN ('T_CLDCW', 'T_CLDNW', 'T_CLDSW');
 
@@ -115,7 +122,6 @@ COPY (SELECT general_unit, sum(totalCashflow) AS totalCost, sum(curtailment) * -
 SELECT YEAR(settlementDate) AS "year", sum(total) AS totalCost FROM replacement_cost GROUP BY YEAR(settlementDate);
 
 -- Total curtailment and direct cost per year:
--- This is in agreement with the REF values!
 SELECT YEAR(settlementDate) AS date, sum(curtailment) * -1 / 1000000 AS totalCurtailmentTwh, SUM(totalCashflow) / 1000000 AS totalCostMillion FROM wind_gen WHERE totalCashflow > 0 GROUP BY YEAR(settlementDate);
 
 -- Total replacement cost per year:
@@ -151,8 +157,6 @@ COPY(
 SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", SUM(curtailment) * -1 AS totalCurtailmnet, SUM(totalCashflow) AS curtailmentCost FROM wind_gen WHERE totalCashflow > 0 GROUP BY "year", "month";
 
 --  What types are getting turned on WHEN there's curtailment?
-
-
 COPY (SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuel, sum(extra) / 1000 AS totalUpGWh FROM (
     SELECT up.bm_unit AS bm_unit, units.fuelType AS fuel, settlementDate, settlementPeriod, extra FROM (SELECT gen.settlementDate, gen.settlementPeriod, bm_unit, extra FROM gen JOIN (
         SELECT settlementDate, settlementPeriod, SUM(curtailment) < 0 AS curtailed FROM wind_gen  GROUP BY settlementDate, settlementPeriod
@@ -207,30 +211,12 @@ COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCas
 COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCashflow) AS totalCost, sum(extra) / 1000 AS totalExtraGWh, FIRST(bmUnitName) AS site_name, FIRST(long) AS long, FIRST(lat) AS lat FROM extra_gen JOIN generator_metadata ON extra_gen.bm_unit = generator_metadata.bm_unit WHERE YEAR(settlementDate) = 2025 AND totalCashflow > 0 GROUP BY general_unit, fuelType ORDER BY totalCost DESC LIMIT 20) TO './analysis/aggregate_extras/2025.csv';
 
 -- Top losers, i.e. who are those that placed bids cheaper than the existing ones, but didn't get them accepted?
-
 CREATE TABLE first_offers AS (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
     FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo 
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 )
-
-SELECT o.bm_unit, skip_count, mean_skip_diff, gspGroupName, fuelType, num_acceptance FROM 
-(SELECT bm_unit, COUNT(offer) AS skip_count, AVG(diff) AS mean_skip_diff, COUNT(accepted) FILTER(WHERE accepted = true) AS num_acceptance FROM (
-    SELECT first_offers.bm_unit, first_offers.accepted AS accepted, first_offers.offer AS offer, max_offer.offer AS limit_in_period, limit_in_period - first_offers.offer AS diff, first_offers.settlementDate, first_offers.settlementPeriod
-    FROM first_offers JOIN (SELECT MAX(offer) AS offer, settlementDate, settlementPeriod FROM first_offers WHERE accepted GROUP BY settlementDate, settlementPeriod) AS max_offer
-    ON first_offers.settlementDate = max_offer.settlementDate AND first_offers.settlementPeriod = max_offer.settlementPeriod
-    WHERE first_offers.offer < limit_in_period AND first_offers.offer > -999  AND first_offers.settlementDate > '2025-01-01'
-) GROUP BY bm_unit) AS o JOIN units
-ON units.bm_unit = o.bm_unit
--- WHERE fuelType != 'CCGT'
-ORDER BY skip_count DESC;
-
-
-SELECT count(accepted) FILTER(WHERE accepted) AS a, count(accepted) FILTER (WHERE NOT accepted) AS r, settlementDate, settlementPeriod FROM (SELECT first_offers.bm_unit, first_offers.accepted AS accepted, first_offers.offer AS offer, max_offer.offer AS limit_in_period, limit_in_period - first_offers.offer AS diff, first_offers.settlementDate, first_offers.settlementPeriod
-FROM first_offers JOIN (SELECT MAX(offer) AS offer, settlementDate, settlementPeriod FROM first_offers WHERE accepted GROUP BY settlementDate, settlementPeriod) AS max_offer
-ON first_offers.settlementDate = max_offer.settlementDate AND first_offers.settlementPeriod = max_offer.settlementPeriod
-WHERE first_offers.offer < limit_in_period AND first_offers.offer > -999  AND first_offers.settlementDate > '2025-01-01') GROUP BY settlementDate, settlementPeriod ORDER BY a DESC;
 
 
 COPY (SELECT settlementDate, settlementPeriod, offs.bm_unit, levelTo, offer, site_name, lat, long FROM (
@@ -260,11 +246,13 @@ COPY (
 
 -- Beatrice bids:
 COPY (
-    SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
-    FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
-    JOIN gen
-    ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
-    WHERE gen.bm_unit LIKE 'T_BEATO%'
+    SELECT bm_unit, levelTo, accepted, bid, beatrice.settlementDate AS settlementDate, beatrice.settlementPeriod AS settlementPeriod, systemSellPrice AS systemPrice, systemPrice - bid AS diff FROM (
+        SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
+        FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo 
+        JOIN gen
+        ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
+        WHERE gen.bm_unit LIKE 'T_BEATO%'
+    ) AS beatrice JOIN system ON beatrice.settlementDate = system.settlementDate AND beatrice.settlementPeriod = system.settlementPeriod
 ) TO "./analysis/beatrice_bids.csv";
 
 -- Odd bids
@@ -275,34 +263,6 @@ CREATE TABLE first_bids AS (
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
 );
 
--- This isn't too informative
-SELECT bm_unit, laggedBmUnit, COUNT(diff) AS c FROM (
-    SELECT 
-        bm_unit, 
-        accepted,
-        settlementDate,
-        settlementPeriod,
-        bid,
-        LAG(bid, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedBid,
-        ABS(laggedBid - bid) AS diff,
-        LAG(accepted, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedAccepted,
-        LAG(bm_unit, 1) OVER (ORDER BY settlementDate, settlementPeriod, bid DESC) AS laggedBmUnit,
-    FROM first_bids
-) WHERE diff > 0 AND diff < 0.5 AND accepted AND NOT laggedAccepted
-GROUP BY bm_unit, laggedBmUnit ORDER BY c DESC;
-
--- Strictly the ones that are undercutting others:
--- For each bid I want the count of other bids in the same period that it has undercut by a maximum of 0.5
-
--- This is wildly inefficient
-SELECT f1.settlementDate, f1.settlementPeriod, f1.bm_unit, f1.bid, count(f2.bid) AS undercut
-FROM first_bids AS f1 JOIN first_bids AS f2 
-ON f1.settlementDate = f2.settlementDate 
-    AND f1.settlementPeriod = f2.settlementPeriod 
-    AND f1.bid < f2.bid 
-    AND f1.bid + 0.5 > f2.bid
-GROUP BY f1.settlementDate, f1.settlementPeriod, f1.bm_unit, f1.bid
-ORDER BY undercut DESC;
 
 -- I'm not certain that this reflects the issues I'm looking for. Also, it'll probably need location data 
 -- to make it comparable and useful
@@ -324,7 +284,6 @@ ORDER BY undercutBids DESC;
 
 
 -- Looking at long spans of consistent pricing, like we saw with Beatrice:
-
 SELECT 
     bm_unit, 
     COUNT(interval_group) AS pricingLength,
@@ -356,21 +315,12 @@ ORDER BY acceptedCount DESC;
 
 
 -- Dispatch times:
-
 CREATE TABLE acc AS SELECT * FROM read_csv('./acceptance/*.csv', filename=True, union_by_name=True);
 ALTER TABLE acc ADD COLUMN bm_unit VARCHAR;
 UPDATE acc SET bm_unit = SUBSTRING(filename, 14, LENGTH(filename) - 17);
 
 
--- Leaving this here for reference, but of course it's not this simple. One needs to merge together those that are consecutive for each bm_unit, because oftern different levels are instructed by the minute.
-COPY (
-    SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuelType, dispatchTime, count(dispatch_times.bm_unit) FROM
-    (select bm_unit, settlementDate, settlementPeriodFrom, timeTo - timeFrom AS dispatchTime from acc where levelFrom != 0 OR levelTo != 0) AS dispatch_times JOIN units ON dispatch_times.bm_unit = units.bm_unit
-    WHERE fuelType IN ('BESS', 'CCGT') AND YEAR(settlementDate) > 2020 AND YEAR(settlementDate) < 2026 GROUP BY YEAR(settlementDate), MONTH(settlementDate), fuelType, dispatchTime
-    ORDER BY "year", "month", fuelType, dispatchTime
-) TO './analysis/dispatch_times.csv';
-
-
+-- Dispatch times
 COPY (
     SELECT YEAR(settlementDate) AS "year", MONTH(settlementDate) AS "month", fuelType, dispatchTime, count(dispatch_times.bm_unit) AS "count" FROM
     (SELECT 
