@@ -1,0 +1,82 @@
+import asyncio
+from pathlib import Path
+
+import pandas as pd
+import polars as pl
+import typer
+import yaml
+from rich.progress import track
+
+from src.elexon.query import fetch_unit_cashflows
+from src.elexon.utils import safe_create_dir
+
+
+def run_from_config(config_path: str, output_folder: str):
+    with open(config_path, "r") as f:
+        config = yaml.safe_load(f)
+
+    with open(Path(output_folder) / "config.yaml", "w") as f:
+        yaml.safe_dump(config, f)
+
+    from_time = config["from_time"]
+    to_time = config["to_time"]
+    retry_empty = config["retry_empty"]
+
+    for cashflow_type in ["bid", "offer"]:
+        type_folder = Path(output_folder) / cashflow_type
+        safe_create_dir(type_folder)
+
+        for unit in track(
+            config["units"],
+            description=f"Getting indicative cashflow data ({cashflow_type}):",
+        ):
+            output_path = Path(type_folder / f"{unit}.csv")
+
+            _acceptance = pl.read_csv(
+                str(output_path).replace(
+                    f"indicative_cashflow/{cashflow_type}", "acceptance"
+                )
+            )
+
+            # This is to reduce the number of calls we're making to the API: if there's
+            # no acceptance, there shouldn't be
+            # a cashflow for it
+            if _acceptance.is_empty():
+                continue
+            else:
+                # restricting the search to those periods where we had acceptances
+                to_time = _acceptance.select(pl.col("settlementDate").max()).item()
+                from_time = _acceptance.select(pl.col("settlementDate").min()).item()
+
+            if output_path.exists():
+                if not retry_empty:
+                    continue
+                else:
+                    _df = pl.read_csv(output_path)
+
+                    if not _df.is_empty():
+                        continue
+                    else:
+                        print(f"No data found for {unit}, retrying...")
+
+            dfs = asyncio.run(
+                fetch_unit_cashflows(unit, from_time, to_time, cashflow_type)
+            )
+
+            if dfs:
+                agg = pl.concat(dfs)
+                if agg is not None:
+                    # NOTE: if more granular data is needed, then we need to unnest
+                    # x§the `bidOfferPairCashflows`
+                    agg.write_csv(output_path)
+                    continue
+                else:
+                    print(f"Aggregate is None for {unit}")
+            else:
+                print(f"No valid days found for {unit}")
+
+            pd.DataFrame().to_csv(output_path)
+
+
+if __name__ == "__main__":
+    typer.run(run_from_config)

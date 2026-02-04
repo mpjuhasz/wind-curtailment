@@ -10,7 +10,7 @@ raw:
     description: Simplified geo file for the UK country boundaries
   - name: bm_units_with_locations.xlsx
     source: https://wooden-knee-d53.notion.site/UK-Wind-Curtailment-Monitor-Methodology-71475d0b7cfd4edb97d6397b358f4118
-    description: Hand-created mapping from BMU to windfarm site 
+    description: Hand-created mapping from BMU to windfarm site
   - name: bm_units.json
     source: https://data.elexon.co.uk/bmrs/api/v1/reference/bmunits/all
     description: All units to name of the plant
@@ -23,21 +23,27 @@ raw:
   - name: uk_counties_buc.geojson
     source: https://geoportal.statistics.gov.uk/datasets/d3bcd109c2c6468b893549bde805a47b_0/explore
     description: county boundaries in the UK
+  - name: AGV_2024/
+    source: https://www.elexon.co.uk/bsc/data/open-settlement-data/
+    description: GSP group level demand data per settlement period for 2024
+  - name: BMUFuelType.xlsx
+    source: https://www.elexon.co.uk/documents/data/operational-data/bmu-fuel-type/
+    description: more detailed fuel types of the bm units than `bm_units.json`
 
 
 interim:
   - name: gb-transmission-map/
-    sources: 
+    sources:
       - GB-transmission-system-boundary-zone-map.pdf
       - uk_buc.geojson
-    description: Mapping the transmission boundaries onto the UK map, and redrawing the boundaries in QGIS found in it for later processing 
+    description: Mapping the transmission boundaries onto the UK map, and redrawing the boundaries in QGIS found in it for later processing
   - name: wikidata_to_repd/
     sources:
       - wikidata_to_repd.py
       - bm_units.py
     description: Mapping wikidata to REPD in order to match the REPD sites to their BM units
   - name: hackcollective_data.csv
-    sources: 
+    sources:
       - bm_units_with_locations.xlsx
       - bm_units.py
     description: cleaned version of the hackcollective manual mapping
@@ -58,7 +64,7 @@ processed:
     source: process_repd.csv
     description: a cleaned version of the REPD dataset with lat-long
   - name: extra_generators_metadata.csv
-    source: visualise_imbalance_timeline.py 
+    source: visualise_imbalance_timeline.py
     description: metadata (location and site-name) for 40 generation sites (non-REPD)
   - name: boundary.json
     source: manual
@@ -67,5 +73,5 @@ processed:
     source: db_scripts/queries.sql
     description: aggregated data for 2025 October curtailment and generation per site
   - name: bm_unit_with_repd.csv
-    source: bm_units.py 
+    source: bm_units.py
     description: final matching of BM units to the REPD database

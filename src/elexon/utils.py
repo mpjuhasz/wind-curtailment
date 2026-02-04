@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 from typing import Literal, Optional
 
 import polars as pl
@@ -5,12 +7,19 @@ import polars as pl
 ENERGY_MULTIPLIERS = {"MWh": 1, "GWh": 1 / 1_000}
 
 
+def safe_create_dir(path: Path) -> None:
+    """Creates a dir if it doesn't already exist"""
+    if not path.exists():
+        os.mkdir(path)
+
+
 def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     """
     Discarding overwritten accepted bids and offers
 
-    Acceptance data comes back as a list of acceptances that might or might not be overwritten by a later acceptance
-    covering the same time period. To handle this, the acceptance levels are interpolated to 1 minute time intervals,
+    Acceptance data comes back as a list of acceptances that might or might not
+    be overwritten by a later acceptance covering the same time period. To handle
+    this, the acceptance levels are interpolated to 1 minute time intervals,
     and for each time interval the level from the last acceptance is selected.
     """
     result = df.with_columns(
@@ -53,38 +62,100 @@ def resolve_acceptances(df: pl.DataFrame) -> pl.DataFrame:
     return (
         pl.concat(dfs)
         .sort(by=["time", "acceptanceTime"])
+        # this ensures, that the latest acceptance is taken into account for each
         .unique(subset=["time"], keep="last")
     )
 
 
+def smoothen_physical(physical: pl.DataFrame) -> pl.DataFrame:
+    """Smoothens the physical dataframe"""
+    # TODO why am I not using the timeTo here?
+    # TODO seems like it can happen, that there's no physical notification. What to do in this case?
+    physical_parsed = physical.with_columns(
+        pl.col("timeFrom")
+        .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
+        .alias("from"),
+        pl.col("timeTo")
+        .str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime)
+        .alias("to"),
+    )
+
+    # Currently only deduplicating, if there's an overlap with exactly the same start and end
+    physical_deduplicated = physical_parsed.unique(
+        subset=["settlementDate", "settlementPeriod", "from", "to"], keep="last"
+    ).select("settlementDate", "settlementPeriod", "from", "to", "levelFrom", "levelTo")
+
+    full_time_range = pl.DataFrame(
+        {
+            "time": pl.datetime_range(
+                start=physical_parsed.select(pl.col("from").min()).item(),
+                end=physical_parsed.select(pl.col("to").max()).item(),
+                closed="left",
+                interval="1m",
+                eager=True,
+            )
+        }
+    )
+
+    physical_smoothened_matched = (
+        full_time_range.join_where(
+            physical_deduplicated,
+            (pl.col("time").ge(pl.col("from")) & pl.col("time").lt(pl.col("to"))),
+        )
+        .unique(subset=["time"], keep="last")
+        .with_columns(
+            (
+                pl.col("levelFrom")
+                + (pl.col("levelTo") - pl.col("levelFrom"))
+                * (
+                    (pl.col("time").dt.minute().sub(pl.col("from").dt.minute()))
+                    / (pl.col("to").dt.minute().sub(pl.col("from").dt.minute()))
+                )
+            )
+            .alias("level")
+            .cast(pl.Float64),
+            pl.col("settlementPeriod").cast(pl.Int64),
+        )
+        .select("time", "level", "settlementPeriod", "settlementDate")
+    )
+
+    physical_smoothened_unmatched = (
+        (full_time_range.join(physical_smoothened_matched, on="time", how="anti"))
+        .with_columns(
+            pl.lit(0).alias("level").cast(pl.Float64),
+            (
+                (pl.col("time").dt.minute() // 30 + 1) * 1
+                + (pl.col("time").dt.hour()) * 2
+            )
+            .alias("settlementPeriod")
+            .cast(pl.Int64),
+            pl.col("time").dt.strftime(format="%Y-%m-%d").alias("settlementDate"),
+        )
+        .select("time", "level", "settlementPeriod", "settlementDate")
+    )
+
+    physical_smoothened = pl.concat(
+        [physical_smoothened_matched, physical_smoothened_unmatched]
+    ).sort(by="time")
+
+    return physical_smoothened
+
+
 def aggregate_acceptance_and_pn(
     accepted: Optional[pl.DataFrame],
-    physical: pl.DataFrame,
-    downsample_frequency: str = "1d",
-    energy_unit: Literal["MWh", "GWh"] = "GWh",
+    physical_smoothened: pl.DataFrame,
+    downsample_frequency: str,
+    energy_unit: Literal["MWh", "GWh"],
 ) -> pl.DataFrame:
     """
     Aggregates and upsamples the accepted-level and physical notification dataframes
 
-    It takes the difference as `accepted - physical`. This means, that curtailment will have negative sign, and extra generation
-    will be positive. This makes more sense than the other way around (which is how I've initially set this up).
-    """
-    physical_smoothened = (
-        physical.select(
-            pl.col("timeFrom").alias("time"),
-            pl.col("levelFrom").alias("level"),
-            pl.col("settlementPeriod"),
-            pl.col("settlementDate"),
-        )
-        .with_columns(
-            pl.col("level"),
-            pl.col("time").str.strptime(format="%Y-%m-%dT%H:%M:%SZ", dtype=pl.Datetime),
-        )
-        .sort(by="time")
-        .upsample(time_column="time", every="1m")
-        .fill_null(strategy="forward")
-    )
+    It takes the difference as `accepted - physical`. This means, that curtailment will
+    have negative sign, and extra generation will be positive. This makes more sense
+    than the other way around (which is how I've initially set this up).
 
+    TODO: this currently doesn't take into account cancelling acceptances
+    """
     if accepted is not None:
         accepted_smoothened = resolve_acceptances(accepted)
 
@@ -114,7 +185,8 @@ def aggregate_acceptance_and_pn(
     multiplier = ENERGY_MULTIPLIERS[energy_unit]
     output = (
         diffs.with_columns(
-            # this roundabout way is required to account for no accepted level cases (where diff = 0)
+            # this roundabout way is required to account for no accepted level
+            # cases (where diff = 0)
             pl.col("physical_level").add(pl.col("diff")).alias("generated"),
             pl.col("diff").clip(lower_bound=0).alias("extra"),
             pl.col("diff").clip(upper_bound=0).alias("curtailment"),
@@ -132,7 +204,8 @@ def aggregate_acceptance_and_pn(
         .group_by_dynamic(index_column="time", every=downsample_frequency)
         .agg(
             # At this point we're aggregating power figures by the minute.
-            # I'm turning this into energy here, assuming constant generation within the minute, i.e. using: E = P x t
+            # I'm turning this into energy here, assuming constant generation within the
+            # minute, i.e. using: E = P x t
             # Keeping physical level for validation: G = E + C + PL
             pl.col("physical_level").mul(1 / 60).mul(multiplier).sum(),
             pl.col("extra").mul(1 / 60).mul(multiplier).sum(),
@@ -148,7 +221,7 @@ def aggregate_acceptance_and_pn(
 def aggregate_bm_unit_generation(
     accepted: pl.DataFrame, physical: pl.DataFrame
 ) -> dict:
-    """Calculating curtailmant, extra generation and total figures for the acceptance and PN datasets for a BM unit"""
+    """Calculating curtailment, extra generation and total for acceptance and PN for a BM unit"""
     diffs = aggregate_acceptance_and_pn(accepted, physical)
 
     return {
@@ -160,3 +233,167 @@ def aggregate_bm_unit_generation(
         ),
         "total": round(diffs.select("generated").sum().item(), 2),
     }
+
+
+def format_bid_offer_table(df: pl.DataFrame) -> pl.DataFrame:
+    """Formats the bids and prices adding a row with zero so that the intervals are complete"""
+    curtailment_val = df.select(pl.col("curtailment")).limit(1).item()
+    extra_val = df.select(pl.col("extra")).limit(1).item()
+
+    sorted_negatives = df.filter(pl.col("levelTo").lt(pl.lit(0))).sort(
+        by="pairId", descending=True
+    )
+
+    sorted_positives = df.filter(pl.col("levelTo").gt(pl.lit(0))).sort(
+        by="pairId", descending=False
+    )
+
+    # sometimes there's a 0-0 row, with pairId 1
+    df = df.filter(
+        ~(pl.col("levelFrom").eq(pl.lit(0)) & pl.col("levelTo").eq(pl.lit(0)))
+    )
+
+    if sorted_negatives.is_empty():
+        sorted_negatives = df.sort(by="pairId", descending=True)
+
+    if sorted_positives.is_empty():
+        sorted_positives = df.sort(by="pairId", descending=False)
+
+    zero_rows = pl.DataFrame(
+        [
+            {
+                "levelFrom": 0,
+                "levelTo": 0,
+                "bid": sorted_negatives.select(pl.col("bid")).limit(1).item(),
+                "offer": sorted_negatives.select(pl.col("offer")).limit(1).item(),
+                "curtailment": curtailment_val,
+                "extra": extra_val,
+                "pairId": -0.1,
+            },
+            {
+                "levelFrom": 0,
+                "levelTo": 0,
+                "bid": sorted_positives.select(pl.col("bid")).limit(1).item(),
+                "offer": sorted_positives.select(pl.col("offer")).limit(1).item(),
+                "curtailment": curtailment_val,
+                "extra": extra_val,
+                "pairId": 0.1,
+            },
+        ]
+    )
+
+    with_zeros = (
+        df.with_columns(pl.col("pairId").cast(pl.Float64))
+        .extend(zero_rows)
+        .sort(by="pairId", descending=False)
+    )
+
+    negative_pairs = with_zeros.filter(pl.col("pairId").lt(pl.lit(0)))
+    positive_pairs = with_zeros.filter(pl.col("pairId").gt(pl.lit(0)))
+
+    bid_offer_table = pl.concat(
+        [
+            negative_pairs.with_columns(pl.col("levelTo").shift(-1)).filter(
+                pl.col("pairId").lt(pl.lit(-0.5))
+            ),
+            positive_pairs.with_columns(pl.col("levelFrom").shift(1)).filter(
+                pl.col("pairId").gt(pl.lit(0.5))
+            ),
+        ]
+    ).filter(~(pl.col("levelTo").eq(pl.col("levelFrom"))))
+
+    bid_offer_table.drop_in_place("pairId")
+
+    return bid_offer_table
+
+
+expr_curtailment = (
+    pl.when(pl.col("curtailment") < pl.col("levelFrom"))
+    .then(
+        pl.col("levelFrom")  # outside of this range (in the negative direction)
+    )
+    .otherwise(
+        pl.when(pl.col("curtailment") > pl.col("levelTo"))
+        .then(
+            pl.lit(0)  # outside of this range (closer to 0)
+        )
+        .otherwise(
+            pl.col("curtailment").sub(pl.col("levelTo"))  # in the range
+        )
+    )
+    .alias("curtailment_in_range")
+)
+
+expr_extra = (
+    pl.when(pl.col("extra") > pl.col("levelTo"))
+    .then(pl.col("levelTo"))
+    .otherwise(
+        pl.when(pl.col("extra") < pl.col("levelFrom"))
+        .then(pl.lit(0))
+        .otherwise(pl.col("extra").sub(pl.col("levelFrom")))
+    )
+    .alias("extra_in_range")
+)
+
+
+c_or_e_map = {
+    "curtailment": ("bid", expr_curtailment, pl.col("levelFrom").le(pl.lit(0))),
+    "extra": ("offer", expr_extra, pl.col("levelFrom").ge(pl.lit(0))),
+}
+
+
+def aggregate_prices(bid_price_table: pl.DataFrame) -> dict[str, float]:
+    """Aggregates the extra generation and curtailment prices for the bid-price table"""
+    prices = dict()
+    for col, (price_col, expr, _filter) in c_or_e_map.items():
+        if bid_price_table.select(pl.col(col)).limit(1).item() == 0:
+            prices[col] = 0.0
+            continue
+        prices[col] = (
+            # because of how the expressions are set up, we filter the price table to
+            # levels below zero for curtailment, and above for extra generation
+            bid_price_table.filter(_filter)
+            .with_columns(expr)
+            .with_columns(
+                pl.col(f"{col}_in_range").mul(pl.col(price_col)).alias(f"{col}_price")
+            )
+            .select(pl.col(f"{col}_price").sum())
+            .item()
+        )
+
+    return prices
+
+
+def calculate_cashflow(df: pl.DataFrame) -> float:
+    """Calculates the cashflow for a single settlement period"""
+    # for debugging: https://github.com/pola-rs/polars/issues/7704
+    try:
+        bid_price_table = format_bid_offer_table(
+            df.select(
+                "levelFrom", "levelTo", "bid", "offer", "curtailment", "extra", "pairId"
+            ).unique()
+        )
+        prices = aggregate_prices(bid_price_table)
+        return (
+            df.select("settlementDate", "settlementPeriod")
+            .unique()
+            .with_columns(
+                pl.lit(v).alias(f"calculated_cashflow_{k}") for k, v in prices.items()
+            )
+        )
+    except Exception as e:
+        from traceback import print_exc
+
+        print_exc()
+        print(e)
+
+
+def cashflow(bo_df: pl.DataFrame, gen_df: pl.DataFrame) -> pl.DataFrame:
+    """Creates cashflow columns form the bid-offer and generation dataframe"""
+    merged = (
+        bo_df.join(gen_df, on=["settlementDate", "settlementPeriod"])
+        .group_by("settlementDate", "settlementPeriod")
+        .map_groups(calculate_cashflow)
+    )
+
+    return merged
