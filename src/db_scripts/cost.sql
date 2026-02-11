@@ -61,7 +61,7 @@ ALTER TABLE unit_metadata ADD COLUMN general_unit VARCHAR;
 UPDATE unit_metadata SET general_unit = split(bm_unit, '-')[1];
 
 -- Metadata for only the wind units (used to filter)
-CREATE TABLE wind_with_metadata AS (
+CREATE VIEW wind_with_metadata AS (
     SELECT * FROM wind INNER JOIN (
         SELECT general_unit, FIRST(repd_site_name) AS site_name, FIRST(repd_lat) AS lat, FIRST(repd_long) AS long, FIRST(capacity) AS capacity, FIRST(region) AS region
         FROM unit_metadata GROUP BY general_unit
@@ -69,7 +69,7 @@ CREATE TABLE wind_with_metadata AS (
 );
 
 -- Generation from WIND sites only, with their corresponding bid cashflows for the curtailment costs
-CREATE TABLE wind_gen AS (
+CREATE VIEW wind_gen AS (
     SELECT * FROM gen JOIN (SELECT * FROM ic INNER JOIN wind_with_metadata ON ic.bm_unit = wind_with_metadata.bm_unit WHERE ic.flow_type = 'bid') AS other
     ON gen.bm_unit = other.bm_unit AND gen.settlementDate = other.settlementDate AND gen.settlementPeriod = other.settlementPeriod
 );
@@ -80,17 +80,17 @@ CREATE TABLE extra_gen AS (
 );
 
 
-CREATE TABLE wind_gen_so AS (
+CREATE VIEW wind_gen_so AS (
     SELECT * FROM so JOIN (SELECT * FROM ic INNER JOIN wind_with_metadata ON ic.bm_unit = wind_with_metadata.bm_unit WHERE ic.flow_type = 'bid') AS other
     ON so.bm_unit = other.bm_unit AND so.settlementDate = other.settlementDate AND so.settlementPeriod = other.settlementPeriod
 );
 
-CREATE TABLE wind_gen_no_ic AS (
+CREATE VIEW wind_gen_no_ic AS (
     SELECT * FROM gen INNER JOIN wind_with_metadata ON gen.bm_unit = wind_with_metadata.bm_unit
 );
 
 -- Am I looking at the right thing with SO? Should only be wind generation!
-CREATE TABLE replacement_cost AS (
+CREATE VIEW replacement_cost AS (
     SELECT avg_price.settlementDate AS settlementDate, avg_price.settlementPeriod AS settlementPeriod, missing_after_so.extra_for_so AS extra_for_so, avg_price.price AS price, missing_after_so.extra_for_so * avg_price.price AS total FROM (
         (SELECT settlementDate, settlementPeriod, -1 * sum(curtailment) AS extra_for_so FROM wind_gen_so GROUP BY settlementDate, settlementPeriod) AS missing_after_so
         JOIN avg_price ON avg_price.settlementDate = missing_after_so.settlementDate AND avg_price.settlementPeriod = missing_after_so.settlementPeriod
@@ -211,12 +211,12 @@ COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCas
 COPY (SELECT general_unit, FIRST(site_name) AS site_name, fuelType, sum(totalCashflow) AS totalCost, sum(extra) / 1000 AS totalExtraGWh, FIRST(bmUnitName) AS site_name, FIRST(long) AS long, FIRST(lat) AS lat FROM extra_gen JOIN generator_metadata ON extra_gen.bm_unit = generator_metadata.bm_unit WHERE YEAR(settlementDate) = 2025 AND totalCashflow > 0 GROUP BY general_unit, fuelType ORDER BY totalCost DESC LIMIT 20) TO './analysis/aggregate_extras/2025.csv';
 
 -- Top losers, i.e. who are those that placed bids cheaper than the existing ones, but didn't get them accepted?
-CREATE TABLE first_offers AS (
+CREATE VIEW first_offers AS (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.extra > 0 AS accepted, offer, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
     FROM (SELECT * FROM bo WHERE pairId = 1 AND offer < 999.0) AS relevant_bo
     JOIN gen
     ON gen.settlementDate = relevant_bo.settlementDate AND gen.settlementPeriod = relevant_bo.settlementPeriod AND gen.bm_unit = relevant_bo.bm_unit
-)
+);
 
 
 COPY (SELECT settlementDate, settlementPeriod, offs.bm_unit, levelTo, offer, site_name, lat, long FROM (
@@ -232,6 +232,7 @@ CREATE TABLE acceptances_2025 AS (
         ) AS a LEFT JOIN generator_metadata ON a.bm_unit = generator_metadata.bm_unit
     ) AS b JOIN units ON units.bm_unit = b.bm_unit
 );
+
 UPDATE acceptances_2025 SET site_name = bmUnitName WHERE site_name IS NULL;
 
 COPY (SELECT * FROM acceptances_2025) TO './analysis/first_acceptances_2025.csv';
@@ -256,7 +257,7 @@ COPY (
 ) TO "./analysis/beatrice_bids.csv";
 
 -- Odd bids
-CREATE TABLE first_bids AS (
+CREATE VIEW first_bids AS (
     SELECT gen.bm_unit AS bm_unit, relevant_bo.levelTo AS levelTo, gen.curtailment < 0 AS accepted, bid, gen.settlementDate AS settlementDate, gen.settlementPeriod AS settlementPeriod
     FROM (SELECT * FROM bo WHERE pairId = -1 AND bid > -999.0) AS relevant_bo
     JOIN gen
